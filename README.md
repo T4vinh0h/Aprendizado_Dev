@@ -83,11 +83,6 @@ Logica_Prog.-Node.js/
 │   ├── Logica Prog/      # Exercícios de lógica de programação
 │   ├── MySQL/            # Exercícios relacionados a MySQL
 │   ├── P.O.O/            # Programação Orientada a Objetos
-│   │   ├── 27-07-26/     # Atividade teórica sobre POO e UML
-│   │   ├── 31-07-26/     # Diagrama de Classes e implementação
-│   │   ├── b04-08-26/    # Exemplo básico de classe
-│   │   ├── b05-08-26/    # Lista de exercícios 01
-│   │   └── b06-08-26/    # Lista de exercícios 02
 │   └── UGC_23-06-26/     # Material específico
 ├── node_modules/         # Dependências instaladas
 ├── package.json          # Configuração do projeto
@@ -138,34 +133,6 @@ Logica_Prog.-Node.js/
 - **toLowerCase(), toUpperCase(), trim()**: normalizam entrada de texto. **- 8 arquivos**
 - **typeof**: verifica tipos de dados em validações. **- 5 arquivos**
 
-### Conceitos e Exemplos de Uso
-
-Os arquivos deste repositório exploram conceitos de lógica de programação aplicados em situações práticas, como cálculos, validações e manipulação de dados.
-
-- **Variáveis e constantes (`let`, `const`, `var`)**: armazenam valores de entrada, resultados de cálculos, contadores e estados.
-- **Operadores aritméticos (`+`, `-`, `*`, `/`)**: usados em somas, subtrações, multiplicações, divisões, médias e conversões.
-- **`console.log`**: exibe resultados, mensagens e orientações ao usuário.
-- **Template strings (`${}`)**: formatam saídas dinâmicas com variáveis dentro de texto.
-- **Comentários**: explicam a lógica por etapas e organizam exercícios.
-- **Entrada de dados com `prompt-sync`**: lê valores do usuário em exercícios interativos.
-- **Conversão de tipos (`Number()`, `parseFloat()`, `parseInt()`)**: transforma texto em número para operações matemáticas.
-- **Condicionais (`if`, `else`, `else if`)**: tomam decisões como aprovação/reprovação e validações de opções.
-- **Operadores de comparação e lógicos**: verificam intervalos, igualdade e combinações de condições.
-- **Valores booleanos (`true`, `false`)**: controlam fluxos de validação e flags de estado.
-- **Strings e manipulação básica**: tratam nomes, respostas, buscas e formatação de texto.
-- **Validações de entrada**: checam números válidos, faixas esperadas e respostas corretas.
-- **Loops (`for`, `while`)**: repetem cálculos, percorrem listas e repetem tarefas até condição ser satisfeita.
-- **`switch/case`**: escolhem ações com base em opções digitadas pelo usuário.
-- **Arrays**: armazenam coleções como notas, itens e listas de valores.
-- **Métodos de arrays (`push`)**: adicionam elementos em listas dinâmicas.
-- **Funções declaradas**: encapsulam cálculos e lógica reutilizável.
-- **Estruturas aninhadas**: combinam loops e condicionais para resolver problemas mais complexos.
-- **`break` e `continue`**: controlam o fluxo dentro de repetições.
-- **Cálculos matemáticos complexos e `Math`**: incluem raízes, arredondamentos e potências.
-- **`toFixed()`**: formata números com casas decimais.
-- **`toLowerCase()`, `toUpperCase()`, `trim()`**: normalizam entrada de texto.
-- **`typeof`**: verifica tipos de dados em validações.
-
 Situações comuns encontradas nos exercícios:
 - cálculo de médias escolares e avaliação de notas
 - menus de opções e escolha de operações
@@ -180,6 +147,7 @@ Situações comuns encontradas nos exercícios:
 
 ### Conceitos Identificados e Frequência
 
+Os arquivos desta pasta exploram conceitos de banco de dados MySQL aplicados em sistemas práticos como bibliotecas, escolas, pet shops e sistemas criminais.
 **Conceitos Básicos (presentes em 8+ arquivos):**
 - **CREATE DATABASE**: cria novos bancos de dados para organizar sistemas completos. **- 8 arquivos**
 - **CREATE TABLE**: define estrutura de tabelas com campos, tipos e restrições. **- 8 arquivos**
@@ -222,51 +190,8 @@ Situações comuns encontradas nos exercícios:
 - **Dependências funcionais**: relação onde um atributo depende de outro para determinar seu valor. **- 2 arquivos**
 - **Modelo conceitual, lógico e físico**: representação abstrata, organização em tabelas e implementação real em SGBD. **- 3 arquivos**
 
-### Conceitos e Exemplos de Uso
 
-Os arquivos desta pasta exploram conceitos de banco de dados MySQL aplicados em sistemas práticos como bibliotecas, escolas, pet shops e sistemas criminais.
 
-- **CREATE DATABASE**: cria novos bancos de dados para organizar sistemas completos.
-- **CREATE TABLE**: define estrutura de tabelas com campos, tipos e restrições.
-- **Tipos de dados**: `INT` para inteiros, `VARCHAR(n)` para texto, `DECIMAL(m,n)` para valores monetários, `DATE/DATETIME` para datas, `ENUM` para listas pré-definidas.
-- **PRIMARY KEY (PK)**: identifica unicamente cada registro da tabela, geralmente com `AUTO_INCREMENT`.
-- **FOREIGN KEY (FK)**: cria relacionamentos entre tabelas, garantindo integridade referencial.
-- **AUTO_INCREMENT**: gera valores automáticos incrementais para chaves primárias.
-- **NOT NULL**: torna campos obrigatórios, impedindo valores vazios.
-- **UNIQUE**: garante que valores em uma coluna não se repitam.
-- **DEFAULT**: define um valor padrão quando nenhum valor é informado.
-- **INSERT**: adiciona novos registros nas tabelas, um ou múltiplos de uma vez.
-- **UPDATE**: modifica registros existentes com base em condições.
-- **DELETE**: remove registros de tabelas conforme filtros especificados.
-- **SELECT**: consulta e recupera dados das tabelas.
-- **WHERE**: filtra resultados baseado em condições específicas.
-- **ORDER BY**: ordena resultados por colunas em ordem crescente (ASC) ou decrescente (DESC).
-- **LIMIT**: limita a quantidade de registros retornados em uma consulta.
-- **DISTINCT**: remove valores duplicados dos resultados.
-- **INNER JOIN**: combina registros de tabelas relacionadas onde há correspondência.
-- **LEFT JOIN**: retorna todos os registros da tabela esquerda e correspondências da direita.
-- **ALTER TABLE**: modifica estrutura de tabelas (adicionar/remover colunas, alterar tipos).
-- **DROP TABLE**: exclui tabelas inteiras do banco de dados.
-- **TRUNCATE TABLE**: remove todos os registros mantendo a estrutura, resetando auto_increment.
-- **ON DELETE CASCADE**: exclui registros relacionados automaticamente quando o registro pai é deletado.
-- **ON DELETE SET NULL**: define como NULL as chaves estrangeiras quando o registro pai é deletado.
-- **ON UPDATE CASCADE**: atualiza automaticamente chaves estrangeiras quando a chave primária é alterada.
-- **GROUP BY**: agrupa resultados por uma ou mais colunas para análise.
-- **Funções de agregação**: `COUNT` conta registros, `SUM` soma valores, `AVG` calcula média, `MAX` retorna maior valor, `MIN` retorna menor valor.
-- **BETWEEN**: filtra valores dentro de um intervalo específico.
-- **IN**: filtra valores que correspondem a uma lista de opções.
-- **LIKE**: busca padrões de texto usando curingas (%).
-- **CHECK**: valida se valores atendem a uma condição específica.
-- **INDEX**: cria índices para acelerar consultas em colunas frequentemente pesquisadas.
-- **Relacionamentos 1:N**: um registro de uma tabela se relaciona com muitos de outra.
-- **Relacionamentos N:N**: muitos registros de uma tabela se relacionam com muitos de outra, resolvido com tabela associativa.
-- **Normalização 1FN**: garante valores atômicos (sem multivalorados em uma célula).
-- **Normalização 2FN**: elimina dependências parciais em chaves compostas.
-- **Normalização 3FN**: elimina dependências transitivas entre atributos não-chave.
-- **Dependências funcionais**: relação onde um atributo depende de outro para determinar seu valor.
-- **Modelo conceitual**: representação abstrata de entidades e relacionamentos.
-- **Modelo lógico**: organização em tabelas com atributos, chaves e tipos, independente de SGBD.
-- **Modelo físico**: implementação real em um SGBD específico com sintaxe SQL completa.
 
 Situações comuns encontradas nos exercícios de MySQL:
 - modelagem de sistemas completos (biblioteca, escola, pet shop, hotel, cinema)
@@ -279,68 +204,24 @@ Situações comuns encontradas nos exercícios de MySQL:
 
 ---
 
-## Programação Orientada a Objetos (POO)
+## P.O.O. - Programação Orientada a Objetos
 
-### Conceitos Identificados e Frequência
+**Conceitos Identificados e Resumo:**
 
-**Conceitos Básicos (presentes em 6 arquivos):**
-- **Classes e Objetos**: Definição de estruturas de dados e suas instâncias. **- 6 arquivos**
-- **Atributos**: Propriedades que armazenam o estado dos objetos. **- 6 arquivos**
-- **Métodos**: Funções que definem o comportamento dos objetos. **- 6 arquivos**
-- **Construtores**: Métodos especiais para inicialização de objetos. **- 6 arquivos**
-- **Tipagem TypeScript**: Uso de tipos para garantir segurança no código. **- 6 arquivos**
-- **Instanciação (new)**: Criação de objetos a partir de classes. **- 6 arquivos**
-- **this**: Referência ao próprio objeto dentro de métodos. **- 6 arquivos**
+**UML e Modelagem:**
+- **POO (Programação Orientada a Objetos)**: paradigma que organiza código em objetos com dados (atributos) e comportamentos (métodos), focando em reutilização, encapsulamento e modularidade. **- 1 arquivo**
+- **Classe vs Objeto**: classe é o modelo/template, objeto é instância concreta. Exemplo: classe "Carro" define estrutura, objeto é "Fusca Vermelho, 1975". **- 1 arquivo**
+- **UML (Unified Modeling Language)**: linguagem de modelagem visual para especificar, visualizar e documentar sistemas de software. Não é linguagem de programação executável. **- 1 arquivo**
+- **Objetivos da UML**: especificar estrutura/comportamento, visualizar arquitetura, documentar decisões de design, facilitar comunicação entre equipe e stakeholders. **- 1 arquivo**
+- **Requisitos funcionais vs não funcionais**: funcionais descrevem o que o sistema faz (ex: login), não funcionais descrevem como o sistema deve ser (ex: tempo de resposta < 2s). **- 1 arquivo**
+- **Ator em Diagrama de Casos de Uso**: entidade externa que interage com o sistema (pessoa, sistema externo ou hardware). Não precisa ser pessoa. **- 1 arquivo**
+- **Relacionamento - Associação**: relacionamento geral entre ator e caso de uso ou entre casos de uso. **- 1 arquivo**
+- **Relacionamento - Inclusão («include»)**: caso de uso base obrigatoriamente inclui outro caso de uso (comportamento obrigatório e reaproveitado). **- 1 arquivo**
+- **Relacionamento - Extensão («extend»)**: caso de uso estende outro de forma opcional sob condição (comportamento opcional condicional). **- 1 arquivo**
+- **Relacionamento - Herança (Generalização)**: caso de uso filho herda comportamento do caso de uso pai. **- 1 arquivo**
+- **Nome de caso de uso**: estrutura Verbo + Objeto (ação + entidade). Exemplos: Consultar Livro, Reservar Sala, Emitir Nota Fiscal. **- 1 arquivo**
 
-**Conceitos Intermediários (presentes em 3-5 arquivos):**
-- **Herança (extends)**: Criação de subclasses que herdam características de classes pai. **- 3 arquivos**
-- **Encapsulamento (private, public)**: Uso de modificadores de acesso. **- 3 arquivos**
-- **Arrays em classes**: Armazenamento de múltiplos objetos como propriedades. **- 3 arquivos**
-- **Métodos com retorno**: Funções que retornam valores calculados. **- 4 arquivos**
-- **Condicionais em métodos**: Uso de if/else para lógica de negócios. **- 4 arquivos**
-- **Métodos void**: Funções que não retornam valor. **- 5 arquivos**
-- **Parâmetros em métodos**: Passagem de dados para métodos. **- 6 arquivos**
-
-**Conceitos Avançados (presentes em 1-2 arquivos):**
-- **Relacionamentos de UML**: Implementação de associação, agregação e composição. **- 1 arquivo**
-- **Multiplicidade**: Definição de cardinalidade entre classes (1..*, 1..1). **- 1 arquivo**
-- **Generalização**: Herança múltipla e especialização de classes. **- 1 arquivo**
-- **Loops em métodos**: Uso de for/while para processar coleções. **- 2 arquivos**
-- **Super()**: Chamada ao construtor da classe pai. **- 2 arquivos**
-- **Composição vs Agregação**: Diferenciação de relacionamentos todo-parte. **- 1 arquivo**
-
-### Conceitos e Exemplos de Uso
-
-Os arquivos da pasta P.O.O exploram conceitos de Programação Orientada a Objetos aplicados em TypeScript, desde classes básicas até implementações de diagramas UML.
-
-- **Classes e Objetos**: Definição de estruturas de dados e suas instâncias.
-- **Atributos**: Propriedades que armazenam o estado dos objetos.
-- **Métodos**: Funções que definem o comportamento dos objetos.
-- **Construtores**: Métodos especiais para inicialização de objetos.
-- **Tipagem TypeScript**: Uso de tipos para garantir segurança no código.
-- **Instanciação (new)**: Criação de objetos a partir de classes.
-- **this**: Referência ao próprio objeto dentro de métodos.
-- **Herança (extends)**: Criação de subclasses que herdam características de classes pai.
-- **Encapsulamento (private, public)**: Uso de modificadores de acesso.
-- **Arrays em classes**: Armazenamento de múltiplos objetos como propriedades.
-- **Métodos com retorno**: Funções que retornam valores calculados.
-- **Condicionais em métodos**: Uso de if/else para lógica de negócios.
-- **Métodos void**: Funções que não retornam valor.
-- **Parâmetros em métodos**: Passagem de dados para métodos.
-- **Relacionamentos de UML**: Implementação de associação, agregação e composição.
-- **Multiplicidade**: Definição de cardinalidade entre classes (1..*, 1..1).
-- **Generalização**: Herança múltipla e especialização de classes.
-- **Loops em métodos**: Uso de for/while para processar coleções.
-- **Super()**: Chamada ao construtor da classe pai.
-- **Composição vs Agregação**: Diferenciação de relacionamentos todo-parte.
-
-Situações comuns encontradas nos exercícios:
-- modelagem de sistemas reais (biblioteca, escola, loja virtual)
-- cadastro de entidades (pessoas, produtos, funcionários)
-- cálculos e conversões (IMC, temperatura, descontos)
-- controle de estoque e operações bancárias
-- implementação de relacionamentos entre classes
-- herança e especialização de objetos
+**Situações comuns:** modelagem de sistemas (biblioteca, pizzaria, estacionamento, clínica, streaming), identificação de relacionamentos entre casos de uso, diferenciação entre requisitos funcionais e não funcionais, uso de atores externos (sistemas, hardware).
 
 ---
 
@@ -350,8 +231,12 @@ Este projeto está licenciado sob a **Licença MIT**.
 
 ### Detalhes da Licença MIT
 
-**Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma cópia deste software e dos arquivos de documentação associados (o "Software"), para lidar com o Software sem restrições, incluindo, sem limitação, os direitos de usar, copiar, modificar, fundir, publicar, distribuir, sublicenciar e/ou vender cópias do Software, e permitir que as pessoas a quem o Software é fornecido o façam, sujeitas às seguintes condições:**
+**Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma cópia deste software e dos arquivos de documentação associados (o "Software"), para lidar com o Software sem restrições, incluindo, sem limitação, os direitos de usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e/ou vender cópias do Software, e para permitir pessoas a quem o Software é fornecido para fazê-lo, sujeito às seguintes condições:**
 
-O aviso de copyright acima e este aviso de permissão devem ser incluídos em todas as cópias ou partes substanciais do Software.
+- O aviso de copyright acima e este aviso de permissão devem ser incluídos em todas as cópias ou partes substanciais do Software.
 
-**O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM FIM ESPECÍFICO E NÃO VIOLAÇÃO. EM NENHUM CASO OS AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANOS OU OUTRA RESPONSABILIDADE, SEJA EM AÇÃO DE CONTRATO, TORT OU OUTRA, PROVENIENTE DE, OU EM CONEXÃO COM O SOFTWARE OU O USO OU OUTRAS NEGOCIAÇÕES NO SOFTWARE.**
+**O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM FIM ESPECÍFICO E NÃO VIOLAÇÃO. EM NENHUMA CASO OS AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANOS OU OUTRAS RESPONSIBILIDADES, SEJA EM UMA AÇÃO DE CONTRATO, ATO ILÍCITO OU DE OUTRA FORMA, DECORRENTE DE, FORA OU EM CONEXÃO COM O SOFTWARE OU O USO OU OUTRAS NEGOCIAÇÕES NO SOFTWARE.**
+
+Para mais informações, consulte o arquivo [LICENSE](LICENSE) neste repositório.
+
+---

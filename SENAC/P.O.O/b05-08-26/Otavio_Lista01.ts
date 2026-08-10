@@ -6,6 +6,12 @@
 // ========================================
 // Exercício 1 – Criando sua primeira Classe
 // ========================================
+// Crie uma classe chamada Pessoa.
+// Ela deve possuir:
+// • atributo nome
+// • método apresentar(), que mostra no console:
+// Ex: Olá! Meu nome é João.
+// Depois crie um objeto da classe e execute o método.
 class Pessoa {
     nome: string;
 
@@ -25,6 +31,12 @@ pessoa1.apresentar();
 // ========================================
 // Exercício 2 – Trabalhando com dois objetos
 // ========================================
+// Crie uma classe chamada Aluno.
+// Ela deverá possuir:
+// • nome
+// • idade
+// Depois crie dois objetos diferentes.
+// Mostre as informações de ambos utilizando um método chamado mostrarDados().
 class Aluno {
     nome: string;
     idade: number;
@@ -48,6 +60,11 @@ aluno2.mostrarDados();
 // ========================================
 // Exercício 3 – Utilizando Construtor
 // ========================================
+// Crie uma classe Livro.
+// O construtor deve receber:
+// • título
+// • autor
+// Depois mostre as informações utilizando um método.
 class Livro {
     titulo: string;
     autor: string;
@@ -69,6 +86,9 @@ livro1.mostrarInformacoes();
 // ========================================
 // Exercício 4 – Calculando com Métodos
 // ========================================
+// Crie uma classe Calculadora.
+// Ela deve possuir um método chamado somar(numero1, numero2).
+// Mostre o resultado da soma.
 class Calculadora {
     somar(numero1: number, numero2: number): number {
         return numero1 + numero2;
@@ -83,6 +103,15 @@ console.log(`Resultado da soma: ${resultado}`);
 // ========================================
 // Exercício 5 – Utilizando Condição
 // ========================================
+// Crie uma classe Produto.
+// Ela deve possuir:
+// • nome
+// • quantidade
+// Crie um método chamado verificarEstoque().
+// Se a quantidade for maior que zero, mostrar:
+// Produto disponível
+// Caso contrário:
+// Produto indisponível
 class Produto {
     nome: string;
     quantidade: number;
@@ -110,6 +139,9 @@ produto2.verificarEstoque();
 // ========================================
 // Exercício 6 – Utilizando Laço de Repetição
 // ========================================
+// Crie uma classe chamada Contador.
+// Faça um método chamado contar().
+// Ele deverá mostrar os números de 1 até 10 utilizando for.
 class Contador {
     contar(): void {
         for (let i = 1; i <= 10; i++) {
@@ -125,6 +157,16 @@ contador.contar();
 // ========================================
 // Exercício 7 – Média do Aluno
 // ========================================
+// Crie uma classe chamada Boletim.
+// Ela deverá receber:
+// • nome
+// • nota1
+// • nota2
+// Crie um método para calcular a média.
+// Se a média for maior ou igual a 7:
+// Aprovado
+// Caso contrário:
+// Reprovado
 class Boletim {
     nome: string;
     nota1: number;
@@ -155,6 +197,9 @@ boletim2.calcularMedia();
 // ========================================
 // Exercício 8 – Tabuada
 // ========================================
+// Crie uma classe chamada Tabuada.
+// Ela deve receber um número.
+// Crie um método que mostre a tabuada utilizando um laço for.
 class Tabuada {
     numero: number;
 
@@ -177,6 +222,13 @@ tabuada.mostrarTabuada();
 // ========================================
 // Exercício 9 – Cadastro de Carros
 // ========================================
+// Crie uma classe chamada Carro.
+// Ela deve possuir:
+// • marca
+// • modelo
+// • ano
+// Crie três objetos diferentes.
+// Mostre as informações utilizando um método.
 class Carro {
     marca: string;
     modelo: string;
@@ -204,6 +256,14 @@ carro3.mostrarInformacoes();
 // ========================================
 // Exercício 10 – Sistema de Conta Bancária
 // ========================================
+// Crie uma classe chamada ContaBancaria.
+// Ela deve possuir:
+// • titular
+// • saldo
+// Crie dois métodos:
+// • depositar(valor)
+// • sacar(valor)
+// No saque, só permitir caso exista saldo suficiente.
 class ContaBancaria {
     titular: string;
     saldo: number;
