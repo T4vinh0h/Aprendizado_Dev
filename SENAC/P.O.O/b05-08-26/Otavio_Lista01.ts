@@ -1,5 +1,5 @@
 // ========================================
-// Lista de Exercícios 01 – JavaScript
+// Lista de Exercícios 01 – Typescript
 // POO – Pilar da Abstração
 // ========================================
 
@@ -14,11 +14,9 @@
 // Depois crie um objeto da classe e execute o método.
 class Pessoa {
     nome: string;
-
     constructor(nome: string) {
         this.nome = nome;
     }
-
     apresentar(): void {
         console.log(`Olá! Meu nome é ${this.nome}.`);
     }
@@ -40,12 +38,10 @@ pessoa1.apresentar();
 class Aluno {
     nome: string;
     idade: number;
-
     constructor(nome: string, idade: number) {
         this.nome = nome;
         this.idade = idade;
     }
-
     mostrarDados(): void {
         console.log(`Nome: ${this.nome}, Idade: ${this.idade}`);
     }
@@ -68,12 +64,10 @@ aluno2.mostrarDados();
 class Livro {
     titulo: string;
     autor: string;
-
     constructor(titulo: string, autor: string) {
         this.titulo = titulo;
         this.autor = autor;
     }
-
     mostrarInformacoes(): void {
         console.log(`Título: ${this.titulo}, Autor: ${this.autor}`);
     }
@@ -115,12 +109,10 @@ console.log(`Resultado da soma: ${resultado}`);
 class Produto {
     nome: string;
     quantidade: number;
-
     constructor(nome: string, quantidade: number) {
         this.nome = nome;
         this.quantidade = quantidade;
     }
-
     verificarEstoque(): void {
         if (this.quantidade > 0) {
             console.log("Produto disponível");
@@ -171,13 +163,11 @@ class Boletim {
     nome: string;
     nota1: number;
     nota2: number;
-
     constructor(nome: string, nota1: number, nota2: number) {
         this.nome = nome;
         this.nota1 = nota1;
         this.nota2 = nota2;
     }
-
     calcularMedia(): void {
         const media = (this.nota1 + this.nota2) / 2;
         if (media >= 7) {
@@ -202,11 +192,9 @@ boletim2.calcularMedia();
 // Crie um método que mostre a tabuada utilizando um laço for.
 class Tabuada {
     numero: number;
-
     constructor(numero: number) {
         this.numero = numero;
     }
-
     mostrarTabuada(): void {
         console.log(`Tabuada do ${this.numero}:`);
         for (let i = 1; i <= 10; i++) {
@@ -233,13 +221,11 @@ class Carro {
     marca: string;
     modelo: string;
     ano: number;
-
     constructor(marca: string, modelo: string, ano: number) {
         this.marca = marca;
         this.modelo = modelo;
         this.ano = ano;
     }
-
     mostrarInformacoes(): void {
         console.log(`Marca: ${this.marca}, Modelo: ${this.modelo}, Ano: ${this.ano}`);
     }
@@ -267,17 +253,14 @@ carro3.mostrarInformacoes();
 class ContaBancaria {
     titular: string;
     saldo: number;
-
     constructor(titular: string, saldo: number) {
         this.titular = titular;
         this.saldo = saldo;
     }
-
     depositar(valor: number): void {
         this.saldo += valor;
         console.log(`Depósito de R$${valor} realizado. Novo saldo: R$${this.saldo}`);
     }
-
     sacar(valor: number): void {
         if (this.saldo >= valor) {
             this.saldo -= valor;
@@ -293,3 +276,5 @@ console.log('\n=== Exercício 10 - Sistema de Conta Bancária ===');
 conta1.depositar(500);
 conta1.sacar(200);
 conta1.sacar(2000);
+
+

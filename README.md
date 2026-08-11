@@ -190,9 +190,6 @@ Os arquivos desta pasta exploram conceitos de banco de dados MySQL aplicados em 
 - **Dependências funcionais**: relação onde um atributo depende de outro para determinar seu valor. **- 2 arquivos**
 - **Modelo conceitual, lógico e físico**: representação abstrata, organização em tabelas e implementação real em SGBD. **- 3 arquivos**
 
-
-
-
 Situações comuns encontradas nos exercícios de MySQL:
 - modelagem de sistemas completos (biblioteca, escola, pet shop, hotel, cinema)
 - criação de relacionamentos entre tabelas com chaves estrangeiras
@@ -206,22 +203,58 @@ Situações comuns encontradas nos exercícios de MySQL:
 
 ## P.O.O. - Programação Orientada a Objetos
 
-**Conceitos Identificados e Resumo:**
+### Conceitos Identificados e Frequência
 
-**UML e Modelagem:**
-- **POO (Programação Orientada a Objetos)**: paradigma que organiza código em objetos com dados (atributos) e comportamentos (métodos), focando em reutilização, encapsulamento e modularidade. **- 1 arquivo**
-- **Classe vs Objeto**: classe é o modelo/template, objeto é instância concreta. Exemplo: classe "Carro" define estrutura, objeto é "Fusca Vermelho, 1975". **- 1 arquivo**
-- **UML (Unified Modeling Language)**: linguagem de modelagem visual para especificar, visualizar e documentar sistemas de software. Não é linguagem de programação executável. **- 1 arquivo**
-- **Objetivos da UML**: especificar estrutura/comportamento, visualizar arquitetura, documentar decisões de design, facilitar comunicação entre equipe e stakeholders. **- 1 arquivo**
-- **Requisitos funcionais vs não funcionais**: funcionais descrevem o que o sistema faz (ex: login), não funcionais descrevem como o sistema deve ser (ex: tempo de resposta < 2s). **- 1 arquivo**
-- **Ator em Diagrama de Casos de Uso**: entidade externa que interage com o sistema (pessoa, sistema externo ou hardware). Não precisa ser pessoa. **- 1 arquivo**
-- **Relacionamento - Associação**: relacionamento geral entre ator e caso de uso ou entre casos de uso. **- 1 arquivo**
-- **Relacionamento - Inclusão («include»)**: caso de uso base obrigatoriamente inclui outro caso de uso (comportamento obrigatório e reaproveitado). **- 1 arquivo**
-- **Relacionamento - Extensão («extend»)**: caso de uso estende outro de forma opcional sob condição (comportamento opcional condicional). **- 1 arquivo**
-- **Relacionamento - Herança (Generalização)**: caso de uso filho herda comportamento do caso de uso pai. **- 1 arquivo**
-- **Nome de caso de uso**: estrutura Verbo + Objeto (ação + entidade). Exemplos: Consultar Livro, Reservar Sala, Emitir Nota Fiscal. **- 1 arquivo**
+**Conceitos Básicos (presentes em 3+ arquivos):**
+- **Classes (`class`)**: modelo/template que define estrutura de objetos com atributos e métodos. **- 3 arquivos**
+- **Objetos (`new`)**: instâncias concretas de classes, criadas com operador new. **- 3 arquivos**
+- **Atributos/Propriedades**: variáveis dentro de classes que armazenam dados (nome, idade, preço, etc.). **- 3 arquivos**
+- **Construtores (`constructor`, `this`)**: métodos especiais para inicializar objetos com valores iniciais e referenciar instância atual. **- 3 arquivos**
+- **Métodos**: funções dentro de classes que definem comportamentos dos objetos. **- 3 arquivos**
+- **Tipagem (`: tipo`, `void`)**: uso de tipos TypeScript (`string`, `number`, `void`) para variáveis, parâmetros e retornos. **- 3 arquivos**
+- **Variáveis (`const`, `let`)**: declaram constantes (não reatribuíveis) e variáveis com escopo de bloco (reatribuíveis). **- 3 arquivos**
+- **console.log**: exibe resultados, mensagens e orientações ao usuário em métodos. **- 3 arquivos**
 
-**Situações comuns:** modelagem de sistemas (biblioteca, pizzaria, estacionamento, clínica, streaming), identificação de relacionamentos entre casos de uso, diferenciação entre requisitos funcionais e não funcionais, uso de atores externos (sistemas, hardware).
+**Conceitos Intermediários (presentes em 1-3 arquivos):**
+- **Métodos com retorno (`: number`, `: string`)**: funções que retornam valores específicos. **- 3 arquivos**
+- **Métodos void (`: void`)**: funções que não retornam valor explícito. **- 3 arquivos**
+- **Parâmetros obrigatórios**: argumentos que devem ser fornecidos ao chamar métodos. **- 3 arquivos**
+- **Parâmetros opcionais (`?`)**: argumentos marcados com ? que podem ser omitidos ao chamar função. **- 1 arquivo**
+- **Funções declaradas (`function`, `=>`)**: palavra-chave para declarar funções e sintaxe de arrow function. **- 1 arquivo**
+- **Condicionais em métodos (`if`, `else`)**: uso de estruturas condicionais para lógica de negócios dentro de classes. **- 3 arquivos**
+- **Laços em métodos (`for`)**: uso de laços de repetição para repetir operações dentro de classes. **- 3 arquivos**
+- **Arrays/Vetores (`[]`)**: armazenamento de múltiplos objetos ou valores em classes. **- 2 arquivos**
+- **Classes compostas**: uma classe usando objetos de outra classe (ex: Escola com Aluno). **- 1 arquivo**
+
+**Conceitos Avançados (presentes em 1-2 arquivos):**
+- **Lógica de negócios complexa**: validações, cálculos de média, IMC, controle de estoque. **- 2 arquivos**
+- **Sistemas completos**: implementação de bibliotecas, estacionamentos, caixas eletrônicos, escolas. **- 2 arquivos**
+- **Regras de negócio**: validação de saldo, controle de vagas, verificação de estoque. **- 2 arquivos**
+
+**Situações comuns encontradas nos exercícios de POO:**
+- criação de classes para modelar entidades do mundo real (Pessoa, Produto, Carro, Aluno)
+- implementação de métodos para apresentar dados, realizar cálculos e validar regras
+- uso de condicionais para controlar fluxo de lógica de negócios
+- uso de laços para percorrer listas de objetos ou repetir operações
+- implementação de sistemas completos com múltiplas classes interconectadas
+- validação de regras de negócio (saldo suficiente, estoque disponível, vagas livres)
+
+### Composição da Sintaxe de POO
+
+**Conceitos Básicos (presentes em 3+ arquivos):**
+- **Definição de classes (`class`, `constructor`, `this`)**: definem estrutura de objetos, inicializam atributos e referenciam instância atual. **- 3 arquivos**
+- **Atributos/Propriedades**: variáveis dentro de classes que armazenam dados (nome, idade, preço, etc.). **- 3 arquivos**
+- **Métodos**: funções dentro de classes que definem comportamentos dos objetos. **- 3 arquivos**
+- **Tipagem (`: tipo`, `void`)**: anotações de tipo para variáveis, parâmetros e retornos, incluindo tipo void para funções sem retorno. **- 3 arquivos**
+- **Criação de objetos (`new`)**: operador para criar nova instância de uma classe. **- 3 arquivos**
+- **Variáveis (`const`, `let`)**: declaram constantes (não reatribuíveis) e variáveis com escopo de bloco (reatribuíveis). **- 3 arquivos**
+- **Funções (`return`)**: palavra-chave para retornar valores de funções e métodos. **- 3 arquivos**
+- **Estruturas de controle (`if`, `else`, `for`)**: condicionais para tomada de decisão e laços para repetição de operações. **- 3 arquivos**
+
+**Conceitos Intermediários (presentes em 1-2 arquivos):**
+- **Funções declaradas (`function`, `=>`)**: palavra-chave para declarar funções e sintaxe de arrow function para forma concisa. **- 1 arquivo**
+- **Parâmetros opcionais (`?`)**: marca parâmetros que podem ser omitidos ao chamar função. **- 1 arquivo**
+- **Arrays/Vetores (`[]`)**: sintaxe para declarar arrays e armazenar múltiplos valores ou objetos. **- 2 arquivos**
 
 ---
 
