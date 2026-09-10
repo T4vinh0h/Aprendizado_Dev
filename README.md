@@ -239,23 +239,6 @@ Situações comuns encontradas nos exercícios de MySQL:
 - implementação de sistemas completos com múltiplas classes interconectadas
 - validação de regras de negócio (saldo suficiente, estoque disponível, vagas livres)
 
-### Composição da Sintaxe de POO
-
-**Conceitos Básicos (presentes em 3+ arquivos):**
-- **Definição de classes (`class`, `constructor`, `this`)**: definem estrutura de objetos, inicializam atributos e referenciam instância atual. **- 3 arquivos**
-- **Atributos/Propriedades**: variáveis dentro de classes que armazenam dados (nome, idade, preço, etc.). **- 3 arquivos**
-- **Métodos**: funções dentro de classes que definem comportamentos dos objetos. **- 3 arquivos**
-- **Tipagem (`: tipo`, `void`)**: anotações de tipo para variáveis, parâmetros e retornos, incluindo tipo void para funções sem retorno. **- 3 arquivos**
-- **Criação de objetos (`new`)**: operador para criar nova instância de uma classe. **- 3 arquivos**
-- **Variáveis (`const`, `let`)**: declaram constantes (não reatribuíveis) e variáveis com escopo de bloco (reatribuíveis). **- 3 arquivos**
-- **Funções (`return`)**: palavra-chave para retornar valores de funções e métodos. **- 3 arquivos**
-- **Estruturas de controle (`if`, `else`, `for`)**: condicionais para tomada de decisão e laços para repetição de operações. **- 3 arquivos**
-
-**Conceitos Intermediários (presentes em 1-2 arquivos):**
-- **Funções declaradas (`function`, `=>`)**: palavra-chave para declarar funções e sintaxe de arrow function para forma concisa. **- 1 arquivo**
-- **Parâmetros opcionais (`?`)**: marca parâmetros que podem ser omitidos ao chamar função. **- 1 arquivo**
-- **Arrays/Vetores (`[]`)**: sintaxe para declarar arrays e armazenar múltiplos valores ou objetos. **- 2 arquivos**
-
 ---
 
 ## Licença

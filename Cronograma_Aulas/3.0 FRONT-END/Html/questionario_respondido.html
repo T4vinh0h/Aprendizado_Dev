@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário Respondido - HTML e Web</title>
+</head>
+<body>
+    <h1>Questionário Respondido</h1>
+    <p><em>Aluno: Otávio Azevedo dos Santos</em></p>
+    
+    <hr>
+    
+    <h2>01 - Qual é a diferença entre Internet e Web?</h2>
+    <p>A Internet é a infraestrutura de cabos e servidores que conecta os dispositivos pelo mundo. A Web é o sistema de sites e páginas que opera sobre a estrutura da Internet. É como se a internet fosse uma estrada e a Web os carros transitando na mesma.</p>
+    
+    <hr>
+    
+    <h2>02 - Qual é a função do navegador?</h2>
+    <p>É o programa (Chrome, Edge, Firefox) que pede os dados de um site ao servidor, interpreta o código (HTML, CSS, JS) e exibe a página pronta na sua tela.
+</p>
+    
+    <hr>
+    
+    <h2>03 - O que acontece quando acessamos uma página hospedada em um servidor?</h2>
+    <p>O processo ocorre em várias etapas:</p>
+    <ol>
+        <li><strong>Requisição:</strong> O navegador envia uma requisição HTTP ao servidor onde a página está hospedada</li>
+        <li><strong>Processamento:</strong> O servidor recebe a requisição, localiza o arquivo e o processa (se necessário)</li>
+        <li><strong>Resposta:</strong> O servidor envia o código HTML (e arquivos associados como CSS, JS, imagens) de volta ao navegador</li>
+        <li><strong>Renderização:</strong> O navegador interpreta o HTML, aplica o CSS e executa o JavaScript</li>
+        <li><strong>Exibição:</strong> A página é renderizada e exibida ao usuário na tela</li>
+    </ol>
+    
+    <hr>
+    
+    <h2>04 - Qual é a função do HTML?</h2>
+    <p><strong>HTML (HyperText Markup Language)</strong> é a linguagem de marcação padrão para criar páginas web. Suas principais funções são:</p>
+    <ul>
+        <li><strong>Estruturar conteúdo:</strong> Define a hierarquia e organização do conteúdo (títulos, parágrafos, listas)</li>
+        <li><strong>Marcar elementos:</strong> Usa tags para indicar o tipo de cada elemento (cabeçalhos, links, imagens, tabelas)</li>
+        <li><strong>Definir semântica:</strong> Atribui significado ao conteúdo (header, nav, main, footer)</li>
+        <li><strong>Base para outras tecnologias:</strong> Serve como base para CSS (estilo) e JavaScript (interatividade)</li>
+    </ul>
+    <p><em>HTML não é uma linguagem de programação, é uma linguagem de marcação.</em></p>
+    
+    <hr>
+    
+    <h2>05 - Qual é a diferença entre tag, atributo e conteúdo?</h2>
+    <p><strong>Tag:</strong> É o elemento HTML que define o tipo de conteúdo. É escrita entre sinais de menor e maior <code>&lt;tag&gt;</code>. Ex: <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a&gt;</code>.</p>
+    <p><strong>Atributo:</strong> São informações adicionais que modificam o comport ou aparência da tag. São especificados dentro da tag de abertura no formato <code>nome="valor"</code>. Ex: <code>href="https://..."</code>, <code>class="titulo"</code>, <code>id="menu"</code>.</p>
+    <p><strong>Conteúdo:</strong> É o texto ou elementos que ficam entre a tag de abertura e fechamento. É o que será exibido ao usuário. Ex: <code>&lt;p&gt;Este é o conteúdo&lt;/p&gt;</code>.</p>
+    <p><em>Exemplo completo: <code>&lt;a href="https://site.com"&gt;Clique aqui&lt;/a&gt;</code></em></p>
+    
+    <hr>
+    
+    <h2>06 - O que deve ficar dentro do head?</h2>
+    <p>A seção <code>&lt;head&gt;</code> contém <strong>metadados e configurações</strong> da página que não são exibidos diretamente no corpo da página. Devem ficar:</p>
+    <ul>
+        <li><strong>&lt;title&gt;</strong> - Título da página (exibido na aba do navegador)</li>
+        <li><strong>&lt;meta&gt;</strong> - Metadados como charset, viewport, descrição, autor</li>
+        <li><strong>&lt;link&gt;</strong> - Links para arquivos externos como CSS e ícones</li>
+        <li><strong>&lt;style&gt;</strong> - Estilos CSS internos</li>
+        <li><strong>&lt;script&gt;</strong> - Scripts JavaScript (quando não precisam ser executados imediatamente)</li>
+        <li><strong>&lt;base&gt;</strong> - URL base para links relativos</li>
+    </ul>
+    
+    <hr>
+    
+    <h2>07 - O que deve ficar dentro do body?</h2>
+    <p>A seção <code>&lt;body&gt;</code> contém <strong>todo o conteúdo visível</strong> da página que será exibido ao usuário. Devem ficar:</p>
+    <ul>
+        <li><strong>Textos:</strong> parágrafos, títulos, listas</li>
+        <li><strong>Imagens:</strong> elementos visuais</li>
+        <li><strong>Links:</strong> hiperlinks para outras páginas</li>
+        <li><strong>Formulários:</strong> campos de entrada e botões</li>
+        <li><strong>Tabelas:</strong> dados tabulares</li>
+        <li><strong>Divs e Spans:</strong> containers para organização</li>
+        <li><strong>Elementos semânticos:</strong> header, nav, main, section, article, footer</li>
+        <li><strong>Scripts:</strong> JavaScript que precisa ser executado após o carregamento</li>
+    </ul>
+    
+    <hr>
+    
+    <h2>08 - Qual é a diferença entre title e h1?</h2>
+    <p><strong>&lt;title&gt;</strong> (dentro do head):</p>
+    <ul>
+        <li>Define o título da página que aparece na <strong>aba do navegador</strong></li>
+        <li>É usado por motores de busca para identificar a página</li>
+        <li>Não aparece no corpo da página</li>
+        <li>Deve ser único e descritivo</li>
+    </ul>
+    <p><strong>&lt;h1&gt;</strong> (dentro do body):</p>
+    <ul>
+        <li>É o <strong>cabeçalho principal</strong> visível na página</li>
+        <li>Aparece como texto grande no conteúdo da página</li>
+        <li>É importante para hierarquia e SEO</li>
+        <li>Deve haver apenas um h1 por página</li>
+    </ul>
+    <p><em>Exemplo: title="Meu Site" (aba), h1="Bem-vindo ao Meu Site" (conteúdo)</em></p>
+    
+    <hr>
+    
+    <h2>09 - Para que servem os comentários?</h2>
+    <p>Os comentários em HTML servem para:</p>
+    <ul>
+        <li><strong>Documentar o código:</strong> Explicar o propósito de seções complexas</li>
+        <li><strong>Fazer anotações:</strong> Deixar lembretes para você ou outros desenvolvedores</li>
+        <li><strong>Desativar código temporariamente:</strong> "Comentar" código para testes sem deletar</li>
+        <li><strong>Melhorar manutenibilidade:</strong> Facilitar a compreensão do código no futuro</li>
+        <li><strong>Organizar seções:</strong> Marcar início e fim de blocos de código</li>
+    </ul>
+    <p><em>Sintaxe: <code>&lt;!-- Este é um comentário --&gt;</code></em></p>
+    <p><em>Os comentários não são renderizados pelo navegador, são invisíveis para o usuário final.</em></p>
+    
+    <hr>
+    
+    <h2>10 - Por que devemos organizar e indentar o código?</h2>
+    <p>Organizar e indentar o código é essencial porque:</p>
+    <ul>
+        <li><strong>Legibilidade:</strong> Código bem indentado é mais fácil de ler e entender</li>
+        <li><strong>Manutenção:</strong> Facilita encontrar e corrigir erros</li>
+        <li><strong>Colaboração:</strong> Outros desenvolvedores conseguem entender seu código mais facilmente</li>
+        <li><strong>Profissionalismo:</strong> Demonstra cuidado e boas práticas de programação</li>
+        <li><strong>Evita erros:</strong> Ajuda a identificar tags não fechadas e estruturas incorretas</li>
+        <li><strong>Produtividade:</strong> Acelera o desenvolvimento e debugging</li>
+    </ul>
+    <p><em>Indentação significa alinhar o código hierarquicamente usando espaços ou tabs, criando uma estrutura visual clara.</em></p>
+</body>
+</html>
