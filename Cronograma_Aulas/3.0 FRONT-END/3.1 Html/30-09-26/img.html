@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 4: Imagens também precisam comunicar</title>
+  <style>
+    :root {
+      --bg: #f5f7fa; --surface: #ffffff; --ink: #1c2430; --muted: #5b6676;
+      --line: #dbe1ea; --accent: #1d4ed8; --accent-soft: #e3ebff;
+      --code-bg: #1b2230; --code-ink: #e6edf7;
+      --tag: #ff9d6e; --attr: #7fd1b9; --val: #f3d37a;
+      --bad: #b4234a; --warn: #b8690f; --good: #1a7f4b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.1rem; line-height: 1.7; }
+    h1, h2, h3, nav, .tip, .note, .demo-label, .pair-label { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); max-width: 1100px; margin: 0 auto; gap: 3rem; padding: 0 1.5rem; }
+    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 0; font-size: .95rem; }
+    nav strong { display: block; margin-bottom: .75rem; }
+    nav a { display: block; padding: .3rem .6rem; color: var(--muted); text-decoration: none; border-left: 2px solid var(--line); }
+    nav a:hover, nav a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
+    main { padding: 2.5rem 0 5rem; max-width: 70ch; }
+    h1 { font-size: clamp(2.1rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: 1.7rem; margin: 3.5rem 0 .75rem; letter-spacing: -.01em; }
+    h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1.1rem; }
+    .lead { font-size: 1.2rem; color: var(--muted); }
+    code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9em; background: var(--accent-soft); padding: .1em .35em; border-radius: 4px; }
+    pre { margin: 1rem 0 1.5rem; background: var(--code-bg); color: var(--code-ink); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+    pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+    .t { color: var(--tag); } .a { color: var(--attr); } .v { color: var(--val); } .c { color: #8a97ad; font-style: italic; }
+    .demo { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; margin: -.5rem 0 1.75rem; overflow: hidden; }
+    .demo-label { font-size: .8rem; color: var(--muted); padding: .4rem 1rem; border-bottom: 1px solid var(--line); background: #eef2f8; }
+    .demo-body { padding: 1rem 1.25rem; }
+    .tip, .note { font-size: .97rem; padding: .9rem 1.1rem; border-radius: 8px; margin: 1.5rem 0; }
+    .tip { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+    .note { background: #fff4e0; border-left: 4px solid #e0912a; }
+    table.ref { border-collapse: collapse; width: 100%; font-family: system-ui, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
+    table.ref th, table.ref td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+    table.ref th { background: #eef2f8; }
+    ul.check { padding-left: 1.2rem; } ul.check li { margin-bottom: .4rem; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .pair pre { margin: .4rem 0 0; }
+    .pair-label { font-size: .85rem; font-weight: 600; color: var(--muted); }
+    .evite { color: var(--bad); font-weight: 600; } .melhor { color: var(--warn); font-weight: 600; } .prefira { color: var(--good); font-weight: 600; }
+    .img-sample { display: block; max-width: 100%; border-radius: 6px; }
+    figure { margin: 0; }
+    figcaption { font-family: system-ui, sans-serif; font-size: .9rem; color: var(--muted); margin-top: .4rem; }
+    .ratio { display: flex; gap: 1rem; flex-wrap: wrap; font-family: ui-monospace, Consolas, monospace; font-size: .85rem; }
+    .ratio div { display: flex; align-items: center; justify-content: center; border: 2px solid; }
+    footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 4rem; color: var(--muted); font-size: .95rem; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      nav { position: static; height: auto; padding: 1.5rem 0 0; }
+      nav a { display: inline-block; border-left: none; border-bottom: 2px solid var(--line); margin-right: .4rem; }
+      .pair { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <nav aria-label="Índice da aula">
+    <strong>Nesta aula</strong>
+    <a href="#ponto-de-partida">Ponto de partida</a>
+    <a href="#img">O elemento img</a>
+    <a href="#atributos">src, alt, width, height</a>
+    <a href="#dimensoes">Dimensões e proporção</a>
+    <a href="#caminhos">Caminhos relativos</a>
+    <a href="#depuracao">Imagem não aparece</a>
+    <a href="#alt">Texto alternativo</a>
+    <a href="#decorativa">Informativa ou decorativa</a>
+    <a href="#link">Imagem como link</a>
+    <a href="#figure">figure e figcaption</a>
+    <a href="#formatos">Formatos</a>
+    <a href="#otimizacao">Otimização</a>
+    <a href="#audio-video">Áudio e vídeo</a>
+    <a href="#direitos">Direitos de uso</a>
+    <a href="#pratica">Prática</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Aula 4: Imagens também precisam comunicar</h1>
+      <p class="lead">Teoria e prática. Ao final você será capaz de:</p>
+      <ul class="check">
+        <li>inserir imagens em páginas HTML;</li>
+        <li>utilizar corretamente <code>src</code>, <code>alt</code>, <code>width</code> e <code>height</code>;</li>
+        <li>construir caminhos relativos para arquivos de imagem;</li>
+        <li>diferenciar imagens informativas e decorativas;</li>
+        <li>criar legendas com <code>figure</code> e <code>figcaption</code>;</li>
+        <li>selecionar formatos adequados;</li>
+        <li>aplicar práticas básicas de otimização;</li>
+        <li>inserir áudio e vídeo;</li>
+        <li>verificar direitos de uso e indicar fontes.</li>
+      </ul>
+      <div class="tip"><strong>Critério de sucesso:</strong> as imagens continuam compreensíveis mesmo quando não aparecem.</div>
+    </header>
+
+    <section id="ponto-de-partida">
+      <h2>Uma imagem comunica antes mesmo de ser lida</h2>
+      <p>No portfólio, a imagem pode apresentar quem você é, demonstrar um projeto ou apenas apoiar a composição visual. Em HTML, uma imagem tem duas partes:</p>
+      <table class="ref">
+        <tr><th>Parte</th><th>O que é</th></tr>
+        <tr><td><strong>IMG</strong>: o arquivo</td><td>É localizado pelo navegador por meio de <code>src</code>.</td></tr>
+        <tr><td><strong>ALT</strong>: o significado</td><td>É comunicado por uma alternativa textual adequada.</td></tr>
+      </table>
+      <div class="tip"><strong>Boa escolha visual + HTML correto + contexto = imagem que realmente comunica.</strong></div>
+    </section>
+
+    <section id="img">
+      <h2>1. Inserção e caminhos</h2>
+      <p>Primeiro, o navegador precisa localizar o arquivo correto. Depois, o HTML precisa explicar o que a imagem representa.</p>
+      <h3>O elemento img incorpora uma imagem</h3>
+      <p>O <code>img</code> é um elemento <strong>vazio</strong> (não tem tag de fechamento):</p>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/projeto-agenda.webp"</span>
+     <span class="a">alt</span>=<span class="v">"Tela do aplicativo Agenda Fácil"</span><span class="t">&gt;</span></code></pre>
+      <div class="note"><strong>A imagem aparece no ponto exato em que a tag foi escrita no documento.</strong> Dica: mantenha a tag legível. Quando houver vários atributos, quebrar a linha pode facilitar a leitura.</div>
+    </section>
+
+    <section id="atributos">
+      <h2>src, alt, width e height respondem a perguntas diferentes</h2>
+      <table class="ref">
+        <tr><th>Atributo</th><th>Pergunta</th><th>Resposta</th></tr>
+        <tr><td><code>src</code></td><td>Onde está?</td><td>Caminho ou endereço do arquivo.</td></tr>
+        <tr><td><code>alt</code></td><td>O que comunica?</td><td>Alternativa textual da informação ou função.</td></tr>
+        <tr><td><code>width</code></td><td>Qual largura?</td><td>Largura exibida, em pixels.</td></tr>
+        <tr><td><code>height</code></td><td>Qual altura?</td><td>Altura exibida, em pixels.</td></tr>
+      </table>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/projeto-agenda.webp"</span> <span class="a">alt</span>=<span class="v">"Tela do aplicativo Agenda Fácil"</span> <span class="a">width</span>=<span class="v">"800"</span> <span class="a">height</span>=<span class="v">"450"</span><span class="t">&gt;</span></code></pre>
+    </section>
+
+    <section id="dimensoes">
+      <h2>Dimensões: respeite a proporção original</h2>
+      <p>Informar <code>width</code> e <code>height</code> permite ao navegador reservar o espaço antes de carregar a imagem, evitando que o conteúdo "pule" na tela. Os valores devem manter a proporção do arquivo original:</p>
+      <div class="demo">
+        <div class="demo-label">Resultado: proporções diferentes</div>
+        <div class="demo-body">
+          <div class="ratio">
+            <div style="width:160px;height:90px;background:#e3ebff;border-color:#1d4ed8;color:#1d4ed8">800 × 450 → 16:9</div>
+            <div style="width:160px;height:120px;background:#fde7ee;border-color:#b4234a;color:#b4234a">800 × 600 → 4:3</div>
+          </div>
+        </div>
+      </div>
+      <div class="tip">Use valores compatíveis com a proporção original. <strong>Evite deformar a imagem.</strong></div>
+    </section>
+
+    <section id="caminhos">
+      <h2>Caminhos relativos: a localização depende da página atual</h2>
+      <p>Considere esta estrutura de pastas:</p>
+<pre><code>meu-site/
+├── index.html
+├── sobre.html
+├── projetos.html
+├── imagens/
+│   ├── avatar.webp
+│   └── projeto-agenda.webp
+└── paginas/
+    └── contato.html</code></pre>
+      <div class="pair">
+        <div>
+          <div class="pair-label">A partir de projetos.html</div>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/avatar.webp"</span> <span class="a">alt</span>=<span class="v">"..."</span><span class="t">&gt;</span></code></pre>
+        </div>
+        <div>
+          <div class="pair-label">Se a página estiver dentro de paginas/</div>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"../imagens/avatar.webp"</span> <span class="a">alt</span>=<span class="v">"..."</span><span class="t">&gt;</span></code></pre>
+        </div>
+      </div>
+      <div class="tip"><strong>Leia o caminho a partir do arquivo HTML que está sendo aberto.</strong> O <code>../</code> sobe uma pasta.</div>
+    </section>
+
+    <section id="depuracao">
+      <h2>Quando a imagem não aparece, verifique o caminho</h2>
+      <p>O navegador pode exibir o texto alternativo quando o arquivo falha. Use este checklist de diagnóstico:</p>
+      <ol>
+        <li>Nome e extensão do arquivo (<code>.webp</code>, <code>.jpg</code>, <code>.png</code>).</li>
+        <li>Letras maiúsculas e minúsculas (<code>Avatar.webp</code> é diferente de <code>avatar.webp</code> em muitos servidores).</li>
+        <li>Pasta correta.</li>
+        <li>Uso de <code>../</code> quando necessário.</li>
+        <li>Barra <code>/</code> no caminho.</li>
+      </ol>
+      <div class="tip">Evite espaços, acentos e nomes inconsistentes nos arquivos: prefira <code>projeto-agenda.webp</code> a <code>Projeto Agenda (1).webp</code>.</div>
+      <div class="demo">
+        <div class="demo-label">Exemplo: imagem com caminho errado (o navegador mostra o alt)</div>
+        <div class="demo-body"><img src="imagens/nao-existe.webp" alt="Tela do aplicativo Agenda Fácil (arquivo não encontrado)" width="320" height="40"></div>
+      </div>
+    </section>
+
+    <section id="alt">
+      <h2>2. alt funciona como substituto da imagem</h2>
+      <ul class="check">
+        <li><strong>Leitor de tela:</strong> o conteúdo é anunciado para quem não vê a imagem.</li>
+        <li><strong>Falha no arquivo:</strong> a informação principal continua disponível.</li>
+        <li><strong>Contexto textual:</strong> o significado permanece integrado ao restante da página.</li>
+      </ul>
+      <div class="tip"><strong>Pergunta-guia:</strong> qual informação seria perdida se esta imagem desaparecesse?</div>
+      <h3>Descreva o essencial, não o óbvio</h3>
+      <table class="ref">
+        <tr><th></th><th>Exemplo</th><th>Por quê</th></tr>
+        <tr><td class="evite">Evite</td><td><code>alt="imagem"</code></td><td>Não informa conteúdo nem função.</td></tr>
+        <tr><td class="melhor">Melhor</td><td><code>alt="print do projeto"</code></td><td>Ainda é genérico e dependente da aparência.</td></tr>
+        <tr><td class="prefira">Prefira</td><td><code>alt="Tela inicial do sistema de biblioteca com busca e três livros em destaque"</code></td><td>Comunica o que importa naquele contexto.</td></tr>
+      </table>
+      <div class="note">Não comece automaticamente com "imagem de...". O leitor de tela já identifica o elemento como imagem.</div>
+    </section>
+
+    <section id="decorativa">
+      <h2>Informativa ou decorativa?</h2>
+      <table class="ref">
+        <tr><th>Pergunta</th><th>Se a resposta for sim</th></tr>
+        <tr><td><strong>A imagem acrescenta conteúdo?</strong> (imagem informativa)</td><td>Escreva um <code>alt</code> que comunique a informação.</td></tr>
+        <tr><td><strong>A imagem só repete ou enfeita?</strong> (imagem decorativa)</td><td>Use <code>alt=""</code> (vazio) para que tecnologias assistivas a ignorem.</td></tr>
+      </table>
+<pre><code><span class="c">&lt;!-- informativa --&gt;</span>
+<span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/avatar.webp"</span> <span class="a">alt</span>=<span class="v">"Retrato profissional de Ana Souza"</span><span class="t">&gt;</span>
+
+<span class="c">&lt;!-- decorativa --&gt;</span>
+<span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/linha-decorativa.svg"</span> <span class="a">alt</span>=<span class="v">""</span><span class="t">&gt;</span></code></pre>
+      <div class="tip"><strong>A decisão depende da função no contexto, não do tipo de arquivo.</strong> A mesma foto pode ser informativa em uma página e decorativa em outra.</div>
+      <div class="note">Nunca omita o atributo <code>alt</code>. Sem ele, alguns leitores de tela leem o nome do arquivo. Se a imagem é decorativa, escreva <code>alt=""</code>.</div>
+    </section>
+
+    <section id="link">
+      <h2>Quando a imagem é um link, o alt descreve a ação</h2>
+<pre><code><span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"curriculo.pdf"</span><span class="t">&gt;</span>
+  <span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/icone-pdf.svg"</span> <span class="a">alt</span>=<span class="v">"Baixar currículo em PDF"</span><span class="t">&gt;</span>
+<span class="t">&lt;/a&gt;</span></code></pre>
+      <p><strong>Regra:</strong> o <code>alt</code> descreve o <em>destino ou a ação</em> do link ("Baixar currículo em PDF"), e não a aparência do ícone ("ícone de documento vermelho").</p>
+    </section>
+
+    <section id="figure">
+      <h2>figure e figcaption: imagem com legenda</h2>
+      <p>Use <code>figure</code> para agrupar a imagem e <code>figcaption</code> para a legenda visível:</p>
+<pre><code><span class="t">&lt;figure&gt;</span>
+  <span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/projeto-agenda.webp"</span>
+       <span class="a">alt</span>=<span class="v">"Tela com tarefas do dia"</span> <span class="a">width</span>=<span class="v">"800"</span> <span class="a">height</span>=<span class="v">"450"</span><span class="t">&gt;</span>
+  <span class="t">&lt;figcaption&gt;</span>Agenda Fácil: protótipo acadêmico<span class="t">&lt;/figcaption&gt;</span>
+<span class="t">&lt;/figure&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <figure>
+            <svg class="img-sample" role="img" aria-label="Tela com tarefas do dia" width="320" height="180" viewBox="0 0 320 180"><rect width="320" height="180" rx="8" fill="#e3ebff"/><rect x="20" y="20" width="280" height="24" rx="4" fill="#1d4ed8"/><rect x="20" y="60" width="200" height="14" rx="3" fill="#9db8f5"/><rect x="20" y="86" width="240" height="14" rx="3" fill="#9db8f5"/><rect x="20" y="112" width="170" height="14" rx="3" fill="#9db8f5"/></svg>
+            <figcaption>Agenda Fácil: protótipo acadêmico</figcaption>
+          </figure>
+        </div>
+      </div>
+      <h3>alt e figcaption podem coexistir sem repetir</h3>
+      <table class="ref">
+        <tr><th></th><th><code>alt</code></th><th><code>figcaption</code></th></tr>
+        <tr><td>Pergunta</td><td>O que a imagem comunica?</td><td>Que contexto quero mostrar?</td></tr>
+        <tr><td>Quem percebe?</td><td>Usuário sem acesso visual</td><td>Todos os usuários</td></tr>
+        <tr><td>É visível?</td><td>Normalmente, não</td><td>Sim</td></tr>
+        <tr><td>Exemplo</td><td>Tela com tarefas do dia</td><td>Agenda Fácil: protótipo acadêmico</td></tr>
+      </table>
+      <div class="tip">A legenda aparece para todos; o <code>alt</code> substitui a imagem quando necessário. <strong>Evite duplicar palavra por palavra. Faça cada texto cumprir sua própria função.</strong></div>
+    </section>
+
+    <section id="formatos">
+      <h2>3. Formato e desempenho</h2>
+      <p>A escolha do formato e o tamanho do arquivo influenciam nitidez, transparência e velocidade de carregamento.</p>
+      <h3>Escolha o formato conforme o conteúdo</h3>
+      <table class="ref">
+        <tr><th>Formato</th><th>Melhor uso</th><th>Vantagem-chave</th><th>Atenção</th></tr>
+        <tr><td><strong>JPEG</strong></td><td>Fotografias</td><td>Compatibilidade, tamanho ajustável pela compressão</td><td>Compressão com perdas; não preserva transparência</td></tr>
+        <tr><td><strong>PNG</strong></td><td>Recortes e interfaces</td><td>Transparência, bordas e texto nítidos, compressão sem perdas</td><td>Fotografias podem ficar muito pesadas</td></tr>
+        <tr><td><strong>WebP</strong></td><td>Fotografias e imagens da Web</td><td>Bom equilíbrio entre qualidade e tamanho</td><td>Verifique a compatibilidade necessária para o seu público</td></tr>
+        <tr><td><strong>SVG</strong></td><td>Logos e ícones</td><td>Cresce sem perder nitidez</td><td>Não é indicado para fotografias</td></tr>
+      </table>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/avatar.webp"</span>
+     <span class="a">alt</span>=<span class="v">"Retrato profissional de Ana Souza"</span><span class="t">&gt;</span>
+
+<span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/logo.svg"</span>
+     <span class="a">alt</span>=<span class="v">"Logo do portfólio de Ana Souza"</span><span class="t">&gt;</span></code></pre>
+      <div class="tip">No portfólio: foto de perfil pode ser JPEG/WebP; captura de interface pode ser PNG/WebP. <strong>Formato não substitui otimização:</strong> dimensões e qualidade ainda precisam ser planejadas.</div>
+    </section>
+
+    <section id="otimizacao">
+      <h2>Um fluxo simples evita imagens pesadas</h2>
+      <ol>
+        <li><strong>Escolher</strong> o formato.</li>
+        <li><strong>Redimensionar</strong> para o uso real.</li>
+        <li><strong>Comprimir</strong> sem perder o necessário.</li>
+        <li><strong>Testar</strong> qualidade e carregamento.</li>
+      </ol>
+      <div class="note">Não envie uma imagem de 4000 px para exibi-la com 400 px. Redimensione antes de publicar.</div>
+      <h3>Dimensões e loading ajudam a experiência</h3>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/projeto-agenda.webp"</span>
+     <span class="a">alt</span>=<span class="v">"Tela do app Agenda Fácil com tarefas do dia"</span>
+     <span class="a">width</span>=<span class="v">"800"</span> <span class="a">height</span>=<span class="v">"450"</span>
+     <span class="a">loading</span>=<span class="v">"lazy"</span><span class="t">&gt;</span></code></pre>
+      <ul class="check">
+        <li><code>width</code> + <code>height</code>: reservam o espaço e evitam saltos no layout.</li>
+        <li><code>loading="lazy"</code>: adia imagens fora da área inicial até que elas se aproximem da tela.</li>
+      </ul>
+      <div class="tip">Use <em>lazy loading</em> nas imagens que aparecem depois da primeira tela, <strong>não no conteúdo principal inicial</strong>.</div>
+    </section>
+
+    <section id="audio-video">
+      <h2>4. Multimídia e uso responsável</h2>
+      <p>Áudio e vídeo também precisam de controles, alternativas e procedência conhecida.</p>
+      <h3>Áudio e vídeo</h3>
+<pre><code><span class="t">&lt;video</span> <span class="a">controls</span> <span class="a">width</span>=<span class="v">"640"</span> <span class="a">poster</span>=<span class="v">"imagens/capa-video.webp"</span><span class="t">&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">src</span>=<span class="v">"midia/demo.mp4"</span> <span class="a">type</span>=<span class="v">"video/mp4"</span><span class="t">&gt;</span>
+  <span class="t">&lt;track</span> <span class="a">kind</span>=<span class="v">"captions"</span> <span class="a">src</span>=<span class="v">"midia/legendas-pt.vtt"</span>
+         <span class="a">srclang</span>=<span class="v">"pt-BR"</span> <span class="a">label</span>=<span class="v">"Português"</span><span class="t">&gt;</span>
+  Seu navegador não suporta vídeo.
+<span class="t">&lt;/video&gt;</span>
+
+<span class="t">&lt;audio</span> <span class="a">controls</span><span class="t">&gt;</span>
+  <span class="t">&lt;source</span> <span class="a">src</span>=<span class="v">"midia/apresentacao.mp3"</span> <span class="a">type</span>=<span class="v">"audio/mpeg"</span><span class="t">&gt;</span>
+<span class="t">&lt;/audio&gt;</span></code></pre>
+      <ul class="check">
+        <li>Use <code>controls</code> para que a pessoa possa pausar, avançar e ajustar o volume.</li>
+        <li><code>poster</code> define a imagem exibida antes de o vídeo começar.</li>
+        <li>Inclua texto alternativo ao conteúdo (transcrição ou texto de apoio).</li>
+        <li>Forneça legendas para vídeo, com <code>track</code>.</li>
+        <li>Evite reprodução automática.</li>
+      </ul>
+    </section>
+
+    <section id="direitos">
+      <h2>Toda imagem precisa de origem conhecida</h2>
+      <p>Antes de publicar, confirme se a imagem é própria, autorizada ou licenciada para o uso pretendido. Ao dar crédito, lembre de <strong>TASL</strong>:</p>
+      <table class="ref">
+        <tr><th>Letra</th><th>Item</th><th>O que informar</th></tr>
+        <tr><td><strong>T</strong></td><td>Título</td><td>Nome da obra</td></tr>
+        <tr><td><strong>A</strong></td><td>Autor</td><td>Quem criou</td></tr>
+        <tr><td><strong>S</strong></td><td>Source</td><td>Link para a fonte</td></tr>
+        <tr><td><strong>L</strong></td><td>License</td><td>Licença aplicável</td></tr>
+      </table>
+<pre><code>Crédito: "Título", por Nome do autor, disponível em URL, licença CC BY 4.0.</code></pre>
+      <p style="font-size:.95rem;color:var(--muted)">O formato exato depende da licença e da orientação da instituição.</p>
+    </section>
+
+    <section id="pratica">
+      <h2>Prática: galeria de projetos no portfólio</h2>
+      <p>Amplie o seu currículo/portfólio com uma galeria de projetos:</p>
+      <ol>
+        <li>Crie a pasta <code>imagens/</code> e salve nela arquivos com nomes simples, em minúsculas e sem espaços.</li>
+        <li>Insira uma foto de perfil com <code>img</code>, usando <code>src</code>, <code>alt</code>, <code>width</code> e <code>height</code> coerentes com a proporção original.</li>
+        <li>Crie uma galeria com pelo menos três projetos, cada um em um <code>figure</code> com <code>img</code> e <code>figcaption</code>.</li>
+        <li>Escreva um <code>alt</code> que comunique o essencial de cada imagem, sem repetir a legenda.</li>
+        <li>Inclua uma imagem decorativa com <code>alt=""</code>.</li>
+        <li>Use <code>loading="lazy"</code> nas imagens que ficam abaixo da primeira tela.</li>
+        <li>Se possível, adicione um vídeo curto com <code>controls</code> e legendas.</li>
+        <li>Adicione uma seção "Créditos" com a origem e a licença de cada imagem que não seja sua.</li>
+        <li>Teste: renomeie um arquivo de propósito e confira se o <code>alt</code> mantém a página compreensível.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>HTML e CSS · Encontro 4.</p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
