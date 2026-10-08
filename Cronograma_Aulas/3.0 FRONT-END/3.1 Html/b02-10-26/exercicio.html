@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de exercícios - Aula 6: Tabelas em HTML</title>
+</head>
+<body>
+    <h1>Lista de exercícios - Aula 6: Tabelas em HTML</h1>
+
+    <h2>1. Tabela básica de tecnologias</h2>
+    <table border="1">
+        <tr>
+            <th>Tecnologia</th>
+            <th>Finalidade</th>
+            <th>Nível de conhecimento</th>
+        </tr>
+        <tr>
+            <td>HTML</td>
+            <td>Estrutura das páginas</td>
+            <td>Intermediário</td>
+        </tr>
+        <tr>
+            <td>CSS</td>
+            <td>Aparência das páginas</td>
+            <td>Iniciante</td>
+        </tr>
+        <tr>
+            <td>JavaScript</td>
+            <td>Interatividade</td>
+            <td>Iniciante</td>
+        </tr>
+        <tr>
+            <td>SQL</td>
+            <td>Consulta a bancos de dados</td>
+            <td>Intermediário</td>
+        </tr>
+    </table>
+
+    <h2>2. Identificando quando usar tabelas</h2>
+    <ul>
+        <li>Horários das aulas: adequada, pois cruza dia e horário.</li>
+        <li>Menu de navegação: inadequada, pois é uma lista de links e não uma relação entre linhas e colunas.</li>
+        <li>Comparação de preços: adequada, pois compara itens por atributos.</li>
+        <li>Galeria de imagens: inadequada, pois é organização visual (layout).</li>
+        <li>Notas de estudantes: adequada, pois cada aluno tem notas em colunas.</li>
+        <li>Cabeçalho de um site: inadequada, pois é estrutura de layout.</li>
+        <li>Cronograma de atividades: adequada, pois relaciona atividades e datas.</li>
+        <li>Lista de presença: adequada, pois relaciona pessoas e datas.</li>
+    </ul>
+
+    <h2>3. Tabela de disciplinas</h2>
+    <table border="1">
+        <caption>Disciplinas</caption>
+        <tr>
+            <th>Disciplina</th>
+            <th>Professor</th>
+            <th>Dia da semana</th>
+            <th>Horário</th>
+        </tr>
+        <tr>
+            <td>Banco de Dados</td>
+            <td>Marcos</td>
+            <td>Segunda-feira</td>
+            <td>19h00</td>
+        </tr>
+        <tr>
+            <td>Programação</td>
+            <td>Carla</td>
+            <td>Terça-feira</td>
+            <td>19h00</td>
+        </tr>
+        <tr>
+            <td>Interface Desktop</td>
+            <td>Renato</td>
+            <td>Quarta-feira</td>
+            <td>19h00</td>
+        </tr>
+        <tr>
+            <td>Fullstack</td>
+            <td>Juliana</td>
+            <td>Quinta-feira</td>
+            <td>19h00</td>
+        </tr>
+        <tr>
+            <td>Projeto Integrador</td>
+            <td>Paulo</td>
+            <td>Sexta-feira</td>
+            <td>19h00</td>
+        </tr>
+    </table>
+
+    <h2>4. Organizando semanticamente a tabela</h2>
+    <table border="1">
+        <caption>Disciplinas</caption>
+        <thead>
+            <tr>
+                <th>Disciplina</th>
+                <th>Professor</th>
+                <th>Dia da semana</th>
+                <th>Horário</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Banco de Dados</td>
+                <td>Marcos</td>
+                <td>Segunda-feira</td>
+                <td>19h00</td>
+            </tr>
+            <tr>
+                <td>Programação</td>
+                <td>Carla</td>
+                <td>Terça-feira</td>
+                <td>19h00</td>
+            </tr>
+            <tr>
+                <td>Interface Desktop</td>
+                <td>Renato</td>
+                <td>Quarta-feira</td>
+                <td>19h00</td>
+            </tr>
+            <tr>
+                <td>Fullstack</td>
+                <td>Juliana</td>
+                <td>Quinta-feira</td>
+                <td>19h00</td>
+            </tr>
+            <tr>
+                <td>Projeto Integrador</td>
+                <td>Paulo</td>
+                <td>Sexta-feira</td>
+                <td>19h00</td>
+            </tr>
+        </tbody>
+        <tfoot>
+    <tr>
+        <th colspan="3">Total de disciplinas</th>
+        <td>5</td>
+    </tr>
+</tfoot>
+    </table>
+
+    <h2>5. Cabeçalhos de coluna</h2>
+    <table border="1">
+        <tr>
+            <th scope="col">Produto</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Quantidade</th>
+        </tr>
+        <tr>
+            <td>Mouse</td>
+            <td>Periféricos</td>
+            <td>50,00</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Teclado</td>
+            <td>Periféricos</td>
+            <td>120,00</td>
+            <td>18</td>
+        </tr>
+        <tr>
+            <td>Monitor</td>
+            <td>Vídeo</td>
+            <td>850,00</td>
+            <td>7</td>
+        </tr>
+    </table>
+
+    <h2>6. Cabeçalhos de linha</h2>
+    <table border="1">
+        <tr>
+            <th>Linguagem</th>
+            <th>Finalidade</th>
+            <th>Tipagem</th>
+            <th>Exemplo de utilização</th>
+        </tr>
+        <tr>
+            <th scope="row">JavaScript</th>
+            <td>Interatividade em páginas web</td>
+            <td>Dinâmica</td>
+            <td>Validar um formulário</td>
+        </tr>
+        <tr>
+            <th scope="row">Python</th>
+            <td>Uso geral</td>
+            <td>Dinâmica</td>
+            <td>Automatizar tarefas</td>
+        </tr>
+        <tr>
+            <th scope="row">Java</th>
+            <td>Aplicações corporativas</td>
+            <td>Estática</td>
+            <td>Sistema de gestão</td>
+        </tr>
+    </table>
+
+    <h2>7. Corrigindo uma tabela</h2>
+    <table border="1">
+        <caption>Produtos e preços</caption>
+        <thead>
+            <tr>
+                <th scope="col">Produto</th>
+                <th scope="col">Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mouse</td>
+                <td>50,00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>8. Utilizando colspan</h2>
+    <table border="1">
+        <tr>
+            <th>Aluno</th>
+            <th>Nota 1</th>
+            <th>Nota 2</th>
+        </tr>
+        <tr>
+            <td>Ana</td>
+            <td>8,0</td>
+            <td>9,0</td>
+        </tr>
+        <tr>
+            <td>Bruno</td>
+            <td>7,0</td>
+            <td>7,0</td>
+        </tr>
+        <tr>
+            <td>Carla</td>
+            <td>9,0</td>
+            <td>9,0</td>
+        </tr>
+        <tr>
+            <td colspan="2">Média da turma</td>
+            <td>8,0</td>
+        </tr>
+    </table>
+
+    <h2>9. Utilizando rowspan</h2>
+    <table border="1">
+        <tr>
+            <td rowspan="3">Front-end</td>
+            <td>HTML</td>
+            <td>Estrutura</td>
+        </tr>
+        <tr>
+            <td>CSS</td>
+            <td>Apresentação</td>
+        </tr>
+        <tr>
+            <td>JavaScript</td>
+            <td>Interatividade</td>
+        </tr>
+    </table>
+
+    <h2>10. Tabela de grade de horários</h2>
+    <table border="1">
+        <caption>Grade semanal</caption>
+        <thead>
+            <tr>
+                <th scope="col">Horário</th>
+                <th scope="col">Segunda</th>
+                <th scope="col">Terça</th>
+                <th scope="col">Quarta</th>
+                <th scope="col">Quinta</th>
+                <th scope="col">Sexta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">19h00</th>
+                <td>Banco de Dados</td>
+                <td>Programação</td>
+                <td>Interface Desktop</td>
+                <td>Fullstack</td>
+                <td>Projeto Integrador</td>
+            </tr>
+            <tr>
+                <th scope="row">20h00</th>
+                <td>Banco de Dados</td>
+                <td>Programação</td>
+                <td>Interface Desktop</td>
+                <td>Fullstack</td>
+                <td>Projeto Integrador</td>
+            </tr>
+            <tr>
+                <th scope="row">21h00</th>
+                <td>Inglês</td>
+                <td>Banco de Dados</td>
+                <td>Programação</td>
+                <td>Interface Desktop</td>
+                <td>Estudo orientado</td>
+            </tr>
+            <tr>
+                <th scope="row">22h00</th>
+                <td>Inglês</td>
+                <td>Banco de Dados</td>
+                <td>Programação</td>
+                <td>Interface Desktop</td>
+                <td>Estudo orientado</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>11. Auditoria de acessibilidade</h2>
+    <p>Tabela analisada: a grade de horários do exercício 10.</p>
+    <ul>
+        <li>Finalidade clara: sim, mostra as aulas de cada dia e horário.</li>
+        <li>Caption informativo: sim, "Grade semanal".</li>
+        <li>Cabeçalhos com th: sim, os dias e os horários usam th.</li>
+        <li>scope="col" e scope="row": sim, col nos dias e em "Horário", row em cada horário.</li>
+        <li>Ordem lógica de leitura: sim, do horário para os dias, de cima para baixo.</li>
+        <li>Compreensível sem depender de cores: sim, nenhuma informação usa cor.</li>
+        <li>Quantidade reduzida de mesclagens: sim, não há mesclagens.</li>
+    </ul>
+
+    <h2>12. Encontre os erros</h2>
+    <ul>
+        <li>Usa td nos títulos das colunas: trocar por th (com scope="col").</li>
+        <li>Título escrito em um parágrafo: usar o elemento caption dentro da tabela.</li>
+        <li>Células vazias apenas para espaçamento: remover as células e usar CSS para o espaçamento.</li>
+        <li>Muitas células mescladas: simplificar a tabela e manter só as mesclagens necessárias.</li>
+        <li>Informações diferenciadas apenas por cores: escrever a informação também em texto.</li>
+    </ul>
+
+    <h2>13. Desafio: tabela completa de cursos</h2>
+    <table border="1">
+        <caption>Cursos e tecnologias</caption>
+        <thead>
+            <tr>
+                <th scope="col">Tecnologia</th>
+                <th scope="col">Finalidade</th>
+                <th scope="col">Nível</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">HTML</th>
+                <td>Estrutura das páginas</td>
+                <td>Intermediário</td>
+            </tr>
+            <tr>
+                <th scope="row">CSS</th>
+                <td>Aparência das páginas</td>
+                <td>Iniciante</td>
+            </tr>
+            <tr>
+                <th scope="row">JavaScript</th>
+                <td>Interatividade</td>
+                <td>Iniciante</td>
+            </tr>
+            <tr>
+                <th scope="row">SQL</th>
+                <td>Consulta a bancos de dados</td>
+                <td>Intermediário</td>
+            </tr>
+            <tr>
+                <th scope="row">Python</th>
+                <td>Uso geral</td>
+                <td>Iniciante</td>
+            </tr>
+            <tr>
+                <th scope="row">Java</th>
+                <td>Aplicações corporativas</td>
+                <td>Iniciante</td>
+            </tr>
+        </tbody>
+        <tfoot>
+    <tr>
+        <th colspan="2">Total de tecnologias</th>
+        <td>6</td>
+    </tr>
+</tfoot>
+    </table>
+</body>
+</html>
