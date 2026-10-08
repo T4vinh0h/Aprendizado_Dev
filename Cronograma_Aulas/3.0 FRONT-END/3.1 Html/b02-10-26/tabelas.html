@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 6: Tabelas</title>
+  <style>
+    :root {
+      --bg: #f5f7fa; --surface: #ffffff; --ink: #1c2430; --muted: #5b6676;
+      --line: #dbe1ea; --accent: #1d4ed8; --accent-soft: #e3ebff;
+      --code-bg: #1b2230; --code-ink: #e6edf7;
+      --tag: #ff9d6e; --attr: #7fd1b9; --val: #f3d37a;
+      --bad: #b4234a; --good: #1a7f4b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.1rem; line-height: 1.7; }
+    h1, h2, h3, nav, .tip, .note, .demo-label, .pair-label { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); max-width: 1100px; margin: 0 auto; gap: 3rem; padding: 0 1.5rem; }
+    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 0; font-size: .95rem; }
+    nav strong { display: block; margin-bottom: .75rem; }
+    nav a { display: block; padding: .3rem .6rem; color: var(--muted); text-decoration: none; border-left: 2px solid var(--line); }
+    nav a:hover, nav a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
+    main { padding: 2.5rem 0 5rem; max-width: 70ch; }
+    h1 { font-size: clamp(2.1rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: 1.7rem; margin: 3.5rem 0 .75rem; letter-spacing: -.01em; }
+    h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1.1rem; }
+    .lead { font-size: 1.2rem; color: var(--muted); }
+    code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9em; background: var(--accent-soft); padding: .1em .35em; border-radius: 4px; }
+    pre { margin: 1rem 0 1.5rem; background: var(--code-bg); color: var(--code-ink); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+    pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+    .t { color: var(--tag); } .a { color: var(--attr); } .v { color: var(--val); } .c { color: #8a97ad; font-style: italic; }
+    .demo { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; margin: -.5rem 0 1.75rem; overflow: hidden; }
+    .demo-label { font-size: .8rem; color: var(--muted); padding: .4rem 1rem; border-bottom: 1px solid var(--line); background: #eef2f8; }
+    .demo-body { padding: 1rem 1.25rem; overflow-x: auto; }
+    .tip, .note { font-size: .97rem; padding: .9rem 1.1rem; border-radius: 8px; margin: 1.5rem 0; }
+    .tip { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+    .note { background: #fff4e0; border-left: 4px solid #e0912a; }
+    table.ref { border-collapse: collapse; width: 100%; font-family: system-ui, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
+    table.ref th, table.ref td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+    table.ref th { background: #eef2f8; }
+    table.ex { border-collapse: collapse; font-family: system-ui, sans-serif; font-size: .95rem; width: 100%; }
+    table.ex caption { font-weight: 600; text-align: left; padding-bottom: .5rem; }
+    table.ex th, table.ex td { border: 1px solid #9aa7ba; padding: .45rem .75rem; text-align: left; }
+    table.ex thead th { background: #dbe8ff; }
+    table.ex tbody th { background: #eef2f8; }
+    table.ex tfoot th, table.ex tfoot td { background: #f4f6fa; font-weight: 600; }
+    ul.check { padding-left: 1.2rem; } ul.check li { margin-bottom: .4rem; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .pair ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+    .pair-label { font-size: .85rem; font-weight: 600; }
+    .ok { color: var(--good); } .no { color: var(--bad); }
+    footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 4rem; color: var(--muted); font-size: .95rem; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      nav { position: static; height: auto; padding: 1.5rem 0 0; }
+      nav a { display: inline-block; border-left: none; border-bottom: 2px solid var(--line); margin-right: .4rem; }
+      .pair { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <nav aria-label="Índice da aula">
+    <strong>Nesta aula</strong>
+    <a href="#problematizacao">Problematização inicial</a>
+    <a href="#quando">Quando utilizar</a>
+    <a href="#estrutura">Estrutura fundamental</a>
+    <a href="#exemplo">Primeiro exemplo</a>
+    <a href="#th-scope">Cabeçalhos com th e scope</a>
+    <a href="#caption">Título com caption</a>
+    <a href="#secoes">thead, tbody e tfoot</a>
+    <a href="#mesclagem">Mesclagem de células</a>
+    <a href="#acessibilidade">Acessibilidade</a>
+    <a href="#pratica">Prática</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Aula 6: Tabelas</h1>
+      <p class="lead">Teoria e prática. Nesta aula você vai ver:</p>
+      <ul class="check">
+        <li>quando utilizar uma tabela;</li>
+        <li>por que tabelas não devem controlar o layout;</li>
+        <li>elementos <code>table</code>, <code>tr</code>, <code>th</code> e <code>td</code>;</li>
+        <li>título com <code>caption</code>;</li>
+        <li>organização com <code>thead</code>, <code>tbody</code> e <code>tfoot</code>;</li>
+        <li>atributo <code>scope</code>;</li>
+        <li>mesclagem com <code>rowspan</code> e <code>colspan</code>;</li>
+        <li>cuidados de acessibilidade.</li>
+      </ul>
+    </header>
+
+    <section id="problematizacao">
+      <h2>Problematização inicial</h2>
+      <p>Imagine três conteúdos:</p>
+      <ol>
+        <li>uma lista de tecnologias;</li>
+        <li>uma grade de horários;</li>
+        <li>uma página dividida em cabeçalho, menu e conteúdo.</li>
+      </ol>
+      <div class="tip"><strong>Em quais situações existe uma relação clara entre linhas e colunas?</strong></div>
+      <p>Só na grade de horários: cada informação é cruzada por dois eixos (dia e horário). A lista é uma sequência de itens (<code>ul</code>) e a divisão da página é <em>layout</em> (cabeçalho, menu e conteúdo), que pertence às tags semânticas e ao CSS. A tabela serve para <strong>dados com relação entre linhas e colunas</strong>.</p>
+    </section>
+
+    <section id="quando">
+      <h2>Quando utilizar uma tabela</h2>
+      <div class="pair">
+        <div>
+          <div class="pair-label ok">Exemplos adequados</div>
+          <ul>
+            <li>horários de aulas;</li>
+            <li>relação de cursos;</li>
+            <li>comparação entre tecnologias;</li>
+            <li>resultados de avaliações;</li>
+            <li>preços de produtos;</li>
+            <li>cronograma de atividades;</li>
+            <li>competências profissionais;</li>
+            <li>registros de presença.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="pair-label no">Exemplos inadequados</div>
+          <ul>
+            <li>posicionar o menu ao lado do conteúdo;</li>
+            <li>organizar cartões de projetos;</li>
+            <li>criar colunas na página;</li>
+            <li>posicionar imagem e texto;</li>
+            <li>estruturar cabeçalho e rodapé.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note"><strong>Tabelas não devem controlar o layout.</strong> Para posicionar elementos na página, use HTML semântico (<code>header</code>, <code>nav</code>, <code>main</code>, <code>footer</code>) e CSS (Flexbox e Grid).</div>
+    </section>
+
+    <section id="estrutura">
+      <h2>Estrutura fundamental</h2>
+      <p>Uma tabela simples utiliza quatro elementos principais:</p>
+      <table class="ref">
+        <tr><th>Elemento</th><th>Função</th></tr>
+        <tr><td><code>&lt;table&gt;</code></td><td>Define a tabela inteira.</td></tr>
+        <tr><td><code>&lt;tr&gt;</code> (<em>table row</em>)</td><td>Define uma linha.</td></tr>
+        <tr><td><code>&lt;th&gt;</code> (<em>table header</em>)</td><td>Define uma célula de cabeçalho.</td></tr>
+        <tr><td><code>&lt;td&gt;</code> (<em>table data</em>)</td><td>Define uma célula de dados.</td></tr>
+      </table>
+      <p>As células ficam sempre dentro de uma linha, e as linhas dentro da tabela. Uma tabela de 3 linhas por 2 colunas tem 3 <code>tr</code>, cada um com 2 células.</p>
+    </section>
+
+    <section id="exemplo">
+      <h2>Primeiro exemplo</h2>
+<pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;th&gt;</span>Tecnologia<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;th&gt;</span>Finalidade<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;th&gt;</span>Nível<span class="t">&lt;/th&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;td&gt;</span>HTML<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Estrutura das páginas<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Intermediário<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;td&gt;</span>CSS<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Apresentação visual<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Iniciante<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <table class="ex">
+            <tr><th>Tecnologia</th><th>Finalidade</th><th>Nível</th></tr>
+            <tr><td>HTML</td><td>Estrutura das páginas</td><td>Intermediário</td></tr>
+            <tr><td>CSS</td><td>Apresentação visual</td><td>Iniciante</td></tr>
+          </table>
+        </div>
+      </div>
+      <p>Esses elementos organizam semanticamente e facilitam a estilização. Entretanto, <strong>sua presença isolada não resolve todas as questões de acessibilidade</strong>. Os cabeçalhos e suas relações ainda precisam estar corretamente definidos.</p>
+      <div class="tip">Por padrão, o navegador não desenha bordas. Para vê-las, use CSS: <code>table, th, td { border: 1px solid #000; }</code>. Evite o antigo atributo <code>border="1"</code>.</div>
+    </section>
+
+    <section id="th-scope">
+      <h2>Cabeçalhos com th e scope</h2>
+      <p>O <code>th</code> indica um cabeçalho. O atributo <code>scope</code> informa <strong>a quais células</strong> esse cabeçalho se refere, o que ajuda leitores de tela a anunciar o contexto de cada dado:</p>
+      <ul class="check">
+        <li><code>scope="col"</code>: o cabeçalho vale para a coluna abaixo dele.</li>
+        <li><code>scope="row"</code>: o cabeçalho vale para a linha à direita dele.</li>
+      </ul>
+<pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;th</span> <span class="a">scope</span>=<span class="v">"col"</span><span class="t">&gt;</span>Tecnologia<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;th</span> <span class="a">scope</span>=<span class="v">"col"</span><span class="t">&gt;</span>Finalidade<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;th</span> <span class="a">scope</span>=<span class="v">"col"</span><span class="t">&gt;</span>Nível<span class="t">&lt;/th&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;th</span> <span class="a">scope</span>=<span class="v">"row"</span><span class="t">&gt;</span>HTML<span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;td&gt;</span>Estrutura semântica<span class="t">&lt;/td&gt;</span>
+    <span class="t">&lt;td&gt;</span>Intermediário<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <table class="ex">
+            <tr><th scope="col">Tecnologia</th><th scope="col">Finalidade</th><th scope="col">Nível</th></tr>
+            <tr><th scope="row">HTML</th><td>Estrutura semântica</td><td>Intermediário</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="caption">
+      <h2>Título com caption</h2>
+      <p>O <code>caption</code> é o título da tabela. Ele deve ser o <strong>primeiro filho</strong> do <code>table</code> e dizer do que se trata:</p>
+<pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;caption&gt;</span>Tecnologias estudadas no curso<span class="t">&lt;/caption&gt;</span>
+  <span class="c">&lt;!-- linhas da tabela --&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+      <div class="note">Não coloque o título da tabela em um parágrafo separado: o <code>caption</code> fica ligado à tabela, e os leitores de tela o anunciam junto com ela.</div>
+    </section>
+
+    <section id="secoes">
+      <h2>Organização com thead, tbody e tfoot</h2>
+      <ul class="check">
+        <li><code>thead</code>: cabeçalho da tabela.</li>
+        <li><code>tbody</code>: corpo, com os dados principais.</li>
+        <li><code>tfoot</code>: rodapé, com totais ou resumos.</li>
+      </ul>
+<pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;caption&gt;</span>Tecnologias estudadas no curso<span class="t">&lt;/caption&gt;</span>
+  <span class="t">&lt;thead&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;th</span> <span class="a">scope</span>=<span class="v">"col"</span><span class="t">&gt;</span>Tecnologia<span class="t">&lt;/th&gt;&lt;th</span> <span class="a">scope</span>=<span class="v">"col"</span><span class="t">&gt;</span>Nível<span class="t">&lt;/th&gt;&lt;/tr&gt;</span>
+  <span class="t">&lt;/thead&gt;</span>
+  <span class="t">&lt;tbody&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;th</span> <span class="a">scope</span>=<span class="v">"row"</span><span class="t">&gt;</span>HTML<span class="t">&lt;/th&gt;&lt;td&gt;</span>Intermediário<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;th</span> <span class="a">scope</span>=<span class="v">"row"</span><span class="t">&gt;</span>CSS<span class="t">&lt;/th&gt;&lt;td&gt;</span>Iniciante<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>
+  <span class="t">&lt;/tbody&gt;</span>
+  <span class="t">&lt;tfoot&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;th</span> <span class="a">scope</span>=<span class="v">"row"</span><span class="t">&gt;</span>Total de tecnologias<span class="t">&lt;/th&gt;&lt;td&gt;</span>2<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>
+  <span class="t">&lt;/tfoot&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <table class="ex">
+            <caption>Tecnologias estudadas no curso</caption>
+            <thead><tr><th scope="col">Tecnologia</th><th scope="col">Nível</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">HTML</th><td>Intermediário</td></tr>
+              <tr><th scope="row">CSS</th><td>Iniciante</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Total de tecnologias</th><td>2</td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="mesclagem">
+      <h2>Mesclagem de células</h2>
+      <p>Duas propriedades permitem que uma célula ocupe mais de uma posição:</p>
+      <ul class="check">
+        <li><code>colspan</code>: a célula se estende por várias <strong>colunas</strong>.</li>
+        <li><code>rowspan</code>: a célula se estende por várias <strong>linhas</strong>.</li>
+      </ul>
+<pre><code><span class="c">&lt;!-- colspan: ocupa duas colunas --&gt;</span>
+<span class="t">&lt;tfoot&gt;</span>
+  <span class="t">&lt;tr&gt;</span>
+    <span class="t">&lt;th</span> <span class="a">scope</span>=<span class="v">"row"</span> <span class="a">colspan</span>=<span class="v">"2"</span><span class="t">&gt;</span>
+      Total de tecnologias
+    <span class="t">&lt;/th&gt;</span>
+    <span class="t">&lt;td&gt;</span>5<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;/tr&gt;</span>
+<span class="t">&lt;/tfoot&gt;</span>
+
+<span class="c">&lt;!-- rowspan: ocupa duas linhas --&gt;</span>
+<span class="t">&lt;tr&gt;</span>
+  <span class="t">&lt;th</span> <span class="a">rowspan</span>=<span class="v">"2"</span> <span class="a">scope</span>=<span class="v">"rowgroup"</span><span class="t">&gt;</span>
+    Desenvolvimento web
+  <span class="t">&lt;/th&gt;</span>
+  <span class="t">&lt;td&gt;</span>HTML<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;td&gt;</span>Estrutura<span class="t">&lt;/td&gt;</span>
+<span class="t">&lt;/tr&gt;</span>
+<span class="t">&lt;tr&gt;</span>
+  <span class="t">&lt;td&gt;</span>CSS<span class="t">&lt;/td&gt;</span>
+  <span class="t">&lt;td&gt;</span>Apresentação<span class="t">&lt;/td&gt;</span>
+<span class="t">&lt;/tr&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <table class="ex">
+            <caption>Tecnologias por área</caption>
+            <thead><tr><th scope="col">Área</th><th scope="col">Tecnologia</th><th scope="col">Papel</th></tr></thead>
+            <tbody>
+              <tr><th rowspan="2" scope="rowgroup">Desenvolvimento web</th><td>HTML</td><td>Estrutura</td></tr>
+              <tr><td>CSS</td><td>Apresentação</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row" colspan="2">Total de tecnologias</th><td>2</td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="tip">Com <code>colspan="2"</code>, a linha passa a ter uma célula a menos. Com <code>rowspan="2"</code>, a linha seguinte também deve ter uma célula a menos. Se a conta não fechar, a tabela se desalinha.</div>
+    </section>
+
+    <section id="acessibilidade">
+      <h2>Cuidados com acessibilidade</h2>
+      <div class="pair">
+        <div>
+          <div class="pair-label ok">Uma tabela acessível deve possuir</div>
+          <ul>
+            <li>finalidade claramente definida;</li>
+            <li><code>caption</code> informativo;</li>
+            <li>cabeçalhos marcados com <code>th</code>;</li>
+            <li><code>scope="col"</code> e <code>scope="row"</code> quando necessário;</li>
+            <li>ordem lógica de leitura;</li>
+            <li>células com conteúdo claro;</li>
+            <li>poucas mesclagens;</li>
+            <li>texto que não dependa exclusivamente de cores;</li>
+            <li>estrutura simples sempre que possível.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="pair-label no">Evite</div>
+          <ul>
+            <li>usar <code>td</code> para cabeçalhos;</li>
+            <li>colocar o título da tabela em um parágrafo separado;</li>
+            <li>criar células vazias apenas para espaçamento;</li>
+            <li>usar tabelas para organizar o layout;</li>
+            <li>criar mesclagens que dificultem a leitura;</li>
+            <li>apresentar informações apenas por cores;</li>
+            <li>colocar todos os elementos em uma única linha de código.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="pratica">
+      <h2>Prática</h2>
+      <p>No seu portfólio, crie uma página <code>horarios.html</code> com a grade semanal de aulas:</p>
+      <ol>
+        <li>Use <code>caption</code> com um título claro (por exemplo, "Grade de aulas da semana").</li>
+        <li>Monte o <code>thead</code> com os dias da semana, usando <code>th scope="col"</code>.</li>
+        <li>No <code>tbody</code>, use <code>th scope="row"</code> para o horário e <code>td</code> para a disciplina.</li>
+        <li>Use <code>rowspan</code> em uma aula que ocupe dois horários seguidos.</li>
+        <li>Adicione um <code>tfoot</code> com o total de aulas na semana, usando <code>colspan</code>.</li>
+        <li>Aplique bordas e espaçamento só com CSS e confira se a tabela não depende de cor para ser entendida.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>HTML e CSS · Encontro 6.</p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
