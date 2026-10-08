@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula de HTML: do zero à primeira página</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --ink: #1c2430;
+      --muted: #5b6676;
+      --line: #dbe1ea;
+      --accent: #1d4ed8;
+      --accent-soft: #e3ebff;
+      --code-bg: #1b2230;
+      --code-ink: #e6edf7;
+      --tag: #ff9d6e;
+      --attr: #7fd1b9;
+      --val: #f3d37a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+    h1, h2, h3, nav, .tip, .note, .demo-label {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      max-width: 1100px;
+      margin: 0 auto;
+      gap: 3rem;
+      padding: 0 1.5rem;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 2rem 0;
+      font-size: .95rem;
+    }
+    nav strong { display: block; margin-bottom: .75rem; }
+    nav a {
+      display: block;
+      padding: .3rem .6rem;
+      color: var(--muted);
+      text-decoration: none;
+      border-left: 2px solid var(--line);
+    }
+    nav a:hover, nav a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
+    main { padding: 2.5rem 0 5rem; max-width: 70ch; }
+    header.hero { margin-bottom: 3rem; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: 1.7rem; margin: 3.5rem 0 .75rem; letter-spacing: -.01em; }
+    h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1.1rem; }
+    .lead { font-size: 1.25rem; color: var(--muted); }
+    code {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size: .9em;
+      background: var(--accent-soft);
+      padding: .1em .35em;
+      border-radius: 4px;
+    }
+    pre {
+      margin: 1rem 0 1.5rem;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 1.1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+    pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+    .t { color: var(--tag); }
+    .a { color: var(--attr); }
+    .v { color: var(--val); }
+    .c { color: #8a97ad; font-style: italic; }
+    .demo {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      margin: -.5rem 0 1.75rem;
+      overflow: hidden;
+    }
+    .demo-label {
+      font-size: .8rem;
+      color: var(--muted);
+      padding: .4rem 1rem;
+      border-bottom: 1px solid var(--line);
+      background: #eef2f8;
+    }
+    .demo-body { padding: 1rem 1.25rem; }
+    .tip, .note {
+      font-size: .97rem;
+      padding: .9rem 1.1rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+    .tip { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+    .note { background: #fff4e0; border-left: 4px solid #e0912a; }
+    table.ref { border-collapse: collapse; width: 100%; font-family: system-ui, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
+    table.ref th, table.ref td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+    table.ref th { background: #eef2f8; }
+    ul.check { padding-left: 1.2rem; }
+    ul.check li { margin-bottom: .4rem; }
+    footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 4rem; color: var(--muted); font-size: .95rem; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      nav { position: static; height: auto; padding: 1.5rem 0 0; }
+      nav a { display: inline-block; border-left: none; border-bottom: 2px solid var(--line); margin-right: .4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <div class="layout">
+
+    <nav aria-label="Índice da aula">
+      <strong>Nesta aula</strong>
+      <a href="#o-que-e">O que é HTML</a>
+      <a href="#estrutura">Estrutura básica</a>
+      <a href="#tags">Tags e elementos</a>
+      <a href="#textos">Títulos e textos</a>
+      <a href="#links-imagens">Links e imagens</a>
+      <a href="#listas">Listas</a>
+      <a href="#tabelas">Tabelas</a>
+      <a href="#formularios">Formulários</a>
+      <a href="#semantica">HTML semântico</a>
+      <a href="#blocos">Div e span</a>
+      <a href="#boas-praticas">Boas práticas</a>
+      <a href="#exercicio">Exercício final</a>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <h1>Aula de HTML: do zero à primeira página</h1>
+        <p class="lead">Nesta aula você vai entender o que é HTML, como um documento é estruturado e como criar textos, links, imagens, listas, tabelas e formulários. Cada conceito vem com um exemplo de código e o resultado que ele produz.</p>
+      </header>
+
+      <section id="o-que-e">
+        <h2>O que é HTML</h2>
+        <p>HTML significa <em>HyperText Markup Language</em> (Linguagem de Marcação de Hipertexto). Ele não é uma linguagem de programação: não tem variáveis, condições nem laços. Ele serve para <strong>marcar o conteúdo</strong>, dizendo ao navegador o que cada pedaço é: um título, um parágrafo, um link, uma imagem.</p>
+        <p>Pense em uma página web como uma casa. O HTML é a estrutura (paredes e cômodos), o CSS é a decoração (cores e layout) e o JavaScript é a parte elétrica (o que se mexe e reage). Sem HTML, não há página.</p>
+        <div class="tip"><strong>Para testar:</strong> salve qualquer código desta aula em um arquivo com extensão <code>.html</code> e abra no navegador (duplo clique ou, no VS Code, a extensão Live Server).</div>
+      </section>
+
+      <section id="estrutura">
+        <h2>Estrutura básica de um documento</h2>
+        <p>Todo documento HTML segue o mesmo esqueleto:</p>
+<pre><code><span class="t">&lt;!DOCTYPE html&gt;</span>
+<span class="t">&lt;html</span> <span class="a">lang</span>=<span class="v">"pt-BR"</span><span class="t">&gt;</span>
+<span class="t">&lt;head&gt;</span>
+  <span class="t">&lt;meta</span> <span class="a">charset</span>=<span class="v">"UTF-8"</span><span class="t">&gt;</span>
+  <span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"viewport"</span> <span class="a">content</span>=<span class="v">"width=device-width, initial-scale=1.0"</span><span class="t">&gt;</span>
+  <span class="t">&lt;title&gt;</span>Minha primeira página<span class="t">&lt;/title&gt;</span>
+<span class="t">&lt;/head&gt;</span>
+<span class="t">&lt;body&gt;</span>
+  <span class="c">&lt;!-- Tudo o que aparece na tela fica aqui --&gt;</span>
+  <span class="t">&lt;h1&gt;</span>Olá, mundo!<span class="t">&lt;/h1&gt;</span>
+<span class="t">&lt;/body&gt;</span>
+<span class="t">&lt;/html&gt;</span></code></pre>
+        <table class="ref">
+          <tr><th>Parte</th><th>Para que serve</th></tr>
+          <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Avisa ao navegador que o documento usa o HTML5.</td></tr>
+          <tr><td><code>&lt;html lang="pt-BR"&gt;</code></td><td>Elemento raiz. O atributo <code>lang</code> informa o idioma (ajuda leitores de tela e buscadores).</td></tr>
+          <tr><td><code>&lt;head&gt;</code></td><td>Informações sobre a página que não aparecem na tela: codificação, título da aba, CSS, etc.</td></tr>
+          <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Garante que acentos e caracteres especiais (ç, ã, é) apareçam corretamente.</td></tr>
+          <tr><td><code>&lt;meta name="viewport"&gt;</code></td><td>Faz a página se ajustar bem em celulares.</td></tr>
+          <tr><td><code>&lt;title&gt;</code></td><td>Texto exibido na aba do navegador.</td></tr>
+          <tr><td><code>&lt;body&gt;</code></td><td>Todo o conteúdo visível da página.</td></tr>
+        </table>
+      </section>
+
+      <section id="tags">
+        <h2>Tags, elementos e atributos</h2>
+        <p>Um <strong>elemento</strong> é formado por uma tag de abertura, um conteúdo e uma tag de fechamento:</p>
+<pre><code><span class="t">&lt;p&gt;</span>Este é um parágrafo.<span class="t">&lt;/p&gt;</span>
+<span class="c">&lt;!-- abertura: &lt;p&gt;   conteúdo: Este é um parágrafo.   fechamento: &lt;/p&gt; --&gt;</span></code></pre>
+        <p>Alguns elementos não têm conteúdo e por isso não precisam de fechamento. São os elementos <em>vazios</em>, como <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code> e <code>&lt;input&gt;</code>.</p>
+        <p><strong>Atributos</strong> dão informações extras a um elemento. Ficam dentro da tag de abertura, no formato <code>nome="valor"</code>:</p>
+<pre><code><span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"https://www.senacrs.com.br"</span> <span class="a">target</span>=<span class="v">"_blank"</span><span class="t">&gt;</span>Site do Senac RS<span class="t">&lt;/a&gt;</span></code></pre>
+        <p>Elementos também podem ficar <strong>aninhados</strong> (um dentro do outro). A regra é fechar sempre na ordem inversa da abertura:</p>
+<pre><code><span class="t">&lt;p&gt;</span>Texto com <span class="t">&lt;strong&gt;</span>destaque<span class="t">&lt;/strong&gt;</span> no meio.<span class="t">&lt;/p&gt;</span></code></pre>
+        <div class="note"><strong>Erro comum:</strong> <code>&lt;p&gt;&lt;strong&gt;texto&lt;/p&gt;&lt;/strong&gt;</code> está errado. Quem abriu por último fecha primeiro.</div>
+      </section>
+
+      <section id="textos">
+        <h2>Títulos e textos</h2>
+        <p>Existem seis níveis de título, de <code>&lt;h1&gt;</code> (mais importante) até <code>&lt;h6&gt;</code>. Use um único <code>&lt;h1&gt;</code> por página e não pule níveis só para mudar o tamanho da letra: o tamanho é função do CSS.</p>
+<pre><code><span class="t">&lt;h1&gt;</span>Título principal<span class="t">&lt;/h1&gt;</span>
+<span class="t">&lt;h2&gt;</span>Seção<span class="t">&lt;/h2&gt;</span>
+<span class="t">&lt;h3&gt;</span>Subseção<span class="t">&lt;/h3&gt;</span>
+<span class="t">&lt;p&gt;</span>Um parágrafo com <span class="t">&lt;strong&gt;</span>importância<span class="t">&lt;/strong&gt;</span> e <span class="t">&lt;em&gt;</span>ênfase<span class="t">&lt;/em&gt;</span>.<span class="t">&lt;/p&gt;</span></code></pre>
+        <div class="demo">
+          <div class="demo-label">Resultado</div>
+          <div class="demo-body">
+            <h1 style="font-size:1.8rem;margin:0 0 .3rem">Título principal</h1>
+            <h2 style="font-size:1.4rem;margin:0 0 .3rem">Seção</h2>
+            <h3 style="margin:0 0 .3rem">Subseção</h3>
+            <p style="margin:0">Um parágrafo com <strong>importância</strong> e <em>ênfase</em>.</p>
+          </div>
+        </div>
+        <table class="ref">
+          <tr><th>Tag</th><th>Uso</th></tr>
+          <tr><td><code>&lt;p&gt;</code></td><td>Parágrafo.</td></tr>
+          <tr><td><code>&lt;strong&gt;</code></td><td>Texto importante (aparece em negrito).</td></tr>
+          <tr><td><code>&lt;em&gt;</code></td><td>Ênfase (aparece em itálico).</td></tr>
+          <tr><td><code>&lt;br&gt;</code></td><td>Quebra de linha.</td></tr>
+          <tr><td><code>&lt;hr&gt;</code></td><td>Linha horizontal de separação.</td></tr>
+          <tr><td><code>&lt;blockquote&gt;</code></td><td>Citação longa.</td></tr>
+          <tr><td><code>&lt;code&gt;</code></td><td>Trecho de código.</td></tr>
+        </table>
+      </section>
+
+      <section id="links-imagens">
+        <h2>Links e imagens</h2>
+        <h3>Links com &lt;a&gt;</h3>
+        <p>O atributo <code>href</code> define o destino. Pode ser um endereço externo, outra página do seu projeto ou um ponto da mesma página (usando <code>#id</code>, como o índice desta aula).</p>
+<pre><code><span class="c">&lt;!-- link externo --&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"https://developer.mozilla.org/pt-BR/"</span> <span class="a">target</span>=<span class="v">"_blank"</span> <span class="a">rel</span>=<span class="v">"noopener"</span><span class="t">&gt;</span>MDN<span class="t">&lt;/a&gt;</span>
+
+<span class="c">&lt;!-- link para outra página do projeto --&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"contato.html"</span><span class="t">&gt;</span>Fale conosco<span class="t">&lt;/a&gt;</span>
+
+<span class="c">&lt;!-- link para um trecho da mesma página --&gt;</span>
+<span class="t">&lt;a</span> <span class="a">href</span>=<span class="v">"#formularios"</span><span class="t">&gt;</span>Ir para formulários<span class="t">&lt;/a&gt;</span></code></pre>
+        <h3>Imagens com &lt;img&gt;</h3>
+<pre><code><span class="t">&lt;img</span> <span class="a">src</span>=<span class="v">"imagens/foto.jpg"</span> <span class="a">alt</span>=<span class="v">"Descrição da foto"</span> <span class="a">width</span>=<span class="v">"300"</span><span class="t">&gt;</span></code></pre>
+        <ul class="check">
+          <li><code>src</code>: caminho do arquivo da imagem.</li>
+          <li><code>alt</code>: texto alternativo. Aparece se a imagem falhar e é lido por leitores de tela. <strong>É obrigatório</strong> em boas práticas de acessibilidade.</li>
+          <li><code>width</code> e <code>height</code>: dimensões em pixels.</li>
+        </ul>
+        <div class="tip"><strong>Caminhos relativos:</strong> <code>imagens/foto.jpg</code> procura a pasta <code>imagens</code> ao lado do seu HTML. <code>../foto.jpg</code> sobe uma pasta. Em repositórios, prefira sempre caminhos relativos, assim o projeto funciona em qualquer máquina e no GitHub Pages.</div>
+      </section>
+
+      <section id="listas">
+        <h2>Listas</h2>
+        <p>Há três tipos: não ordenada (<code>&lt;ul&gt;</code>), ordenada (<code>&lt;ol&gt;</code>) e de descrição (<code>&lt;dl&gt;</code>). Os itens das duas primeiras ficam em <code>&lt;li&gt;</code>.</p>
+<pre><code><span class="t">&lt;ul&gt;</span>
+  <span class="t">&lt;li&gt;</span>HTML<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>CSS<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>JavaScript<span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ul&gt;</span>
+
+<span class="t">&lt;ol&gt;</span>
+  <span class="t">&lt;li&gt;</span>Criar o arquivo<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Escrever o código<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Abrir no navegador<span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ol&gt;</span></code></pre>
+        <div class="demo">
+          <div class="demo-label">Resultado</div>
+          <div class="demo-body">
+            <ul style="margin:0 0 .75rem"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+            <ol style="margin:0"><li>Criar o arquivo</li><li>Escrever o código</li><li>Abrir no navegador</li></ol>
+          </div>
+        </div>
+      </section>
+
+      <section id="tabelas">
+        <h2>Tabelas</h2>
+        <p>Tabelas servem para dados organizados em linhas e colunas, não para montar o layout da página. A estrutura usa <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (linha), <code>&lt;th&gt;</code> (cabeçalho) e <code>&lt;td&gt;</code> (célula).</p>
+<pre><code><span class="t">&lt;table&gt;</span>
+  <span class="t">&lt;thead&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;th&gt;</span>Disciplina<span class="t">&lt;/th&gt;&lt;th&gt;</span>Nota<span class="t">&lt;/th&gt;&lt;/tr&gt;</span>
+  <span class="t">&lt;/thead&gt;</span>
+  <span class="t">&lt;tbody&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;td&gt;</span>Banco de Dados<span class="t">&lt;/td&gt;&lt;td&gt;</span>9,0<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="t">&lt;tr&gt;&lt;td&gt;</span>Orientação a Objetos<span class="t">&lt;/td&gt;&lt;td&gt;</span>8,5<span class="t">&lt;/td&gt;&lt;/tr&gt;</span>
+  <span class="t">&lt;/tbody&gt;</span>
+<span class="t">&lt;/table&gt;</span></code></pre>
+        <div class="demo">
+          <div class="demo-label">Resultado</div>
+          <div class="demo-body">
+            <table class="ref" style="margin:0">
+              <thead><tr><th>Disciplina</th><th>Nota</th></tr></thead>
+              <tbody>
+                <tr><td>Banco de Dados</td><td>9,0</td></tr>
+                <tr><td>Orientação a Objetos</td><td>8,5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="formularios">
+        <h2>Formulários</h2>
+        <p>Formulários coletam dados do usuário. O elemento <code>&lt;form&gt;</code> agrupa os campos; cada campo costuma ter um <code>&lt;label&gt;</code> ligado a ele pelo atributo <code>for</code> (que deve ser igual ao <code>id</code> do campo).</p>
+<pre><code><span class="t">&lt;form</span> <span class="a">action</span>=<span class="v">"/enviar"</span> <span class="a">method</span>=<span class="v">"post"</span><span class="t">&gt;</span>
+  <span class="t">&lt;label</span> <span class="a">for</span>=<span class="v">"nome"</span><span class="t">&gt;</span>Nome<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"text"</span> <span class="a">id</span>=<span class="v">"nome"</span> <span class="a">name</span>=<span class="v">"nome"</span> <span class="a">required</span><span class="t">&gt;</span>
+
+  <span class="t">&lt;label</span> <span class="a">for</span>=<span class="v">"email"</span><span class="t">&gt;</span>E-mail<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="v">"email"</span> <span class="a">id</span>=<span class="v">"email"</span> <span class="a">name</span>=<span class="v">"email"</span><span class="t">&gt;</span>
+
+  <span class="t">&lt;label</span> <span class="a">for</span>=<span class="v">"curso"</span><span class="t">&gt;</span>Curso<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;select</span> <span class="a">id</span>=<span class="v">"curso"</span> <span class="a">name</span>=<span class="v">"curso"</span><span class="t">&gt;</span>
+    <span class="t">&lt;option&gt;</span>Desenvolvimento de Sistemas<span class="t">&lt;/option&gt;</span>
+    <span class="t">&lt;option&gt;</span>Redes<span class="t">&lt;/option&gt;</span>
+  <span class="t">&lt;/select&gt;</span>
+
+  <span class="t">&lt;label</span> <span class="a">for</span>=<span class="v">"msg"</span><span class="t">&gt;</span>Mensagem<span class="t">&lt;/label&gt;</span>
+  <span class="t">&lt;textarea</span> <span class="a">id</span>=<span class="v">"msg"</span> <span class="a">name</span>=<span class="v">"msg"</span> <span class="a">rows</span>=<span class="v">"4"</span><span class="t">&gt;&lt;/textarea&gt;</span>
+
+  <span class="t">&lt;button</span> <span class="a">type</span>=<span class="v">"submit"</span><span class="t">&gt;</span>Enviar<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;/form&gt;</span></code></pre>
+        <div class="demo">
+          <div class="demo-label">Resultado (exemplo funcional, não envia nada)</div>
+          <div class="demo-body">
+            <form onsubmit="return false" style="display:grid;gap:.6rem;font-family:system-ui,sans-serif;font-size:.95rem">
+              <label for="d-nome">Nome</label>
+              <input type="text" id="d-nome" name="nome" required>
+              <label for="d-email">E-mail</label>
+              <input type="email" id="d-email" name="email">
+              <label for="d-curso">Curso</label>
+              <select id="d-curso" name="curso"><option>Desenvolvimento de Sistemas</option><option>Redes</option></select>
+              <label for="d-msg">Mensagem</label>
+              <textarea id="d-msg" name="msg" rows="3"></textarea>
+              <button type="submit" style="justify-self:start">Enviar</button>
+            </form>
+          </div>
+        </div>
+        <p>Tipos de <code>&lt;input&gt;</code> mais usados:</p>
+        <table class="ref">
+          <tr><th><code>type</code></th><th>Campo</th></tr>
+          <tr><td><code>text</code></td><td>Texto simples.</td></tr>
+          <tr><td><code>email</code></td><td>E-mail (valida o formato).</td></tr>
+          <tr><td><code>password</code></td><td>Senha (oculta os caracteres).</td></tr>
+          <tr><td><code>number</code></td><td>Números.</td></tr>
+          <tr><td><code>date</code></td><td>Seletor de data.</td></tr>
+          <tr><td><code>checkbox</code></td><td>Caixa de marcação (várias opções).</td></tr>
+          <tr><td><code>radio</code></td><td>Escolha única entre opções com o mesmo <code>name</code>.</td></tr>
+        </table>
+      </section>
+
+      <section id="semantica">
+        <h2>HTML semântico</h2>
+        <p>Tags semânticas descrevem o <strong>significado</strong> de cada região da página. Isso ajuda a manter o código organizado, melhora a acessibilidade e facilita o trabalho dos buscadores.</p>
+<pre><code><span class="t">&lt;body&gt;</span>
+  <span class="t">&lt;header&gt;</span>
+    <span class="t">&lt;h1&gt;</span>Meu site<span class="t">&lt;/h1&gt;</span>
+    <span class="t">&lt;nav&gt;</span> <span class="c">&lt;!-- menu de links --&gt;</span> <span class="t">&lt;/nav&gt;</span>
+  <span class="t">&lt;/header&gt;</span>
+
+  <span class="t">&lt;main&gt;</span>
+    <span class="t">&lt;article&gt;</span>
+      <span class="t">&lt;h2&gt;</span>Título do artigo<span class="t">&lt;/h2&gt;</span>
+      <span class="t">&lt;p&gt;</span>Conteúdo...<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;/article&gt;</span>
+    <span class="t">&lt;aside&gt;</span> <span class="c">&lt;!-- conteúdo lateral --&gt;</span> <span class="t">&lt;/aside&gt;</span>
+  <span class="t">&lt;/main&gt;</span>
+
+  <span class="t">&lt;footer&gt;</span>
+    <span class="t">&lt;p&gt;</span>&amp;copy; 2026 Meu site<span class="t">&lt;/p&gt;</span>
+  <span class="t">&lt;/footer&gt;</span>
+<span class="t">&lt;/body&gt;</span></code></pre>
+        <table class="ref">
+          <tr><th>Tag</th><th>Significado</th></tr>
+          <tr><td><code>&lt;header&gt;</code></td><td>Cabeçalho da página ou de uma seção.</td></tr>
+          <tr><td><code>&lt;nav&gt;</code></td><td>Bloco de navegação (menus).</td></tr>
+          <tr><td><code>&lt;main&gt;</code></td><td>Conteúdo principal. Use apenas um por página.</td></tr>
+          <tr><td><code>&lt;section&gt;</code></td><td>Seção temática do conteúdo, geralmente com um título.</td></tr>
+          <tr><td><code>&lt;article&gt;</code></td><td>Conteúdo independente (post, notícia).</td></tr>
+          <tr><td><code>&lt;aside&gt;</code></td><td>Conteúdo complementar.</td></tr>
+          <tr><td><code>&lt;footer&gt;</code></td><td>Rodapé.</td></tr>
+        </table>
+      </section>
+
+      <section id="blocos">
+        <h2>Div e span: os elementos sem significado</h2>
+        <p>Quando nenhuma tag semântica serve, use os genéricos. O <code>&lt;div&gt;</code> é um <strong>bloco</strong> (ocupa a linha inteira) e o <code>&lt;span&gt;</code> é <strong>em linha</strong> (acompanha o texto). Eles ganham sentido com os atributos <code>class</code> e <code>id</code>, que o CSS e o JavaScript usam para encontrá-los.</p>
+<pre><code><span class="t">&lt;div</span> <span class="a">class</span>=<span class="v">"cartao"</span> <span class="a">id</span>=<span class="v">"cartao-1"</span><span class="t">&gt;</span>
+  <span class="t">&lt;p&gt;</span>Status: <span class="t">&lt;span</span> <span class="a">class</span>=<span class="v">"ok"</span><span class="t">&gt;</span>concluído<span class="t">&lt;/span&gt;&lt;/p&gt;</span>
+<span class="t">&lt;/div&gt;</span></code></pre>
+        <ul class="check">
+          <li><code>class</code> pode se repetir em vários elementos.</li>
+          <li><code>id</code> é único: não pode haver dois iguais na mesma página.</li>
+        </ul>
+      </section>
+
+      <section id="boas-praticas">
+        <h2>Boas práticas</h2>
+        <ul class="check">
+          <li>Sempre declare <code>&lt;!DOCTYPE html&gt;</code>, <code>lang</code> e <code>charset</code>.</li>
+          <li>Use <strong>indentação</strong> consistente (2 espaços por nível aninhado).</li>
+          <li>Escreva tags e atributos em <strong>minúsculas</strong> e valores entre aspas.</li>
+          <li>Prefira tags semânticas a <code>&lt;div&gt;</code> quando houver uma adequada.</li>
+          <li>Coloque <code>alt</code> em toda imagem e <code>label</code> em todo campo de formulário.</li>
+          <li>Use HTML para estrutura e CSS para aparência: evite estilizar com tags antigas como <code>&lt;font&gt;</code> ou <code>&lt;center&gt;</code>.</li>
+          <li>Dê nomes claros a arquivos e pastas, sem espaços nem acentos (<code>minha-pagina.html</code>).</li>
+          <li>Valide seu código em <a href="https://validator.w3.org/" target="_blank" rel="noopener">validator.w3.org</a>.</li>
+          <li>Comente trechos importantes com <code>&lt;!-- comentário --&gt;</code>.</li>
+        </ul>
+      </section>
+
+      <section id="exercicio">
+        <h2>Exercício final</h2>
+        <p>Crie uma página chamada <code>sobre-mim.html</code> que contenha:</p>
+        <ol>
+          <li>A estrutura básica completa, com <code>lang="pt-BR"</code> e um <code>&lt;title&gt;</code>.</li>
+          <li><code>&lt;header&gt;</code> com seu nome em <code>&lt;h1&gt;</code> e <code>&lt;nav&gt;</code> com links para as seções da página.</li>
+          <li>Uma <code>&lt;section&gt;</code> de apresentação com uma foto (<code>&lt;img&gt;</code> com <code>alt</code>) e dois parágrafos.</li>
+          <li>Uma <code>&lt;section&gt;</code> com lista das tecnologias que você estuda.</li>
+          <li>Uma <code>&lt;section&gt;</code> com tabela das disciplinas do curso.</li>
+          <li>Uma <code>&lt;section&gt;</code> com formulário de contato (nome, e-mail, mensagem e botão).</li>
+          <li>Um <code>&lt;footer&gt;</code> com o ano e seu nome.</li>
+        </ol>
+        <div class="tip"><strong>Desafio extra:</strong> depois de pronta, valide a página no W3C Validator e corrija os avisos. O próximo passo natural é estilizá-la com CSS.</div>
+      </section>
+
+      <footer>
+        <p>Fim da aula. Próximos passos: CSS para estilizar e JavaScript para dar comportamento às suas páginas.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
