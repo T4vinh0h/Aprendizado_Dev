@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 2: Textos bem estruturados possuem significado</title>
+  <style>
+    :root {
+      --bg: #f5f7fa; --surface: #ffffff; --ink: #1c2430; --muted: #5b6676;
+      --line: #dbe1ea; --accent: #1d4ed8; --accent-soft: #e3ebff;
+      --code-bg: #1b2230; --code-ink: #e6edf7;
+      --tag: #ff9d6e; --attr: #7fd1b9; --val: #f3d37a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.1rem; line-height: 1.7; }
+    h1, h2, h3, nav, .tip, .note, .demo-label, .pair-label { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); max-width: 1100px; margin: 0 auto; gap: 3rem; padding: 0 1.5rem; }
+    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 0; font-size: .95rem; }
+    nav strong { display: block; margin-bottom: .75rem; }
+    nav a { display: block; padding: .3rem .6rem; color: var(--muted); text-decoration: none; border-left: 2px solid var(--line); }
+    nav a:hover, nav a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
+    main { padding: 2.5rem 0 5rem; max-width: 70ch; }
+    h1 { font-size: clamp(2.1rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: 1.7rem; margin: 3.5rem 0 .75rem; letter-spacing: -.01em; }
+    h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1.1rem; }
+    .lead { font-size: 1.2rem; color: var(--muted); }
+    code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9em; background: var(--accent-soft); padding: .1em .35em; border-radius: 4px; }
+    pre { margin: 1rem 0 1.5rem; background: var(--code-bg); color: var(--code-ink); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+    pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+    .t { color: var(--tag); } .a { color: var(--attr); } .v { color: var(--val); } .c { color: #8a97ad; font-style: italic; }
+    .demo { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; margin: -.5rem 0 1.75rem; overflow: hidden; }
+    .demo-label { font-size: .8rem; color: var(--muted); padding: .4rem 1rem; border-bottom: 1px solid var(--line); background: #eef2f8; }
+    .demo-body { padding: 1rem 1.25rem; }
+    .tip, .note { font-size: .97rem; padding: .9rem 1.1rem; border-radius: 8px; margin: 1.5rem 0; }
+    .tip { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+    .note { background: #fff4e0; border-left: 4px solid #e0912a; }
+    table.ref { border-collapse: collapse; width: 100%; font-family: system-ui, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
+    table.ref th, table.ref td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+    table.ref th { background: #eef2f8; }
+    ul.check { padding-left: 1.2rem; } ul.check li { margin-bottom: .4rem; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .pair pre { margin: .4rem 0 0; height: calc(100% - 1.8rem); }
+    .pair-label { font-size: .85rem; font-weight: 600; color: var(--muted); }
+    .box-block { background: #dbe8ff; border: 1px solid #9db8f5; padding: .4rem .6rem; margin-bottom: .4rem; }
+    .box-inline { background: #ffe9c7; border: 1px solid #e8b867; padding: 0 .3rem; }
+    footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 4rem; color: var(--muted); font-size: .95rem; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      nav { position: static; height: auto; padding: 1.5rem 0 0; }
+      nav a { display: inline-block; border-left: none; border-bottom: 2px solid var(--line); margin-right: .4rem; }
+      .pair { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <nav aria-label="Índice da aula">
+    <strong>Nesta aula</strong>
+    <a href="#retomada">Retomada</a>
+    <a href="#semantica">O que é semântica</a>
+    <a href="#html-css">HTML x CSS</a>
+    <a href="#titulos">Títulos e hierarquia</a>
+    <a href="#paragrafos">Parágrafos</a>
+    <a href="#strong-em">strong e em</a>
+    <a href="#listas">Listas</a>
+    <a href="#citacoes">Citações</a>
+    <a href="#abbr-time">Siglas e datas</a>
+    <a href="#codigo">Trechos de código</a>
+    <a href="#bloco-linha">Bloco e linha</a>
+    <a href="#sintese">Síntese</a>
+    <a href="#pratica">Prática</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Aula 2: Textos bem estruturados possuem significado</h1>
+      <p class="lead">Teoria e prática. Ao final você será capaz de:</p>
+      <ul class="check">
+        <li>compreender o conceito de semântica no HTML;</li>
+        <li>organizar títulos e subtítulos de maneira hierárquica;</li>
+        <li>estruturar textos utilizando parágrafos;</li>
+        <li>aplicar corretamente os elementos <code>strong</code> e <code>em</code>;</li>
+        <li>criar listas ordenadas, não ordenadas e de definições;</li>
+        <li>representar citações, abreviações, códigos e datas;</li>
+        <li>diferenciar elementos com comportamento de bloco e em linha.</li>
+      </ul>
+    </header>
+
+    <section id="retomada">
+      <h2>Retomada: três tecnologias, três papéis</h2>
+      <p>Uma página web nasce da combinação de três tecnologias:</p>
+      <table class="ref">
+        <tr><th>Tecnologia</th><th>Papel</th><th>Exemplos</th></tr>
+        <tr><td><strong>HTML</strong></td><td>Estrutura e significado</td><td>títulos, textos, listas</td></tr>
+        <tr><td><strong>CSS</strong></td><td>Aparência visual</td><td>cores, fontes, posições</td></tr>
+        <tr><td><strong>JavaScript</strong></td><td>Comportamento</td><td>ações, cálculos, validações</td></tr>
+      </table>
+      <div class="tip">Nesta aula, o foco está no <strong>significado</strong> que o HTML atribui ao conteúdo.</div>
+    </section>
+
+    <section id="semantica">
+      <h2>O que é semântica?</h2>
+      <p>Semântica está relacionada ao <strong>significado</strong> dos elementos utilizados no documento. No HTML, devemos escolher os elementos de acordo com a <strong>função do conteúdo</strong>, e não apenas pela sua aparência.</p>
+<pre><code><span class="t">&lt;h1&gt;</span>Desenvolvimento de Sistemas<span class="t">&lt;/h1&gt;</span></code></pre>
+      <p>O elemento <code>h1</code> informa que o texto é o <strong>título principal</strong> da página.</p>
+      <p>Compare duas formas de escrever o mesmo conteúdo:</p>
+      <div class="pair">
+        <div>
+          <div class="pair-label">Sem significado</div>
+<pre><code><span class="t">&lt;p&gt;</span>Formação<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;p&gt;</span>Curso Técnico em TDS<span class="t">&lt;/p&gt;</span></code></pre>
+          <p style="font-size:.95rem;color:var(--muted)">A estrutura não revela a relação entre os conteúdos.</p>
+        </div>
+        <div>
+          <div class="pair-label">Com significado</div>
+<pre><code><span class="t">&lt;h2&gt;</span>Formação<span class="t">&lt;/h2&gt;</span>
+<span class="t">&lt;p&gt;</span>Curso Técnico em TDS.<span class="t">&lt;/p&gt;</span></code></pre>
+          <p style="font-size:.95rem;color:var(--muted)">A hierarquia fica clara para pessoas e sistemas.</p>
+        </div>
+      </div>
+      <div class="tip"><strong>Significado primeiro. Aparência depois.</strong></div>
+    </section>
+
+    <section id="html-css">
+      <h2>HTML define a função; CSS define a aparência</h2>
+      <div class="pair">
+        <div>
+          <div class="pair-label">HTML: significado</div>
+<pre><code><span class="t">&lt;h1&gt;</span>Sobre mim<span class="t">&lt;/h1&gt;</span></code></pre>
+          <p style="font-size:.95rem;color:var(--muted)">Informa: "este é o título principal".</p>
+        </div>
+        <div>
+          <div class="pair-label">CSS: apresentação</div>
+<pre><code><span class="t">h1</span> {
+  <span class="a">color</span>: <span class="v">blue</span>;
+  <span class="a">font-size</span>: <span class="v">32px</span>;
+}</code></pre>
+          <p style="font-size:.95rem;color:var(--muted)">Informa: "o título será azul e terá 32 px".</p>
+        </div>
+      </div>
+      <div class="note"><strong>Não use uma tag apenas porque ela parece visualmente adequada.</strong></div>
+      <h3>Uma boa estrutura beneficia toda a página</h3>
+      <ul class="check">
+        <li><strong>Leitura do código:</strong> a função de cada trecho fica evidente.</li>
+        <li><strong>Acessibilidade:</strong> leitores de tela interpretam melhor o conteúdo.</li>
+        <li><strong>Mecanismos de busca:</strong> a organização ajuda a compreender a página.</li>
+        <li><strong>Manutenção:</strong> alterações futuras se tornam mais simples.</li>
+      </ul>
+    </section>
+
+    <section id="titulos">
+      <h2>1. Títulos criam hierarquia</h2>
+      <p>Os elementos <code>h1</code> a <code>h6</code> formam a hierarquia do conteúdo. Exemplo de um currículo:</p>
+<pre><code><span class="t">&lt;h1&gt;</span>Currículo de Marina<span class="t">&lt;/h1&gt;</span>
+
+<span class="t">&lt;h2&gt;</span>Apresentação<span class="t">&lt;/h2&gt;</span>
+
+<span class="t">&lt;h2&gt;</span>Conhecimentos<span class="t">&lt;/h2&gt;</span>
+  <span class="t">&lt;h3&gt;</span>Desenvolvimento web<span class="t">&lt;/h3&gt;</span>
+  <span class="t">&lt;h3&gt;</span>Banco de dados<span class="t">&lt;/h3&gt;</span>
+
+<span class="t">&lt;h2&gt;</span>Formação<span class="t">&lt;/h2&gt;</span></code></pre>
+      <ul class="check">
+        <li>Use um título principal claro (<code>h1</code>).</li>
+        <li>Organize seções com <code>h2</code>.</li>
+        <li>Use <code>h3</code> dentro de uma seção <code>h2</code>.</li>
+        <li>Evite pular níveis sem necessidade.</li>
+        <li>Não escolha o título pelo tamanho da fonte.</li>
+      </ul>
+    </section>
+
+    <section id="paragrafos">
+      <h2>Parágrafos organizam ideias, não o espaçamento</h2>
+      <p>Use um assunto por parágrafo, com o elemento <code>p</code>:</p>
+<pre><code><span class="t">&lt;p&gt;</span>Atualmente, estudo HTML e CSS.<span class="t">&lt;/p&gt;</span>
+
+<span class="t">&lt;p&gt;</span>Meu objetivo é trabalhar com
+desenvolvimento de software.<span class="t">&lt;/p&gt;</span></code></pre>
+      <p><strong>Vários espaços no código viram um só.</strong> O navegador ignora espaços e quebras de linha repetidos:</p>
+<pre><code><span class="t">&lt;p&gt;</span>HTML       organiza       o
+conteúdo.<span class="t">&lt;/p&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body"><p style="margin:0">HTML       organiza       o
+conteúdo.</p></div>
+      </div>
+      <div class="note">Para separar ideias, crie outro <code>&lt;p&gt;</code>. Não use espaços, <code>&lt;br&gt;</code> em sequência ou parágrafos vazios para "dar espaçamento": isso é papel do CSS.</div>
+    </section>
+
+    <section id="strong-em">
+      <h2>strong e em: importância e ênfase</h2>
+      <table class="ref">
+        <tr><th>Elemento</th><th>Significado</th><th>Visual padrão</th></tr>
+        <tr><td><code>&lt;strong&gt;</code></td><td>Importância, seriedade ou urgência do trecho.</td><td>Geralmente aparece em negrito.</td></tr>
+        <tr><td><code>&lt;em&gt;</code></td><td>Ênfase, mudança de entonação ao ler.</td><td>Geralmente aparece em itálico.</td></tr>
+      </table>
+<pre><code><span class="t">&lt;p&gt;&lt;strong&gt;</span>Atenção:<span class="t">&lt;/strong&gt;</span> a entrega é <span class="t">&lt;em&gt;</span>hoje<span class="t">&lt;/em&gt;</span>.<span class="t">&lt;/p&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body"><p style="margin:0"><strong>Atenção:</strong> a entrega é <em>hoje</em>.</p></div>
+      </div>
+      <div class="tip"><strong>O visual é consequência; a escolha deve considerar o significado.</strong> Se você só quer negrito ou itálico sem importância ou ênfase, use CSS. As tags <code>&lt;b&gt;</code> e <code>&lt;i&gt;</code> existem para casos sem esse sentido, mas a regra é pensar primeiro no significado.</div>
+    </section>
+
+    <section id="listas">
+      <h2>2. Listas organizam relações e sequências</h2>
+      <p>Escolha o tipo de lista conforme a relação existente entre os itens.</p>
+      <table class="ref">
+        <tr><th>Tipo</th><th>Elemento</th><th>Quando usar</th></tr>
+        <tr><td>Não ordenada</td><td><code>ul</code> + <code>li</code></td><td>Itens sem ordem importante.</td></tr>
+        <tr><td>Ordenada</td><td><code>ol</code> + <code>li</code></td><td>Sequência ou passos em que a ordem importa.</td></tr>
+        <tr><td>De definições</td><td><code>dl</code> + <code>dt</code> + <code>dd</code></td><td>Termos e suas descrições.</td></tr>
+      </table>
+<pre><code><span class="t">&lt;ul&gt;</span>
+  <span class="t">&lt;li&gt;</span>HTML<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>CSS<span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ul&gt;</span>
+
+<span class="t">&lt;ol&gt;</span>
+  <span class="t">&lt;li&gt;</span>Criar o arquivo<span class="t">&lt;/li&gt;</span>
+  <span class="t">&lt;li&gt;</span>Escrever o código<span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ol&gt;</span></code></pre>
+      <h3>Listas de definições relacionam termos e descrições</h3>
+<pre><code><span class="t">&lt;dl&gt;</span>
+  <span class="t">&lt;dt&gt;</span>HTML<span class="t">&lt;/dt&gt;</span>
+  <span class="t">&lt;dd&gt;</span>Linguagem de marcação que estrutura o conteúdo.<span class="t">&lt;/dd&gt;</span>
+  <span class="t">&lt;dt&gt;</span>CSS<span class="t">&lt;/dt&gt;</span>
+  <span class="t">&lt;dd&gt;</span>Linguagem que define a aparência da página.<span class="t">&lt;/dd&gt;</span>
+<span class="t">&lt;/dl&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <dl style="margin:0">
+            <dt style="font-weight:bold">HTML</dt><dd>Linguagem de marcação que estrutura o conteúdo.</dd>
+            <dt style="font-weight:bold">CSS</dt><dd>Linguagem que define a aparência da página.</dd>
+          </dl>
+        </div>
+      </div>
+      <h3>Uma lista pode detalhar itens de outra lista</h3>
+      <p>A lista interna fica <strong>dentro do <code>li</code></strong> do item que ela detalha:</p>
+<pre><code><span class="t">&lt;ul&gt;</span>
+  <span class="t">&lt;li&gt;</span>
+    Desenvolvimento web
+    <span class="t">&lt;ul&gt;</span>
+      <span class="t">&lt;li&gt;</span>HTML<span class="t">&lt;/li&gt;</span>
+      <span class="t">&lt;li&gt;</span>CSS<span class="t">&lt;/li&gt;</span>
+    <span class="t">&lt;/ul&gt;</span>
+  <span class="t">&lt;/li&gt;</span>
+<span class="t">&lt;/ul&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body"><ul style="margin:0"><li>Desenvolvimento web<ul><li>HTML</li><li>CSS</li></ul></li></ul></div>
+      </div>
+      <div class="tip">O recuo visual revela que HTML e CSS pertencem ao item "Desenvolvimento web".</div>
+    </section>
+
+    <section id="citacoes">
+      <h2>3. Citações, siglas, códigos e datas</h2>
+      <h3>Citações curtas e longas usam elementos diferentes</h3>
+      <div class="pair">
+        <div>
+          <div class="pair-label">q: citação curta (dentro do parágrafo)</div>
+<pre><code><span class="t">&lt;p&gt;</span>Como diz o princípio,
+<span class="t">&lt;q&gt;</span>pratique para aprender<span class="t">&lt;/q&gt;</span>.<span class="t">&lt;/p&gt;</span></code></pre>
+          <p style="font-size:.95rem;color:var(--muted)">O navegador normalmente adiciona aspas.</p>
+        </div>
+        <div>
+          <div class="pair-label">blockquote: citação em bloco (trecho separado)</div>
+<pre><code><span class="t">&lt;blockquote</span> <span class="a">cite</span>=<span class="v">"https://exemplo.com"</span><span class="t">&gt;</span>
+  A aprendizagem é um processo contínuo.
+<span class="t">&lt;/blockquote&gt;</span></code></pre>
+          <p style="font-size:.95rem;color:var(--muted)">O atributo <code>cite</code> registra a fonte, mas não a exibe.</p>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <p>Como diz o princípio, <q>pratique para aprender</q>.</p>
+          <blockquote style="margin:0 0 0 1rem;padding-left:1rem;border-left:3px solid var(--line)">A aprendizagem é um processo contínuo.</blockquote>
+        </div>
+      </div>
+      <p>O elemento <code>&lt;cite&gt;</code> pode identificar o <strong>título de uma obra</strong>:</p>
+<pre><code><span class="t">&lt;p&gt;</span>Li o livro <span class="t">&lt;cite&gt;</span>Dom Casmurro<span class="t">&lt;/cite&gt;</span> no semestre passado.<span class="t">&lt;/p&gt;</span></code></pre>
+    </section>
+
+    <section id="abbr-time">
+      <h2>Siglas e datas</h2>
+      <p>Use <code>abbr</code> para siglas e abreviações. O atributo <code>title</code> mostra a forma completa ao passar o mouse. Use <code>time</code> para datas e horários, com o atributo <code>datetime</code> em formato legível por máquinas (<code>AAAA-MM-DD</code>).</p>
+<pre><code><span class="t">&lt;p&gt;</span>
+  O <span class="t">&lt;abbr</span> <span class="a">title</span>=<span class="v">"Serviço Nacional de Aprendizagem Comercial"</span><span class="t">&gt;</span>SENAC<span class="t">&lt;/abbr&gt;</span>
+  iniciou as aulas em <span class="t">&lt;time</span> <span class="a">datetime</span>=<span class="v">"2026-10-07"</span><span class="t">&gt;</span>7 de outubro de 2026<span class="t">&lt;/time&gt;</span>.
+<span class="t">&lt;/p&gt;</span></code></pre>
+      <div class="demo">
+        <div class="demo-label">Resultado (passe o mouse sobre a sigla)</div>
+        <div class="demo-body"><p style="margin:0">O <abbr title="Serviço Nacional de Aprendizagem Comercial">SENAC</abbr> iniciou as aulas em <time datetime="2026-10-07">7 de outubro de 2026</time>.</p></div>
+      </div>
+    </section>
+
+    <section id="codigo">
+      <h2>Trechos de código: code identifica, pre preserva</h2>
+      <div class="pair">
+        <div>
+          <div class="pair-label">code: código dentro de uma frase</div>
+<pre><code><span class="t">&lt;p&gt;</span>Use <span class="t">&lt;code&gt;</span>&amp;lt;h1&amp;gt;<span class="t">&lt;/code&gt;</span>
+para o título principal.<span class="t">&lt;/p&gt;</span></code></pre>
+        </div>
+        <div>
+          <div class="pair-label">pre + code: bloco formatado</div>
+<pre><code><span class="t">&lt;pre&gt;&lt;code&gt;</span>&amp;lt;h1&amp;gt;Olá!&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Minha página.&amp;lt;/p&amp;gt;<span class="t">&lt;/code&gt;&lt;/pre&gt;</span></code></pre>
+        </div>
+      </div>
+      <ul class="check">
+        <li><code>&amp;lt;</code> representa <code>&lt;</code> e <code>&amp;gt;</code> representa <code>&gt;</code>.</li>
+        <li><code>pre</code> mantém espaços, recuos e quebras de linha.</li>
+      </ul>
+      <div class="note">Sem as entidades <code>&amp;lt;</code> e <code>&amp;gt;</code>, o navegador tentaria interpretar o exemplo como uma <strong>tag real</strong> e não mostraria o texto na tela.</div>
+      <div class="demo">
+        <div class="demo-label">Resultado</div>
+        <div class="demo-body">
+          <p>Use <code>&lt;h1&gt;</code> para o título principal.</p>
+          <pre style="margin:0"><code>&lt;h1&gt;Olá!&lt;/h1&gt;
+&lt;p&gt;Minha página.&lt;/p&gt;</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="bloco-linha">
+      <h2>4. Bloco e linha descrevem o comportamento visual padrão</h2>
+      <ul class="check">
+        <li><strong>Elementos de bloco</strong> começam em uma nova linha e ocupam toda a largura disponível: <code>h1</code> a <code>h6</code>, <code>p</code>, <code>ul</code>, <code>ol</code>, <code>li</code>, <code>blockquote</code>, <code>pre</code>, <code>div</code>.</li>
+        <li><strong>Elementos em linha</strong> acompanham o fluxo do texto e ocupam só o espaço do conteúdo: <code>strong</code>, <code>em</code>, <code>a</code>, <code>q</code>, <code>abbr</code>, <code>time</code>, <code>code</code>, <code>span</code>.</li>
+      </ul>
+      <div class="demo">
+        <div class="demo-label">Resultado: azul = bloco, laranja = em linha</div>
+        <div class="demo-body">
+          <div class="box-block">Elemento de bloco 1</div>
+          <div class="box-block">Elemento de bloco 2</div>
+          <p style="margin:0">Texto com <span class="box-inline">linha 1</span> e <span class="box-inline">linha 2</span> no mesmo parágrafo.</p>
+        </div>
+      </div>
+      <div class="tip">O CSS pode alterar esse comportamento (propriedade <code>display</code>). A escolha da tag continua baseada no <strong>significado</strong>.</div>
+    </section>
+
+    <section id="sintese">
+      <h2>Síntese: antes de escrever uma tag, faça três perguntas</h2>
+      <ol>
+        <li>Que função este conteúdo desempenha?</li>
+        <li>Ele pertence a qual nível da estrutura?</li>
+        <li>Existe um elemento HTML mais significativo?</li>
+      </ol>
+      <div class="tip"><strong>Significado antes da aparência.</strong></div>
+    </section>
+
+    <section id="pratica">
+      <h2>Prática</h2>
+      <p>Crie um arquivo <code>curriculo.html</code> sobre você, aplicando tudo desta aula:</p>
+      <ol>
+        <li>Um <code>h1</code> com seu nome e seções com <code>h2</code> (Apresentação, Conhecimentos, Formação). Em Conhecimentos, use <code>h3</code> para subáreas.</li>
+        <li>Pelo menos dois parágrafos, cada um com um único assunto.</li>
+        <li>Uma palavra com <code>strong</code> e uma com <code>em</code>, justificando o significado de cada uma.</li>
+        <li>Uma lista não ordenada de tecnologias com uma lista aninhada, e uma lista ordenada com seus passos de estudo.</li>
+        <li>Uma lista de definições com dois termos da área.</li>
+        <li>Uma citação curta (<code>q</code>) e uma citação em bloco (<code>blockquote</code>) com <code>cite</code>.</li>
+        <li>Uma sigla com <code>abbr</code> e uma data com <code>time</code>.</li>
+        <li>Um exemplo de código mostrado com <code>pre</code> e <code>code</code>, usando as entidades <code>&amp;lt;</code> e <code>&amp;gt;</code>.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>HTML e CSS · Encontro 2. Na próxima aula, o CSS entra para cuidar da aparência dos elementos que você acabou de estruturar.</p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
