@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lógica Intermediária - Condicionais e Operadores</title>
+  <style>
+    :root {
+      --bg: #f5f7fa; --surface: #ffffff; --ink: #1c2430; --muted: #5b6676;
+      --line: #dbe1ea; --accent: #1d4ed8; --accent-soft: #e3ebff;
+      --code-bg: #1b2230; --code-ink: #e6edf7;
+      --tag: #ff9d6e; --attr: #7fd1b9; --val: #f3d37a;
+      --bad: #b4234a; --warn: #b8690f; --good: #1a7f4b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.1rem; line-height: 1.7; }
+    h1, h2, h3, nav, .tip, .note, .demo-label, .pair-label { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); max-width: 1100px; margin: 0 auto; gap: 3rem; padding: 0 1.5rem; }
+    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 0; font-size: .95rem; }
+    nav strong { display: block; margin-bottom: .75rem; }
+    nav a { display: block; padding: .3rem .6rem; color: var(--muted); text-decoration: none; border-left: 2px solid var(--line); }
+    nav a:hover, nav a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
+    main { padding: 2.5rem 0 5rem; max-width: 70ch; }
+    h1 { font-size: clamp(2.1rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: 1.7rem; margin: 3.5rem 0 .75rem; letter-spacing: -.01em; }
+    h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1.1rem; }
+    .lead { font-size: 1.2rem; color: var(--muted); }
+    code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9em; background: var(--accent-soft); padding: .1em .35em; border-radius: 4px; }
+    pre { margin: 1rem 0 1.5rem; background: var(--code-bg); color: var(--code-ink); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+    pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+    .t { color: var(--tag); } .a { color: var(--attr); } .v { color: var(--val); } .c { color: #8a97ad; font-style: italic; }
+    .demo { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; margin: -.5rem 0 1.75rem; overflow: hidden; }
+    .demo-label { font-size: .8rem; color: var(--muted); padding: .4rem 1rem; border-bottom: 1px solid var(--line); background: #eef2f8; }
+    .demo-body { padding: 1rem 1.25rem; }
+    .tip, .note { font-size: .97rem; padding: .9rem 1.1rem; border-radius: 8px; margin: 1.5rem 0; }
+    .tip { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+    .note { background: #fff4e0; border-left: 4px solid #e0912a; }
+    table.ref { border-collapse: collapse; width: 100%; font-family: system-ui, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
+    table.ref th, table.ref td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+    table.ref th { background: #eef2f8; }
+    ul.check { padding-left: 1.2rem; } ul.check li { margin-bottom: .4rem; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .pair pre { margin: .4rem 0 0; }
+    .pair-label { font-size: .85rem; font-weight: 600; color: var(--muted); }
+    .evite { color: var(--bad); font-weight: 600; } .melhor { color: var(--warn); font-weight: 600; } .prefira { color: var(--good); font-weight: 600; }
+    footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 4rem; color: var(--muted); font-size: .95rem; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      nav { position: static; height: auto; padding: 1.5rem 0 0; }
+      nav a { display: inline-block; border-left: none; border-bottom: 2px solid var(--line); margin-right: .4rem; }
+      .pair { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <nav aria-label="Índice da aula">
+    <strong>Nesta aula</strong>
+    <a href="#condicionais">Condicionais (if, else, else if)</a>
+    <a href="#comparacao">Operadores de Comparação</a>
+    <a href="#logicos">Operadores Lógicos</a>
+    <a href="#booleanos">Valores Booleanos</a>
+    <a href="#strings">Strings e Manipulação</a>
+    <a href="#validacao">Validações de Entrada</a>
+    <a href="#exercicios">Exercícios Práticos</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Lógica Intermediária - Condicionais e Operadores</h1>
+      <p class="lead">Teoria e prática. Ao final você será capaz de:</p>
+      <ul class="check">
+        <li>usar condicionais if, else e else if;</li>
+        <li>aplicar operadores de comparação;</li>
+        <li>combinar operadores lógicos;</li>
+        <li>trabalhar com valores booleanos;</li>
+        <li>manipular strings básicas;</li>
+        <li>validar entrada de dados;</li>
+        <li>criar sistemas de decisão simples;</li>
+        <li>resolver problemas que exigem lógica condicional.</li>
+      </ul>
+      <div class="tip"><strong>Critério de sucesso:</strong> consegue criar programas que tomam decisões baseadas em condições e validam dados de entrada.</div>
+    </header>
+
+    <section id="condicionais">
+      <h2>Condicionais (if, else, else if)</h2>
+      <p>Condicionais permitem que o programa tome decisões baseadas em condições.</p>
+      <h3>Estrutura básica</h3>
+<pre><code><span class="t">if</span> (condição) {
+    <span class="c">// código executado se a condição for verdadeira</span>
+} <span class="t">else if</span> (outra_condição) {
+    <span class="c">// código executado se a outra condição for verdadeira</span>
+} <span class="t">else</span> {
+    <span class="c">// código executado se nenhuma condição for verdadeira</span>
+}</code></pre>
+      <div class="note"><strong>Importante:</strong> apenas um bloco será executado, o primeiro que tiver condição verdadeira.</div>
+    </section>
+
+    <section id="comparacao">
+      <h2>Operadores de Comparação</h2>
+      <p>Esses operadores comparam valores e retornam <code>true</code> ou <code>false</code>:</p>
+      <table class="ref">
+        <tr><th>Operador</th><th>Nome</th><th>Exemplo</th><th>Resultado</th></tr>
+        <tr><td><code>></code></td><td>Maior que</td><td><code>10 > 5</code></td><td>true</td></tr>
+        <tr><td><code><</code></td><td>Menor que</td><td><code>10 < 5</code></td><td>false</td></tr>
+        <tr><td><code>>=</code></td><td>Maior ou igual</td><td><code>10 >= 10</code></td><td>true</td></tr>
+        <tr><td><code><=</code></td><td>Menor ou igual</td><td><code>5 <= 10</code></td><td>true</td></tr>
+        <tr><td><code>==</code></td><td>Igual (valor)</td><td><code>5 == "5"</code></td><td>true</td></tr>
+        <tr><td><code>===</code></td><td>Igual (valor e tipo)</td><td><code>5 === "5"</code></td><td>false</td></tr>
+        <tr><td><code>!=</code></td><td>Diferente (valor)</td><td><code>5 != "5"</code></td><td>false</td></tr>
+        <tr><td><code>!==</code></td><td>Diferente (valor e tipo)</td><td><code>5 !== "5"</code></td><td>true</td></tr>
+      </table>
+      <div class="tip">Prefira sempre <code>===</code> e <code>!==</code> para evitar comportamentos inesperados.</div>
+    </section>
+
+    <section id="logicos">
+      <h2>Operadores Lógicos</h2>
+      <p>Combinam múltiplas condições:</p>
+      <table class="ref">
+        <tr><th>Operador</th><th>Nome</th><th>Exemplo</th><th>Resultado</th></tr>
+        <tr><td><code>&&</code></td><td>E (AND)</td><td><code>true && false</code></td><td>false</td></tr>
+        <tr><td><code>||</code></td><td>Ou (OR)</td><td><code>true || false</code></td><td>true</td></tr>
+        <tr><td><code>!</code></td><td>Não (NOT)</td><td><code>!true</code></td><td>false</td></tr>
+      </table>
+      <div class="note"><strong>Regra:</strong> <code>&&</code> exige todas as condições verdadeiras; <code>||</code> exige pelo menos uma verdadeira.</div>
+    </section>
+
+    <section id="booleanos">
+      <h2>Valores Booleanos</h2>
+      <p>Booleanos representam apenas dois valores: <code>true</code> (verdadeiro) ou <code>false</code> (falso).</p>
+<pre><code><span class="t">let</span> ativo = <span class="t">true</span>;
+<span class="t">let</span> desativado = <span class="t">false</span>;
+
+<span class="t">if</span> (ativo) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"O sistema está ativo"</span>);
+}</code></pre>
+      <div class="tip">Muitas funções e operações retornam valores booleanos, tornando-os essenciais para controle de fluxo.</div>
+    </section>
+
+    <section id="strings">
+      <h2>Strings e Manipulação Básica</h2>
+      <p>Strings são sequências de caracteres e podem ser manipuladas de várias formas:</p>
+<pre><code><span class="t">let</span> texto = <span class="v">"JavaScript"</span>;
+
+<span class="c">// Propriedades úteis</span>
+<span class="t">console</span>.<span class="a">log</span>(texto.<span class="a">length</span>); <span class="c">// 10 (tamanho)</span>
+<span class="t">console</span>.<span class="a">log</span>(texto.<span class="a">toUpperCase</span>()); <span class="c">// "JAVASCRIPT"</span>
+<span class="t">console</span>.<span class="a">log</span>(texto.<span class="a">toLowerCase</span>()); <span class="c">// "javascript"</span>
+<span class="t">console</span>.<span class="a">log</span>(texto.<span class="a">trim</span>()); <span class="c">// remove espaços</span></code></pre>
+      <div class="note"><strong>Importante:</strong> strings são imutáveis em JavaScript - métodos retornam novas strings.</div>
+    </section>
+
+    <section id="validacao">
+      <h2>Validações de Entrada</h2>
+      <p>Validar dados de entrada é essencial para evitar erros e garantir funcionalidade:</p>
+<pre><code><span class="t">let</span> idade = <span class="a">Number</span>(<span class="a">prompt</span>(<span class="v">"Digite sua idade: "</span>));
+
+<span class="t">if</span> (<span class="a">isNaN</span>(idade)) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Por favor, digite um número válido."</span>);
+} <span class="t">else if</span> (idade < <span class="v">0</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Idade não pode ser negativa."</span>);
+} <span class="t">else if</span> (idade >= <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Você é maior de idade."</span>);
+} <span class="t">else</span> {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Você é menor de idade."</span>);
+}</code></pre>
+      <div class="tip">Sempre valide entrada do usuário antes de processar os dados.</div>
+    </section>
+
+    <section id="exercicios">
+      <h2>Exercícios Práticos</h2>
+      <p>Baseado nos exercícios das pastas 21-05-26, 25-05-26, 26-05-26 e 27-05-26:</p>
+      
+      <h3>Exercício 1 - Comparação de Números</h3>
+      <p>Crie um programa que receba dois números e verifique se o primeiro é maior que o segundo.</p>
+<pre><code><span class="t">let</span> n1 = <span class="a">+</span><span class="a">prompt</span>(<span class="v">`Digite um Numero`</span>);
+<span class="t">let</span> n2 = <span class="a">+</span><span class="a">prompt</span>(<span class="v">`Digite outro Numero:`</span>);
+<span class="t">const</span> comparar = (n1 > n2 || n2 > n1);
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Os Numeros ${n1},${n2} tem diferença de: ${comparar}`</span>);</code></pre>
+
+      <h3>Exercício 2 - Sistema de Acesso Bancário</h3>
+      <p>Crie um sistema que valide acesso a uma conta bancária com usuário e senha.</p>
+<pre><code><span class="t">let</span> usuario = <span class="v">"cliente"</span>;
+<span class="t">const</span> senha = <span class="v">'banco123'</span>;
+<span class="t">let</span> saldo = <span class="v">1168.92</span>;
+
+<span class="t">if</span> (usuario === <span class="v">'cliente'</span> && senha === <span class="v">'banco123'</span>) {
+    <span class="t">if</span> (saldo > <span class="v">0</span>) {
+        <span class="t">console</span>.<span class="a">log</span>(<span class="v">`Acesso Concedido`</span>);
+    } <span class="t">else</span> {
+        <span class="t">console</span>.<span class="a">log</span>(<span class="v">`Conta sem saldo`</span>);
+    }
+} <span class="t">else</span> {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">`Credenciais Incorretas: Usuário ou senha inválidos...`</span>);
+}</code></pre>
+
+      <h3>Exercício 3 - Ano Bissexto</h3>
+      <p>Peça um ano e informe se ele é bissexto usando as regras apropriadas.</p>
+<pre><code><span class="t">let</span> ano = <span class="a">Number</span>(<span class="a">prompt</span>(<span class="v">"Digite um ano: "</span>));
+<span class="t">let</span> bissexto = <span class="t">false</span>;
+
+<span class="t">if</span> (ano % <span class="v">4</span> === <span class="v">0</span>) {
+    <span class="t">if</span> (ano % <span class="v">100</span> !== <span class="v">0</span> || ano % <span class="v">400</span> === <span class="v">0</span>) {
+        bissexto = <span class="t">true</span>;
+    }
+}
+
+<span class="t">if</span> (bissexto) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">`${ano} é um ano bissexto.`</span>);
+} <span class="t">else</span> {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">`${ano} não é um ano bissexto.`</span>);
+}</code></pre>
+    </section>
+
+    <footer>
+      <p>Conceitos Intermediários de Programação JavaScript</p>
+      <p>Pratique regularmente para solidificar o conhecimento!</p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
