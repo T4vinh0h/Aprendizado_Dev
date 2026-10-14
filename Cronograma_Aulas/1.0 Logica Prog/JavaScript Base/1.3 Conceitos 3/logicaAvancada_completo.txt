@@ -1,0 +1,385 @@
+[Lógica Avançada - Loops, Arrays e Funções
+Material de consulta e estudo das aulas de Lógica de Programação do Senac. Reúne contexto institucional, exemplos específicos das aulas, exercícios práticos, base teórica e explicações linha a linha.
+Como usar este material: consulte os conceitos conforme precisar, execute os exemplos no ambiente indicado e tente resolver os exercícios antes de olhar novamente os exemplos. Os trechos identificados como exemplos da aula foram mantidos; quando necessário, o código foi corrigido para corresponder ao resultado explicado.
+1. Contexto Geral da Disciplina
+Informações Institucionais
+Instituição: Senac Fecomércio / Unisenac Centro Universitário RS
+Curso: Técnico em Desenvolvimento de Sistemas
+Disciplina: Programador Web
+Professor(a): Profª Maria Antônia e Prof. Cauê Duarte
+Este material cobre todo o conteúdo das UC 2 (Unidade Curricular 2) do curso, incluindo Aulas 1 a 5 e o Resumo Geral de Lógica de Programação.
+2. Loops (while, for)
+DEFINIÇÃO
+Loops permitem executar código repetidamente enquanto uma condição for verdadeira. É como o programa fazer algo automaticamente várias vezes sem você precisar escrever o mesmo código repetidamente.
+WHILE LOOP
+O while é ideal quando não sabemos quantas repetições serão necessárias. Ele continua executando enquanto a condição for verdadeira.
+// ============================================
+// WHILE LOOP
+// ============================================
+
+let i = 1;
+// "i" = nome da caixinha
+// "=" = "guarde isso aqui dentro"
+// "1" = valor inicial
+
+while (i <= 10) {
+    // i <= 10 = "i é menor ou igual a 10?"
+    // while = "enquanto isso for verdadeiro, continue executando"
+    
+    console.log(i);
+    // mostra o valor de i no console
+    
+    i++;
+    // i++ = "incremente i em 1" (i = i + 1)
+}
+// mostra: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+FOR LOOP
+O for é ideal quando sabemos o número exato de repetições. A sintaxe compacta já inclui inicialização, condição e incremento em uma linha.
+// ============================================
+// FOR LOOP
+// ============================================
+
+for (let i = 1; i <= 10; i++) {
+    // let i = 1 = "comece com i valendo 1"
+    // i <= 10  = "continua enquanto i for menor ou igual a 10"
+    // i++     = "incremente i em 1" após cada repetição
+    
+    console.log(i);
+    // mostra o valor de i no console
+}
+// mostra: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+DETALHES IMPORTANTES
+Diferença: while é melhor quando não sabemos quantas repetições serão necessárias; for é ideal quando sabemos o número exato.
+3. Switch Case
+DEFINIÇÃO
+O switch é uma alternativa elegante a múltiplos if/else quando comparamos o mesmo valor. É mais limpo e organizado em situações com muitas comparações da mesma variável.
+ESTRUTURA BÁSICA
+// ============================================
+// SWITCH CASE
+// ============================================
+
+let dia = "segunda";
+// "dia" = nome da caixinha
+// "="   = "guarde isso aqui dentro"
+// "segunda" = valor guardado (texto)
+
+switch (dia) {
+    // switch = "verifique o valor da caixinha dia"
+    
+    case "segunda":
+        // case "segunda" = "se o valor for 'segunda'"
+        console.log("Hoje é segunda-feira");
+        // mostra "Hoje é segunda-feira" no console
+        break;
+        // break = "saia do switch"
+    
+    case "terca":
+        console.log("Hoje é terça-feira");
+        break;
+    
+    default:
+        console.log("Dia não reconhecido");
+        // default = "se nenhum case bater, execute isto"
+        break;
+}
+DETALHES IMPORTANTES
+Não esqueça do break em cada case, senão o código continua executando nos próximos casos mesmo depois de encontrar uma correspondência.
+4. Arrays e Métodos
+DEFINIÇÃO
+Arrays são listas ordenadas de valores que podem ser manipuladas com métodos específicos. Pense como uma caixa com vários compartimentos, cada um com um índice (número) para acessar.
+ESTRUTURA BÁSICA
+// ============================================
+// ARRAYS E MÉTODOS
+// ============================================
+
+// ============================================
+// Criando um array
+// ============================================
+let nomes = ["Ana", "Bruno", "Carlos", "Daniela", "Eduardo"];
+// "nomes" = nome da caixinha
+// []     = cria uma lista/array
+// valores entre aspas separados por vírgula
+
+// ============================================
+// Métodos básicos
+// ============================================
+console.log(nomes.length); // 5 (tamanho)
+console.log(nomes[0]); // "Ana" (primeiro elemento)
+console.log(nomes.push("Fernanda")); // adiciona ao final
+console.log(nomes.pop()); // remove do final
+console.log(nomes.shift()); // remove do início
+console.log(nomes.unshift("Zoe")); // adiciona no início
+DETALHES IMPORTANTES
+Importante: arrays em JavaScript são indexados a partir de 0, não de 1. O primeiro elemento está no índice 0, o segundo no índice 1, e assim por diante.
+5. Funções Declaradas
+DEFINIÇÃO
+Funções são blocos de código reutilizáveis que podem ser chamados quando necessário. Pense como uma "receita" que você define uma vez e pode usar quantas vezes quiser.
+ESTRUTURA BÁSICA
+// ============================================
+// FUNÇÕES DECLARADAS
+// ============================================
+
+// ============================================
+// Declarando uma função
+// ============================================
+function saudar(nome) {
+    // function = "cria uma função"
+    // saudar   = "nome da função"
+    // (nome)   = "parâmetro - dado que entra na função"
+    
+    return `Olá, ${nome}!`;
+    // return = "devolva este resultado quando a função for chamada"
+    // `Olá, ${nome}!` = "texto com o valor de nome encaixado"
+    // "saudar" = nome da caixinha que recebe o resultado
+}
+
+// ============================================
+// Chamando a função
+// ============================================
+console.log(saudar("Maria")); // "Olá, Maria!"
+console.log(saudar("João"));  // "Olá, João!"
+DETALHES IMPORTANTES
+Use funções para evitar repetição de código e tornar seu programa mais organizado. Quando você precisa fazer a mesma coisa várias vezes, crie uma função!
+6. Estruturas Aninhadas
+DEFINIÇÃO
+Estruturas podem ser combinadas para criar lógicas mais complexas. Isso significa colocar uma estrutura dentro de outra, como um loop dentro de outro loop, ou um if dentro de um for.
+EXEMPLO PRÁTICO
+// ============================================
+// ESTRUTURAS ANINHADAS
+// ============================================
+
+for (let i = 1; i <= 3; i++) {
+    // loop externo com i de 1 a 3
+    
+    console.log(`Iteração externa: ${i}`);
+    // mostra: "Iteração externa: 1", depois "Iteração externa: 2", etc.
+    
+    for (let j = 1; j <= 2; j++) {
+        // loop interno com j de 1 a 2
+        console.log(`  Iteração interna: ${j}`);
+        // mostra: "  Iteração interna: 1", depois "  Iteração interna: 2"
+    }
+}
+// Resultado:
+// Iteração externa: 1
+//   Iteração interna: 1
+//   Iteração interna: 2
+// Iteração externa: 2
+//   Iteração interna: 1
+//   Iteração interna: 2
+// Iteração externa: 3
+//   Iteração interna: 1
+//   Iteração interna: 2
+DETALHES IMPORTANTES
+Cuidado: estruturas muito aninhadas podem dificultar a leitura do código. Mantenha o nível de aninhamento razoável. Se estiver muito difícil de entender, considere refatorar.
+7. Break e Continue
+DEFINIÇÃO
+Comandos para controlar o fluxo de loops. Permitem interromper ou pular repetições específicas dentro de loops.
+BREAK
+O break sai completamente do loop quando encontrado. É como dizer "pare tudo, encontrei o que procurava".
+// ============================================
+// BREAK - sai completamente do loop
+// ============================================
+
+for (let i = 1; i <= 10; i++) {
+    if (i === 5) {
+        break; // para no 5
+        // i === 5 = "i é igual a 5?"
+        // break    = "saia do loop completamente"
+    }
+    console.log(i);
+}
+// mostra: 1, 2, 3, 4 (para antes do 5)
+CONTINUE
+O continue pula a iteração atual e continua com a próxima. É como dizer "pule este, mas continue com os próximos".
+// ============================================
+// CONTINUE - pula a iteração atual
+// ============================================
+
+for (let i = 1; i <= 10; i++) {
+    if (i === 5) {
+        continue; // pula o 5
+        // i === 5    = "i é igual a 5?"
+        // continue    = "pule esta iteração e vá para a próxima"
+    }
+    console.log(i);
+}
+// mostra: 1, 2, 3, 4, 6, 7, 8, 9, 10 (pula o 5)
+DETALHES IMPORTANTES
+Use break quando encontrar o que procura; use continue quando quiser ignorar casos específicos.
+8. Métodos Avançados
+DEFINIÇÃO
+Métodos úteis para manipulação de dados, especialmente números e strings. Ajudam a formatar, converter e validar informações.
+TABELA COMPLETA DE MÉTODOS
+Método	Descrição	Exemplo	Resultado
+toFixed()	Formata casas decimais	(3.14159).toFixed(2)	"3.14"
+toLowerCase()	Converte para minúsculas	"HELLO".toLowerCase()	"hello"
+toUpperCase()	Converte para maiúsculas	"hello".toUpperCase()	"HELLO"
+trim()	Remove espaços	" hello ".trim()	"hello"
+typeof	Verifica tipo	typeof 42	"number"
+DETALHES IMPORTANTES
+Importante: toFixed() retorna uma string, não um número. Se você precisar fazer cálculos depois, converta de volta com Number().
+9. Exercícios Práticos Completos
+Exercício 1 - Contagem de 1 até 10
+Crie um programa que use while para mostrar no console os números de 1 até 10.
+// ============================================
+// EXERCÍCIO 1 - CONTAGEM DE 1 ATÉ 10 (WHILE)
+// ============================================
+
+// ============================================
+// Inicialização
+// ============================================
+let i = 1;
+// "i" = nome da caixinha
+// "=" = "guarde isso aqui dentro"
+// "1" = valor inicial
+
+// ============================================
+// Loop while
+// ============================================
+while (i <= 10) {
+    // i <= 10 = "i é menor ou igual a 10?"
+    // while  = "enquanto isso for verdadeiro, continue executando"
+    
+    console.log(i);
+    // mostra o valor de i no console
+    
+    i++;
+    // i++ = "incremente i em 1" (i = i + 1)
+}
+Exercício 2 - Contagem com For
+Crie um programa que use o laço for para mostrar no console os números de 1 até 10.
+// ============================================
+// EXERCÍCIO 2 - CONTAGEM COM FOR
+// ============================================
+
+for (let i = 1; i <= 10; i++) {
+    // let i = 1     = "comece com i valendo 1"
+    // i <= 10      = "continua enquanto i for menor ou igual a 10"
+    // i++          = "incremente i em 1" após cada repetição
+    
+    console.log(`${i}`);
+    // mostra o valor de i no console com template string
+}
+Exercício 3 - Array de Nomes
+Crie um array chamado nomes com 5 nomes de pessoas e mostre o array completo no console.
+// ============================================
+// EXERCÍCIO 3 - ARRAY DE NOMES
+// ============================================
+
+// ============================================
+// Criando o array
+// ============================================
+let nomes = ["Ana", "Bruno", "Carlos", "Daniela", "Eduardo"];
+// "nomes" = nome da caixinha
+// []     = cria uma lista/array
+// valores entre aspas separados por vírgula
+
+// ============================================
+// Saída - mostrando o array completo
+// ============================================
+console.log(nomes);
+// mostra: ["Ana", "Bruno", "Carlos", "Daniela", "Eduardo"]
+Exercício 4 - Sistema de Média com Recuperação
+Crie um programa que leia o nome de um aluno e 4 notas, calcule a média e mostre a situação.
+// ============================================
+// EXERCÍCIO 4 - SISTEMA DE MÉDIA COM RECUPERAÇÃO
+// ============================================
+
+const prompt = require('prompt-sync')();
+
+// ============================================
+// Entrada - recebendo nome do aluno
+// ============================================
+let nome = prompt(`Digite o nome do Aluno(a): `);
+// "nome" = nome da caixinha
+// "="   = "guarde o resultado aqui dentro"
+// prompt() = pede ao usuário digitar
+
+// ============================================
+// Processamento - acumulando as notas
+// ============================================
+let acumulador = 0;
+// "acumulador" = nome da caixinha
+// "="           = "guarde isso aqui dentro"
+// "0"           = valor inicial (começa do zero)
+
+for (let i = 1; i <= 4; i++) {
+    // loop de 1 a 4 (4 notas)
+    
+    let nota = Number(prompt(`Digite a ${i}º nota de ${nome}: `));
+    // "nota" = nome da caixinha
+    // "="    = "guarde o resultado aqui dentro"
+    // Number() = converte para número
+    // prompt() = pede ao usuário digitar
+    
+    acumulador += nota;
+    // acumulador += nota = "acumulador = acumulador + nota"
+    // soma a nota atual ao acumulador
+}
+
+// ============================================
+// Cálculo da média
+// ============================================
+let media = acumulador / 4;
+// "media" = nome da caixinha
+// "="    = "guarde o resultado aqui dentro"
+// acumulador / 4 = "divida a soma das notas por 4"
+
+// ============================================
+// Classificação com switch
+// ============================================
+let situacao;
+
+switch (true) {
+    case (media >= 7):
+        situacao = "Aprovado";
+        break;
+    case (media >= 5):
+        situacao = "Recuperação";
+        break;
+    default:
+        situacao = "Reprovado";
+}
+
+// ============================================
+// Saída - mostrando resultados
+// ============================================
+console.log(`Nome: ${nome}`);
+console.log(`Média: ${media.toFixed(2)}`);
+console.log(`Situação: ${situacao}`);
+10. Guia rápido de consulta
+Esta seção complementa os tópicos anteriores; não substitui os exemplos detalhados.
+Preciso...	Recurso		
+Executar código repetidamente	while, for		
+Decisão entre múltiplos valores	switch, case, break, default		
+Decisão simples em uma linha	condição ? valorSeVerdadeiro : valorSeFalso		
+Trabalhar com listas ordenadas	[] (criar array), .length, [índice], .push(), .pop(), .shift(), .unshift()		
+Criar código reutilizável	function, return, parâmetros		
+Combinar estruturas	loops dentro de loops, ifs dentro de loops		
+Controlar fluxo de loops	break, continue		
+Formatar números decimais	.toFixed()		
+Converter maiúsculas/minúsculas	.toLowerCase(), .toUpperCase()		
+Remover espaços em texto	.trim()		
+Verificar tipo de dado	typeof		
+Checklist para resolver um exercício
+1.	Identifique se precisa de repetir alguma ação.
+2.	Determine se sabe o número exato de repetições ou não.
+3.	Escolha while se desconhece o número; escolha for se sabe.
+4.	Para múltiplas comparações do mesmo valor, considere switch/case.
+5.	Para decisões simples em uma linha, considere o operador ternário.
+6.	Identifique quando precisa de estruturas de dados (arrays).
+7.	Crie funções para código que se repete muito.
+8.	Combine estruturas quando necessário, mas mantenha legibilidade.
+9.	Use break e continue para controlar fluxo específico em loops.
+10.	Aplicue métodos de formatação e conversão quando necessário.
+11.	Teste valores diferentes, incluindo casos-limite.
+12.	Se ocorrer um erro, leia a mensagem e confira loops, índices de array, parâmetros de função e tipos de dados.
+Observação sobre os exemplos
+Os exemplos são modelos para estudo. Em exercícios que pedem entrada de dados, adapte os valores fixos para leituras com prompt-sync quando esse for o objetivo. Em exemplos de loops, lembre-se de verificar a condição de parada para evitar loops infinitos. Em exemplos de arrays, lembre-se de que os índices começam em 0, não em 1.
+Conceitos Avançados de Programação JavaScript
+──────────────────────────────────────────────────
+Material completo das UC 2 - Aulas 1 a 5 + Resumo Geral
+Senac Fecomércio / Unisenac Centro Universitário RS
+Profª Maria Antônia e Prof. Cauê Duarte
+Técnico em Desenvolvimento de Sistemas]

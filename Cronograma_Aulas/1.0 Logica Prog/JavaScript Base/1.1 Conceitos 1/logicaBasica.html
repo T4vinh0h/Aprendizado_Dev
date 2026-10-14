@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lógica Básica - Conceitos Fundamentais</title>
+  <style>
+    :root {
+      --bg: #f5f7fa; --surface: #ffffff; --ink: #1c2430; --muted: #5b6676;
+      --line: #dbe1ea; --accent: #1d4ed8; --accent-soft: #e3ebff;
+      --code-bg: #1b2230; --code-ink: #e6edf7;
+      --tag: #ff9d6e; --attr: #7fd1b9; --val: #f3d37a;
+      --bad: #b4234a; --warn: #b8690f; --good: #1a7f4b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.1rem; line-height: 1.7; }
+    h1, h2, h3, nav, .tip, .note, .demo-label, .pair-label { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); max-width: 1100px; margin: 0 auto; gap: 3rem; padding: 0 1.5rem; }
+    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 0; font-size: .95rem; }
+    nav strong { display: block; margin-bottom: .75rem; }
+    nav a { display: block; padding: .3rem .6rem; color: var(--muted); text-decoration: none; border-left: 2px solid var(--line); }
+    nav a:hover, nav a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
+    main { padding: 2.5rem 0 5rem; max-width: 70ch; }
+    h1 { font-size: clamp(2.1rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -.02em; }
+    h2 { font-size: 1.7rem; margin: 3.5rem 0 .75rem; letter-spacing: -.01em; }
+    h3 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+    p { margin: 0 0 1.1rem; }
+    .lead { font-size: 1.2rem; color: var(--muted); }
+    code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9em; background: var(--accent-soft); padding: .1em .35em; border-radius: 4px; }
+    pre { margin: 1rem 0 1.5rem; background: var(--code-bg); color: var(--code-ink); padding: 1.1rem 1.25rem; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+    pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+    .t { color: var(--tag); } .a { color: var(--attr); } .v { color: var(--val); } .c { color: #8a97ad; font-style: italic; }
+    .demo { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; margin: -.5rem 0 1.75rem; overflow: hidden; }
+    .demo-label { font-size: .8rem; color: var(--muted); padding: .4rem 1rem; border-bottom: 1px solid var(--line); background: #eef2f8; }
+    .demo-body { padding: 1rem 1.25rem; }
+    .tip, .note { font-size: .97rem; padding: .9rem 1.1rem; border-radius: 8px; margin: 1.5rem 0; }
+    .tip { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+    .note { background: #fff4e0; border-left: 4px solid #e0912a; }
+    table.ref { border-collapse: collapse; width: 100%; font-family: system-ui, sans-serif; font-size: .95rem; margin-bottom: 1.5rem; }
+    table.ref th, table.ref td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+    table.ref th { background: #eef2f8; }
+    ul.check { padding-left: 1.2rem; } ul.check li { margin-bottom: .4rem; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 1.5rem; }
+    .pair pre { margin: .4rem 0 0; }
+    .pair-label { font-size: .85rem; font-weight: 600; color: var(--muted); }
+    .evite { color: var(--bad); font-weight: 600; } .melhor { color: var(--warn); font-weight: 600; } .prefira { color: var(--good); font-weight: 600; }
+    footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 4rem; color: var(--muted); font-size: .95rem; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      nav { position: static; height: auto; padding: 1.5rem 0 0; }
+      nav a { display: inline-block; border-left: none; border-bottom: 2px solid var(--line); margin-right: .4rem; }
+      .pair { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <nav aria-label="Índice da aula">
+    <strong>Nesta aula</strong>
+    <a href="#contexto">Contexto da Disciplina</a>
+    <a href="#introducao">Introdução à Lógica e Algoritmos</a>
+    <a href="#fluxo">Fluxo: Entrada, Processamento, Saída</a>
+    <a href="#ferramentas">Ferramentas de Desenvolvimento</a>
+    <a href="#variaveis">Variáveis e Tipos de Dados</a>
+    <a href="#console">console.log</a>
+    <a href="#template">Template Strings</a>
+    <a href="#aritmeticos">Operadores Aritméticos</a>
+    <a href="#relacionais">Operadores Relacionais</a>
+    <a href="#logicos">Operadores Lógicos</a>
+    <a href="#condicionais">Estruturas Condicionais</a>
+    <a href="#prompt">Entrada de Dados</a>
+    <a href="#conversao">Conversão de Tipos</a>
+    <a href="#erros">Erros Comuns</a>
+    <a href="#exercicios">Exercícios Práticos</a>
+    <a href="#guia">Guia Rápido de Consulta</a>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Lógica Básica - Conceitos Fundamentais</h1>
+      <p class="lead">Material de consulta e estudo das aulas de Lógica de Programação do Senac. Reúne contexto institucional, exemplos específicos das aulas, exercícios práticos, base teórica e explicações linha a linha.</p>
+      <div class="note"><strong>Como usar este material:</strong> consulte os conceitos conforme precisar, execute os exemplos no ambiente indicado e tente resolver os exercícios antes de olhar novamente os exemplos. Os trechos identificados como exemplos da aula foram mantidos; quando necessário, o código foi corrigido para corresponder ao resultado explicado.</div>
+    </header>
+
+    <section id="contexto">
+      <h2>1. Contexto Geral da Disciplina</h2>
+      
+      <h3>Informações Institucionais</h3>
+      <p><strong>Instituição:</strong> Senac Fecomércio / Unisenac Centro Universitário RS</p>
+      <p><strong>Curso:</strong> Técnico em Desenvolvimento de Sistemas</p>
+      <p><strong>Disciplina:</strong> Programador Web</p>
+      <p><strong>Professor(a):</strong> Profª Maria Antônia e Prof. Cauê Duarte</p>
+      
+      <div class="note"><strong>Este material cobre todo o conteúdo das UC 2 (Unidade Curricular 2) do curso, incluindo Aulas 1 a 5 e o Resumo Geral de Lógica de Programação.</strong></div>
+    </section>
+
+    <section id="introducao">
+      <h2>2. Introdução à Lógica e Algoritmos</h2>
+      
+      <h3>O QUE É LÓGICA?</h3>
+      <p>Lógica é a capacidade de organizar nosso pensamento de forma estruturada. É como aprender a "pensar de forma organizada" para resolver problemas passo a passo.</p>
+      
+      <h3>O QUE É ALGORITMO?</h3>
+      <p>Algoritmo é uma sequência finita (com início, meio e fim) de passos lógicos para resolver um problema ou realizar uma tarefa específica. Todo algoritmo precisa ser:</p>
+      <ul class="check">
+        <li>Claro e bem definido</li>
+        <li>Ter um início óbvio</li>
+        <li>Ter passos lógicos na ordem certa</li>
+        <li>Ter um fim definido</li>
+      </ul>
+      
+      <h3>EXEMPLO PRÁTICO: ALGORITMO DO BANHO</h3>
+      <p>Este é um exemplo clássico de algoritmo que todo mundo entende:</p>
+      
+      <div class="demo">
+        <div class="demo-label">Algoritmo para tomar banho (9 passos detalhados)</div>
+        <div class="demo-body">
+          <ol>
+            <li>Entrar no banheiro</li>
+            <li>Ligar o chuveiro</li>
+            <li>Ajustar a temperatura da água</li>
+            <li>Molhar o corpo</li>
+            <li>Passar sabonete</li>
+            <li>Enxaguar o corpo</li>
+            <li>Desligar o chuveiro</li>
+            <li>Secar o corpo com a toalha</li>
+            <li>Vestir-se</li>
+          </ol>
+        </div>
+      </div>
+      
+      <div class="tip"><strong>Exercício proposto:</strong> Tente escrever o algoritmo da sua rotina para vir para a aula de Técnico em Desenvolvimento de Sistemas. Comece desde quando você acorda até chegar na sala de aula.</div>
+      
+      <h3>LÓGICA DE PROGRAMAÇÃO NO DIA A DIA</h3>
+      <p>Usamos lógica constantemente, muitas vezes sem perceber. O melhor exemplo é decidir se leva guarda-chuva:</p>
+      <ul class="check">
+        <li><strong>Se estiver chovendo</strong> → Levar guarda-chuva</li>
+        <li><strong>Se não estiver chovendo</strong> → Não levar guarda-chuva</li>
+      </ul>
+      
+      <p>Este é um exemplo simples de decisão condicional, que é fundamental na programação.</p>
+      
+      <h3>LINGUAGEM DE PROGRAMAÇÃO</h3>
+      <p>Uma linguagem de programação é um conjunto de regras e símbolos para implementar algoritmos que o computador consegue entender. Existem várias linguagens:</p>
+      <ul class="check">
+        <li>Python</li>
+        <li>Java</li>
+        <li>C</li>
+        <li>C#</li>
+        <li>PHP</li>
+        <li>JavaScript (a que vamos usar)</li>
+        <li>Portugol</li>
+      </ul>
+      
+      <h3>EXEMPLO SIMPLES EM JAVASCRIPT</h3>
+<pre><code><span class="c">// Este é o programa mais famoso de programação</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"Olá, mundo!"</span>);</code></pre>
+    </section>
+
+    <section id="fluxo">
+      <h2>3. Fluxo: Entrada → Processamento → Saída</h2>
+      
+      <h3>OS TRÊS COMPONENTES FUNDAMENTAIS</h3>
+      <p>Todo programa funciona basicamente assim: recebe dados (entrada), processa esses dados (processamento) e apresenta o resultado (saída).</p>
+      
+      <table class="ref">
+        <tr><th>Componente</th><th>O que é</th><th>Exemplos específicos</th></tr>
+        <tr><td><strong>Entrada</strong></td><td>Dados recebidos pelo programa</td><td>Nome do usuário, dois números, idade, senha</td></tr>
+        <tr><td><strong>Processamento</strong></td><td>Manipulação dos dados através de regras</td><td>Somar números, verificar idade, comparar valores, calcular média</td></tr>
+        <tr><td><strong>Saída</strong></td><td>Resultado apresentado ao usuário</td><td>"Resultado = 10", "Acesso permitido", "Usuário cadastrado", "YOU WIN!"</td></tr>
+      </table>
+      
+      <h3>EXEMPLO 1: PREPARAR CAFÉ</h3>
+      <div class="demo">
+        <div class="demo-label">Fluxo completo</div>
+        <div class="demo-body">
+          <p><strong>Entrada:</strong> Água, café, açúcar</p>
+          <p><strong>Processamento:</strong> Ferver água, misturar café, coar</p>
+          <p><strong>Saída:</strong> Café pronto</p>
+        </div>
+      </div>
+      
+      <h3>EXEMPLO 2: SOMA DE DOIS NÚMEROS</h3>
+      <p><strong>Conceito matemático:</strong> 6 + 4 = 10 (Parcelas → Soma)</p>
+      <p><strong>Estrutura algorítmica:</strong> Número 1, Número 2 → Somar os números → Resultado da soma</p>
+      
+      <h3>IMPLEMENTAÇÃO EM JAVASCRIPT</h3>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// EXEMPLO: SOMA DE DOIS NÚMEROS</span>
+<span class="c">// ============================================</span>
+
+<span class="c">// Entrada - recebendo os números</span>
+<span class="t">let</span> numero1 = <span class="v">5</span>;
+<span class="c">// "numero1" = nome da caixinha</span>
+<span class="c">// "="       = "guarde isso aqui dentro"</span>
+<span class="c">// "5"       = valor guardado</span>
+
+<span class="t">let</span> numero2 = <span class="v">3</span>;
+<span class="c">// "numero2" = nome da caixinha</span>
+<span class="c">// "="       = "guarde isso aqui dentro"</span>
+<span class="c">// "3"       = valor guardado</span>
+
+<span class="c">// Processamento - somando os números</span>
+<span class="t">let</span> soma = numero1 + numero2;
+<span class="c">// "soma"    = nome da caixinha onde vai o resultado</span>
+<span class="c">// "="       = "guarde o resultado aqui dentro"</span>
+<span class="c">// numero1 + numero2 = "some os valores das duas caixinhas"</span>
+
+<span class="c">// Saída - mostrando o resultado</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"Resultado:"</span>, soma);
+<span class="c">// mostra "Resultado: 8" no console</span></code></pre>
+      
+      <h3>EXERCÍCIO EM GRUPO</h3>
+      <p><strong>Tarefa:</strong> Identifique Entrada, Processamento e Saída para:</p>
+      <ul class="check">
+        <li>Calculadora</li>
+        <li>Login de usuário</li>
+        <li>Caixa eletrônico</li>
+        <li>Sistema de notas escolares</li>
+        <li>E-commerce</li>
+        <li>Aplicativo de delivery</li>
+      </ul>
+    </section>
+
+    <section id="ferramentas">
+      <h2>4. Ferramentas de Desenvolvimento</h2>
+      
+      <h3>JAVASCRIPT</h3>
+      <p>Linguagem interpretada e multiplataforma. Criada para a web, hoje usada no backend, navegador e servidor com Node.js. É baseada no motor V8 do Google Chrome.</p>
+      
+      <h3>NODE.JS</h3>
+      <p>Permite executar JavaScript fora do navegador de forma direta no terminal. Isso significa que podemos criar programas que rodam no computador, não apenas em sites.</p>
+      
+      <h3>BIBLIOTECA prompt-sync</h3>
+      <p>Biblioteca síncrona para entrada de dados no terminal. É compatível com Windows, Linux e macOS e permite que programas JavaScript interajam com usuários via terminal.</p>
+      
+      <h3>VISUAL STUDIO CODE (VS CODE)</h3>
+      <p>Editor de código gratuito, leve e multiplataforma. Tem terminal integrado, suporte a extensões e é muito popular entre programadores profissionais.</p>
+      
+      <h3>ESTRUTURA BÁSICA DE UM PROGRAMA</h3>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// ESTRUTURA BÁSICA DE UM PROGRAMA</span>
+<span class="c">// ============================================</span>
+
+<span class="c">// Entrada - dados que entram no programa</span>
+<span class="t">const</span> nome = <span class="v">"João"</span>;
+<span class="c">// "const" = não permite atribuir outro valor à variável</span>
+<span class="c">// "nome" = nome da caixinha</span>
+<span class="c">// "="    = "guarde isso aqui dentro"</span>
+<span class="c">// "João" = valor guardado (texto)</span>
+
+<span class="c">// Processamento - manipulando os dados</span>
+<span class="t">const</span> mensagem = <span class="v">"Olá, "</span> + nome;
+<span class="c">// gruda "Olá, " com o valor da caixinha "nome"</span>
+<span class="c">// resultado: "Olá, João"</span>
+
+<span class="c">// Saída - mostrando o resultado</span>
+<span class="t">console</span>.<span class="a">log</span>(mensagem);
+<span class="c">// mostra "Olá, João" no console</span></code></pre>
+    </section>
+
+    <section id="variaveis">
+      <h2>5. Variáveis e Tipos de Dados</h2>
+      
+      <h3>CONCEITO DE VARIÁVEL</h3>
+      <p>Variável é um espaço reservado na memória para armazenar informações. Pense como caixas com rótulos (etiquetas) onde guardamos diferentes tipos de dados.</p>
+      
+      <div class="demo">
+        <div class="demo-label">Representação visual de variáveis</div>
+        <div class="demo-body">
+          <p>📦 <strong>[myInt]</strong> → número inteiro</p>
+          <p>📦 <strong>[myReal]</strong> → número decimal</p>
+          <p>📦 <strong>[myChar]</strong> → caractere</p>
+          <p>📦 <strong>[myString]</strong> → texto</p>
+        </div>
+      </div>
+      
+      <h3>AS 3 FORMAS DE CRIAR UMA VARIÁVEL (as "etiquetas")</h3>
+      
+      <h4>const - Valor FIXO</h4>
+      <p>Cria uma variável que não pode receber uma nova atribuição depois de declarada. Para valores primitivos, isso significa que o valor não pode ser substituído. Em arrays e objetos, porém, os elementos ou propriedades ainda podem ser alterados.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// const - Valor FIXO (não muda nunca)</span>
+<span class="c">// ============================================</span>
+
+<span class="t">const</span> pi = <span class="v">3.14</span>;
+<span class="c">// "const" = não permite atribuir outro valor à variável</span>
+<span class="c">// "pi"    = nome da caixinha</span>
+<span class="c">// "="     = "guarde isso aqui dentro"</span>
+<span class="c">// "3.14"  = valor guardado</span>
+
+<span class="c">// pi = 3.15;  // ❌ ERRO! const não deixa reatribuir</span>
+<span class="c">// Se tentar mudar, o programa para com erro!</span>
+
+<span class="c">// Atenção: const impede reatribuir a variável, mas não congela</span>
+<span class="c">// automaticamente objetos e arrays. Exemplo:</span>
+<span class="c">// const pessoa = { nome: "João" };</span>
+<span class="c">// pessoa.nome = "Maria"; // funciona</span>
+<span class="c">// pessoa = {};           // erro: tentativa de reatribuição</span></code></pre>
+      
+      <h4>let - Valor que PODE mudar</h4>
+      <p>Cria uma variável que PODE mudar de valor depois. Oferece maior flexibilidade.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// let - Valor que PODE mudar</span>
+<span class="c">// ============================================</span>
+
+<span class="t">let</span> nota = <span class="v">8</span>;
+<span class="c">// "let"  = valor pode mudar depois</span>
+<span class="c">// "nota" = nome da caixinha</span>
+<span class="c">// "="    = "guarde isso aqui dentro"</span>
+<span class="c">// "8"    = valor guardado</span>
+
+nota = <span class="v">9</span>;
+<span class="c">// ✅ funciona! "let" permite atualizar</span>
+<span class="c">// "nota" = "atualize o valor da caixinha"</span>
+<span class="c">// "="    = "com este novo valor"</span>
+<span class="c">// "9"    = novo valor</span>
+
+<span class="t">console</span>.<span class="a">log</span>(nota);  <span class="c">// Resultado: 9</span></code></pre>
+      
+      <h4>var - Forma antiga (EVITE usar)</h4>
+      <p>Forma antiga de criar variável (antes de 2015). Também pode mudar de valor, mas tem comportamentos estranhos (não respeita bem os blocos {}) e por isso hoje em dia EVITA-SE usar var. Só existe pra manter compatibilidade com código antigo.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// var - Forma antiga (EVITE usar)</span>
+<span class="c">// ============================================</span>
+
+<span class="t">var</span> cidade = <span class="v">"Pelotas"</span>;
+<span class="c">// funciona, mas prefira "let" pra isso</span>
+
+cidade = <span class="v">"Porto Alegre"</span>;
+<span class="c">// funciona, mas prefira "let" pra isso</span>
+
+<span class="c">// RESUMO DAS ETIQUETAS:</span>
+<span class="c">// const → não permite reatribuição (USE POR PADRÃO QUANDO POSSÍVEL)</span>
+<span class="c">// let   → valor pode mudar (use quando sabe que vai atualizar)</span>
+<span class="c">// var   → forma antiga, evite usar</span></code></pre>
+      
+      <div class="tip"><strong>Boa prática:</strong> Usar <code>const</code> por padrão e <code>let</code> quando a variável precisar receber outro valor. Atenção: const impede a reatribuição, mas não torna automaticamente imutáveis os objetos e arrays armazenados nela.</div>
+      
+      <h3>REGRAS PARA NOMES DE VARIÁVEIS</h3>
+      
+      <table class="ref">
+        <tr><th>✅ PERMITIDO</th><th>❌ NÃO PERMITIDO</th><th>MOTIVO</th></tr>
+        <tr><td><code>let idade;</code></td><td><code>let 123nome;</code></td><td>Não pode começar com números</td></tr>
+        <tr><td><code>let nomeCompleto;</code></td><td><code>let let;</code></td><td>Não pode usar palavras reservadas</td></tr>
+        <tr><td><code>let valor_total;</code></td><td><code>let nome-completo;</code></td><td>Não pode usar hífen</td></tr>
+      </table>
+      
+      <h3>TIPOS DE DADOS PRIMITIVOS</h3>
+      <p>O JavaScript identifica o tipo automaticamente (tipagem dinâmica). Os tipos primitivos são:</p>
+      
+      <h4>string - Texto</h4>
+      <p>Textos entre aspas simples ou duplas.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// string - Texto (sempre entre aspas)</span>
+<span class="c">// ============================================</span>
+
+<span class="t">const</span> nome = <span class="v">"Carlos"</span>;
+<span class="c">// "const" = valor fixo</span>
+<span class="c">// "nome" = nome da caixinha</span>
+<span class="c">// "="    = "guarde isso aqui dentro"</span>
+<span class="c">// "Carlos" = valor guardado (texto)</span>
+<span class="c">// ""      = aspas indicam que é texto</span>
+
+<span class="t">console</span>.<span class="a">log</span>(nome);  <span class="c">// mostra "Carlos"</span></code></pre>
+      
+      <h4>number - Número</h4>
+      <p>Valores numéricos inteiros e decimais.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// number - Número (inteiro ou decimal)</span>
+<span class="c">// ============================================</span>
+
+<span class="t">let</span> idade = <span class="v">25</span>;
+<span class="c">// "let"  = valor pode mudar</span>
+<span class="c">// "idade" = nome da caixinha</span>
+<span class="c">// "="    = "guarde isso aqui dentro"</span>
+<span class="c">// "25"   = valor guardado (número)</span>
+<span class="c">// sem aspas = indica que é número</span>
+
+<span class="t">console</span>.<span class="a">log</span>(idade);  <span class="c">// mostra 25</span></code></pre>
+      
+      <h4>boolean - Booleano/Lógico</h4>
+      <p>Valores lógicos true ou false.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// boolean - Booleano/Lógico (só true ou false)</span>
+<span class="c">// ============================================</span>
+
+<span class="t">let</span> aprovado = <span class="t">true</span>;
+<span class="c">// "let"     = valor pode mudar</span>
+<span class="c">// "aprovado" = nome da caixinha</span>
+<span class="c">// "="       = "guarde isso aqui dentro"</span>
+<span class="c">// "true"    = valor guardado (verdadeiro)</span>
+<span class="c">// sem aspas  = indica que é boolean</span>
+
+<span class="t">console</span>.<span class="a">log</span>(aprovado);  <span class="c">// mostra true</span></code></pre>
+      
+      <h4>undefined - Indefinido</h4>
+      <p>Valor que uma variável declarada, mas ainda não inicializada, apresenta por padrão. Também pode aparecer quando se acessa uma propriedade inexistente.</p>
+<pre><code><span class="t">let</span> endereco;
+<span class="c">// caixinha criada mas sem valor</span>
+<span class="t">console</span>.<span class="a">log</span>(endereco);  <span class="c">// undefined</span></code></pre>
+      
+      <h4>null - Nulo</h4>
+      <p>Valor usado intencionalmente para representar a ausência de um valor. É diferente de undefined.</p>
+<pre><code><span class="t">let</span> telefone = <span class="t">null</span>;
+<span class="c">// caixinha propositalmente vazia</span>
+<span class="t">console</span>.<span class="a">log</span>(telefone);  <span class="c">// null</span></code></pre>
+      
+      <h3>TIPOS DE DADOS COMPLEXOS</h3>
+      
+      <h4>Object - Objeto</h4>
+      <p>Estrutura com propriedades.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// object - Objeto (estrutura com propriedades)</span>
+<span class="c">// ============================================</span>
+
+<span class="c">// Exemplo específico da aula</span>
+<span class="t">let</span> pessoa = { 
+    nome: <span class="v">"Tonton"</span>, 
+    idade: <span class="v">26</span>, 
+    estudante: <span class="t">false</span> 
+};
+<span class="c">// "pessoa" = nome da caixinha</span>
+<span class="c">// {}       = cria um objeto (vários valores juntos)</span>
+<span class="c">// nome: "Tonton" = propriedade "nome" com valor "Tonton"</span>
+<span class="c">// idade: 26      = propriedade "idade" com valor 26</span>
+<span class="c">// estudante: false = propriedade "estudante" com valor false</span>
+
+<span class="t">console</span>.<span class="a">log</span>(pessoa);</code></pre>
+      
+      <h4>Array - Lista</h4>
+      <p>Lista ordenada de valores.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// array - Lista (vários valores ordenados)</span>
+<span class="c">// ============================================</span>
+
+<span class="c">// Exemplo específico da aula</span>
+<span class="t">let</span> frutas = [<span class="v">"maçã"</span>, <span class="v">"banana"</span>, <span class="v">"laranja"</span>];
+<span class="c">// "frutas" = nome da caixinha</span>
+<span class="c">// []       = cria uma lista/array</span>
+<span class="c">// "maçã", "banana", "laranja" = valores na lista</span>
+
+<span class="t">console</span>.<span class="a">log</span>(frutas);</code></pre>
+      
+      <h3>TIPOS DE VALOR (o que pode ir dentro da caixinha)</h3>
+<pre><code><span class="t">const</span> nome = <span class="v">"Otavio"</span>;     <span class="c">// string  → texto, sempre entre aspas</span>
+<span class="t">const</span> numero = <span class="v">33</span>;         <span class="c">// number  → qualquer número, inteiro ou decimal</span>
+<span class="t">const</span> aprovado = <span class="t">true</span>;     <span class="c">// boolean → só true ou false</span>
+
+<span class="c">// Pra descobrir o tipo de qualquer variável, usa o "typeof":</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="t">typeof</span> nome);      <span class="c">// "string"</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="t">typeof</span> numero);    <span class="c">// "number"</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="t">typeof</span> aprovado);  <span class="c">// "boolean"</span></code></pre>
+      
+      <h3>TEMPLATE STRINGS</h3>
+      <p>Facilitam a criação de textos complexos interpolando variáveis.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// TEMPLATE STRINGS - Forma moderna de juntar texto</span>
+<span class="c">// ============================================</span>
+
+<span class="c">// Exemplo específico da aula</span>
+<span class="t">let</span> nome = <span class="v">"João"</span>;
+<span class="t">let</span> idade = <span class="v">30</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Meu nome é ${nome} e tenho ${idade} anos.`</span>);
+<span class="c">// crase ` = template string (permite ${variavel})</span>
+<span class="c">// ${nome} = "encaixe o valor da caixinha nome aqui"</span>
+<span class="c">// ${idade} = "encaixe o valor da caixinha idade aqui"</span></code></pre>
+      
+      <h3>ENTRADA E SAÍDA</h3>
+      
+      <h4>Saída - console.log()</h4>
+      <p>Exibição de mensagens ou variáveis no console.</p>
+      
+      <h4>Entrada - prompt()</h4>
+      <p>Recolha de dados digitados pelo utilizador.</p>
+      
+      <h3>O PROBLEMA DE ENTRADAS DE TEXTO COM NÚMEROS</h3>
+      <p>O prompt() do navegador e a função retornada por prompt-sync recebem a entrada como texto (string). Mesmo quando a pessoa digita números, é necessário converter o texto para um tipo numérico antes de realizar cálculos.</p>
+      
+      <div class="demo">
+        <div class="demo-label">Exemplo do erro comum</div>
+        <div class="demo-body">
+<pre><code><span class="c">// Se o utilizador digitar 10 e 20:</span>
+<span class="t">let</span> n1 = <span class="a">prompt</span>(<span class="v">"Digite um número: "</span>);
+<span class="t">let</span> n2 = <span class="a">prompt</span>(<span class="v">"Digite outro número: "</span>);
+<span class="t">console</span>.<span class="a">log</span>(n1 + n2);  <span class="c">// "1020" (concatenação de texto, não soma!)</span></code></pre>
+        </div>
+      </div>
+      
+      <h3>EXERCÍCIO PRÁTICO DA AULA 2</h3>
+      <p><strong>Objetivo:</strong> Criar um programa que mostre a mensagem final: <code>Olá Mário, você tem 12 anos.</code></p>
+      
+      <h4>Resolução apresentada na aula:</h4>
+<pre><code><span class="t">let</span> nome = <span class="v">"mario"</span>;
+<span class="t">let</span> idade = <span class="v">"12"</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Olá ${nome}, você tem ${idade} anos.`</span>);</code></pre>
+    </section>
+
+    <section id="console">
+      <h2>6. Comando de Saída (console.log)</h2>
+      
+      <h3>UTILIZADO PARA VISUALIZAR VARIÁVEIS</h3>
+      <p>O console.log() é utilizado para visualizar variáveis no console.</p>
+      
+      <h3>DUAS FORMAS DE JUNTAR TEXTO COM VARIÁVEL</h3>
+      
+      <h4>Forma 1: Concatenação com "+"</h4>
+      <p>Gruda os textos um do lado do outro. Cuidado: com números vira string se um dos lados já for texto!</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// Forma 1: concatenação com "+"</span>
+<span class="c">// ============================================</span>
+
+<span class="t">const</span> a = <span class="v">"1"</span>;
+<span class="t">const</span> b = <span class="v">"2"</span>;
+
+<span class="t">console</span>.<span class="a">log</span>(a + <span class="v">" "</span> + b);       <span class="c">// "1 2"</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"2"</span> + <span class="v">"2"</span>);         <span class="c">// "22"   (textos grudados, NÃO é soma)</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">2</span> + <span class="v">2</span>);             <span class="c">// 4      (aqui são números de verdade, soma)</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"Gau"</span> + <span class="v">"cho"</span>);     <span class="c">// "Gaucho"</span></code></pre>
+      
+      <h4>Forma 2: Template literals (crase ` + ${})</h4>
+      <p>Forma mais moderna e mais fácil de ler. Usa crase ` no lugar de aspas, e ${variavel} pra "encaixar" o valor dentro do texto.</p>
+<pre><code><span class="c">// ============================================</span>
+<span class="c">// Forma 2: template literals (crase `` + ${})</span>
+<span class="c">// ============================================</span>
+
+<span class="t">const</span> exemplo = <span class="v">"mundo"</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Olá ${exemplo}!`</span>);  <span class="c">// "Olá mundo!"</span>
+
+<span class="c">// Comparando as duas formas fazendo a mesma coisa:</span>
+<span class="t">const</span> soma1 = <span class="v">5</span> + <span class="v">3</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"O resultado é: "</span> + soma1);   <span class="c">// concatenação</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`O resultado é: ${soma1}`</span>);   <span class="c">// template literal (mais limpo)</span></code></pre>
+      
+      <h3>EXECUÇÃO VIA NODE.JS</h3>
+      <p>Comando no terminal: <code>node nomedomeuarquivo.js</code></p>
+      <div class="note"><strong>É fundamental verificar se está posicionado na pasta correta do ficheiro!</strong></div>
+    </section>
+
+    <section id="template">
+      <h2>7. Template Strings Detalhadas</h2>
+      
+      <h3>Facilitam a criação de textos complexos</h3>
+      <p>Template strings interpolam variáveis dentro do texto, tornando o código mais limpo e legível.</p>
+      
+      <h3>Exemplo prático da aula</h3>
+<pre><code><span class="t">let</span> nome = <span class="v">"João"</span>;
+<span class="t">let</span> idade = <span class="v">30</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Meu nome é ${nome} e tenho ${idade} anos.`</span>);</code></pre>
+    </section>
+
+    <section id="aritmeticos">
+      <h2>8. Operadores Aritméticos</h2>
+      
+      <h3>DEFINIÇÃO</h3>
+      <p>Símbolos usados para realizar cálculos matemáticos em valores do tipo number.</p>
+      
+      <h3>CÁLCULOS SIMPLES (operadores matemáticos)</h3>
+<pre><code><span class="t">const</span> x = <span class="v">200</span>;
+<span class="t">const</span> y = <span class="v">54</span>;
+
+<span class="t">const</span> soma = x + y;          <span class="c">// +  soma</span>
+<span class="t">const</span> subtracao = x - y;     <span class="c">// -  subtração</span>
+<span class="t">const</span> multiplicacao = x * y; <span class="c">// *  multiplicação</span>
+<span class="t">const</span> divisao = x / y;       <span class="c">// /  divisão</span>
+
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Soma: ${soma}`</span>);
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Subtração: ${subtracao}`</span>);
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Multiplicação: ${multiplicacao}`</span>);
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Divisão: ${divisao}`</span>);</code></pre>
+      
+      <h3>LISTA DE OPERADORES (com a = 10, b = 3)</h3>
+      
+      <table class="ref">
+        <tr><th>Operador</th><th>Nome</th><th>Exemplo</th><th>Resultado</th><th>Exemplo prático</th></tr>
+        <tr><td><code>+</code></td><td>Adição</td><td><code>a + b</code></td><td><code>13</code></td><td><code>console.log("Olá " + "Mundo");</code></td></tr>
+        <tr><td><code>-</code></td><td>Subtração</td><td><code>a - b</code></td><td><code>7</code></td><td><code>let diferenca = idadeAtual - idadeAnterior;</code></td></tr>
+        <tr><td><code>*</code></td><td>Multiplicação</td><td><code>a * b</code></td><td><code>30</code></td><td><code>let total = preco * quantidade;</code></td></tr>
+        <tr><td><code>/</code></td><td>Divisão</td><td><code>a / b</code></td><td><code>3.33...</code></td><td>Número diferente de zero dividido por zero retorna Infinity; 0 / 0 retorna NaN</td></tr>
+        <tr><td><code>**</code></td><td>Potenciação</td><td><code>a ** b</code></td><td><code>1000</code></td><td><code>2 ** 3 → 8</code></td></tr>
+        <tr><td><code>%</code></td><td>Módulo/Resto</td><td><code>a % b</code></td><td><code>1</code></td><td><code>10 % 3 → 1</code></td></tr>
+      </table>
+      
+      <h3>PRECEDÊNCIA DE OPERADORES</h3>
+      <p>Define a ordem em que os cálculos são executados.</p>
+      
+      <h3>Exemplo prático da aula</h3>
+<pre><code><span class="t">let</span> resultado = <span class="v">2</span> + <span class="v">3</span> * <span class="v">4</span>;
+<span class="t">console</span>.<span class="a">log</span>(resultado);  <span class="c">// Retorna 14 (multiplicação antes da adição)</span></code></pre>
+    </section>
+
+    <section id="relacionais">
+      <h2>9. Operadores Relacionais</h2>
+      
+      <h3>UTILIZADOS PARA COMPARAR VALORES</h3>
+      <p>Retornam sempre um valor booleano (true ou false).</p>
+      
+      <h3>TABELA COMPLETA DE OPERADORES</h3>
+      
+      <table class="ref">
+        <tr><th>Operador</th><th>Nome</th><th>Exemplo</th><th>Resultado</th></tr>
+        <tr><td><code>></code></td><td>Maior que</td><td><code>10 > 5</code></td><td><code>true</code></td></tr>
+        <tr><td><code><</code></td><td>Menor que</td><td><code>2 < 8</code></td><td><code>true</code></td></tr>
+        <tr><td><code>>=</code></td><td>Maior ou igual</td><td><code>18 >= 18</code></td><td><code>true</code></td></tr>
+        <tr><td><code><=</code></td><td>Menor ou igual</td><td><code>10 <= 20</code></td><td><code>true</code></td></tr>
+        <tr><td><code>==</code></td><td>Igualdade de valor</td><td><code>"5" == 5</code></td><td><code>true</code></td></tr>
+        <tr><td><code>===</code></td><td>Igualdade estrita</td><td><code>"5" === 5</code></td><td><code>false</code></td></tr>
+        <tr><td><code>!=</code></td><td>Diferença de valor</td><td><code>5 != 10</code></td><td><code>true</code></td></tr>
+        <tr><td><code>!==</code></td><td>Diferença estrita</td><td><code>"5" !== 5</code></td><td><code>true</code></td></tr>
+      </table>
+      
+      <h3>DETALHES IMPORTANTES</h3>
+      
+      <h4>>= (Maior ou igual)</h4>
+      <ul class="check">
+        <li><code>18 >= 18</code> → <code>true</code></li>
+        <li><code>20 >= 18</code> → <code>true</code></li>
+        <li><code>15 >= 18</code> → <code>false</code></li>
+      </ul>
+      
+      <h4><= (Menor ou igual)</h4>
+      <ul class="check">
+        <li><code>10 <= 20</code> → <code>true</code></li>
+        <li><code>20 <= 20</code> → <code>true</code></li>
+        <li><code>30 <= 20</code> → <code>false</code></li>
+      </ul>
+      
+      <h3>ESTRUTURA CONDICIONAL (if / else)</h3>
+      <p>Avalia uma condição e executa fluxos alternativos.</p>
+      
+      <h3>Exemplo completo da aula</h3>
+<pre><code><span class="t">if</span>(idade > <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Maior de idade"</span>);
+} <span class="t">else if</span>(idade === <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Acabou de completar 18"</span>);
+} <span class="t">else</span> {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Menor de idade"</span>);
+}</code></pre>
+    </section>
+
+    <section id="logicos">
+      <h2>10. Operadores Lógicos</h2>
+      
+      <h3>COMBINAM EXPRESSÕES BOOLEANAS</h3>
+      
+      <h3>OPERADOR E (AND) - &&</h3>
+      <p>Verdadeiro apenas se ambos os lados tiverem de ser true.</p>
+      
+      <h4>Tabela Verdade &&</h4>
+      <table class="ref">
+        <tr><th>Condição 1</th><th>Condição 2</th><th>Resultado</th></tr>
+        <tr><td>true</td><td>true</td><td>true</td></tr>
+        <tr><td>true</td><td>false</td><td>false</td></tr>
+        <tr><td>false</td><td>true</td><td>false</td></tr>
+        <tr><td>false</td><td>false</td><td>false</td></tr>
+      </table>
+      
+      <h3>OPERADOR OU (OR) - ||</h3>
+      <p>Verdadeiro se pelo menos um dos lados for true.</p>
+      
+      <h4>Tabela Verdade ||</h4>
+      <table class="ref">
+        <tr><th>Condição 1</th><th>Condição 2</th><th>Resultado</th></tr>
+        <tr><td>true</td><td>true</td><td>true</td></tr>
+        <tr><td>true</td><td>false</td><td>true</td></tr>
+        <tr><td>false</td><td>true</td><td>true</td></tr>
+        <tr><td>false</td><td>false</td><td>false</td></tr>
+      </table>
+      
+      <h3>OPERADOR NÃO (NOT) - !</h3>
+      <p>Inverte o valor lógico.</p>
+      
+      <table class="ref">
+        <tr><th>Valor</th><th>Resultado</th></tr>
+        <tr><td><code>!true</code></td><td><code>false</code></td></tr>
+        <tr><td><code>!false</code></td><td><code>true</code></td></tr>
+      </table>
+      
+      <h3>EXPRESSÕES LÓGICAS COMPLEXAS</h3>
+      <p>Exemplo: Verificar aprovação escolar com nota mínima 7 e frequência mínima 75%:</p>
+<pre><code><span class="t">let</span> nota = <span class="v">8</span>;
+<span class="t">let</span> frequencia = <span class="v">90</span>;
+<span class="t">console</span>.<span class="a">log</span>(nota >= <span class="v">7</span> && frequencia >= <span class="v">75</span>); <span class="c">// Retorna: true</span></code></pre>
+    </section>
+
+    <section id="condicionais">
+      <h2>11. Estrutura Condicional Completa</h2>
+      
+      <h3>Exemplo completo da aula com todas as possibilidades</h3>
+<pre><code><span class="t">if</span>(idade > <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Maior de idade"</span>);
+} <span class="t">else if</span>(idade === <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Acabou de completar 18"</span>);
+} <span class="t">else</span> {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Menor de idade"</span>);
+}</code></pre>
+    </section>
+
+    <section id="prompt">
+      <h2>12. Entrada de Dados com prompt-sync</h2>
+      
+      <h3>OBJETIVOS</h3>
+      <p>Receber dados do utilizador no terminal de forma interativa e converter textos em números.</p>
+      
+      <h3>CONFIGURAÇÃO E INSTALAÇÃO</h3>
+      
+      <h4>Instalar a biblioteca via npm</h4>
+      <p>No terminal: <code>npm install prompt-sync</code></p>
+      
+      <h4>Importar no topo do script</h4>
+      <p><code>const prompt = require('prompt-sync')();</code></p>
+      
+      <h3>UTILIZAÇÃO</h3>
+      <p><code>let a = prompt("digite um número");</code></p>
+      
+      <h3>EXEMPLO BÁSICO</h3>
+<pre><code><span class="t">const</span> prompt = <span class="a">require</span>(<span class="v">'prompt-sync'</span>)();
+<span class="t">let</span> nome = <span class="a">prompt</span>(<span class="v">"Digite seu nome: "</span>);
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"Olá, "</span> + nome);</code></pre>
+      
+      <h3>FUNÇÕES DE CONVERSÃO</h3>
+      <p>As conversões não validam sozinhas se a entrada faz sentido para o programa. Por exemplo, texto não numérico pode resultar em NaN; em exercícios maiores, verifique a entrada antes de usar o valor nos cálculos.</p>
+      
+      <h4>Number() - Converte para número (incluindo decimais)</h4>
+      <ul class="check">
+        <li><code>Number("123")</code> → <code>123</code></li>
+        <li><code>Number("3.14")</code> → <code>3.14</code></li>
+        <li><code>Number(true)</code> → <code>1</code> / <code>Number(false)</code> → <code>0</code></li>
+        <li><code>Number("texto")</code> → <code>NaN</code> (Not a Number)</li>
+        <li><code>Number("")</code> → <code>0</code></li>
+      </ul>
+      
+      <h4>parseInt() - Converte para número inteiro</h4>
+      <p>Atenção: ignora partes decimais, parseInt("8.9") resulta em 8.</p>
+      
+      <h4>parseFloat() - Converte para número decimal</h4>
+      <p><code>parseFloat("7.5")</code></p>
+      
+      <h3>EXEMPLO PRÁTICO COMPLETO DA AULA 5</h3>
+<pre><code><span class="t">const</span> prompt = <span class="a">require</span>(<span class="v">"prompt-sync"</span>)();
+
+<span class="t">let</span> nome = <span class="a">prompt</span>(<span class="v">"Nome: "</span>);
+<span class="t">let</span> idade = <span class="a">parseInt</span>(<span class="a">prompt</span>(<span class="v">"Idade: "</span>));
+<span class="t">let</span> altura = <span class="a">parseFloat</span>(<span class="a">prompt</span>(<span class="v">"Altura: "</span>));
+
+<span class="t">console</span>.<span class="a">log</span>(nome);
+<span class="t">console</span>.<span class="a">log</span>(idade);
+<span class="t">console</span>.<span class="a">log</span>(altura);</code></pre>
+    </section>
+
+    <section id="conversao">
+      <h2>13. Funções de Conversão de Tipos Detalhadas</h2>
+      
+      <h3>CONVERSÃO PARA STRING()</h3>
+      <ul class="check">
+        <li><code>String(123)</code> → <code>"123"</code></li>
+        <li><code>String(true)</code> → <code>"true"</code></li>
+        <li><code>String(null)</code> → <code>"null"</code> / <code>String(undefined)</code> → <code>"undefined"</code></li>
+        <li><code>String([1, 2, 3])</code> → <code>"1,2,3"</code></li>
+      </ul>
+      
+      <h3>CONVERSÃO PARA BOOLEAN()</h3>
+      <ul class="check">
+        <li><code>Boolean(1)</code> → <code>true</code> / <code>Boolean(0)</code> → <code>false</code></li>
+        <li><code>Boolean("")</code> → <code>false</code> / <code>Boolean("texto")</code> → <code>true</code></li>
+      </ul>
+      
+      <h3>EXEMPLOS PRÁTICOS COMPLETOS</h3>
+<pre><code><span class="c">// Conversão de tipos</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="t">typeof</span> <span class="t">String</span>(<span class="v">123</span>));  <span class="c">// "string"</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="t">typeof</span> <span class="t">Number</span>(<span class="v">"123"</span>));  <span class="c">// "number"</span>
+<span class="t">console</span>.<span class="a">log</span>(<span class="t">typeof</span> <span class="t">Boolean</span>(<span class="v">1</span>));    <span class="c">// "boolean"</span></code></pre>
+    </section>
+
+    <section id="erros">
+      <h2>14. Erros Comuns de Sintaxe</h2>
+      
+      <h3>ERRO 1: Faltando ponto e vírgula</h3>
+<pre><code><span class="c">// ⚠️ Sem ponto e vírgula</span>
+<span class="c">// const X = 200</span>
+<span class="c">// const Y = 54</span>
+<span class="c">// JavaScript geralmente insere ponto e vírgula automaticamente,</span>
+<span class="c">// mas manter um padrão explícito pode melhorar a consistência do código.</span>
+
+<span class="c">// ✅ Convenção usada neste material — terminar com ponto e vírgula</span>
+<span class="t">const</span> X1 = <span class="v">200</span>;
+<span class="t">const</span> Y1 = <span class="v">54</span>;</code></pre>
+      
+      <h3>ERRO 2: Variável repetida</h3>
+<pre><code><span class="c">// ❌ ERRADO — variável repetida (isso trava o código com erro!)</span>
+<span class="c">// const X = 200;</span>
+<span class="c">// const X = 9;   // SyntaxError: Identifier 'X' has already been declared</span>
+
+<span class="c">// ✅ CERTO — nomes diferentes pra cada conjunto de dados</span>
+<span class="t">const</span> X2 = <span class="v">9</span>;
+<span class="t">const</span> Y2 = <span class="v">10</span>;
+<span class="t">const</span> A2 = <span class="v">2</span>;</code></pre>
+      
+      <h3>ERRO 3: Convenção de nomes de variáveis (acentos)</h3>
+<pre><code><span class="c">// ⚠️ Válido em JavaScript, mas geralmente evitado por convenção</span>
+<span class="c">// const Otávio = 10;</span>
+
+<span class="c">// ✅ Convenção recomendada — evitar acentos nos nomes</span>
+<span class="t">const</span> Otavio = <span class="v">10</span>;
+<span class="t">const</span> Oivato = <span class="v">20</span>;
+<span class="t">console</span>.<span class="a">log</span>(Otavio + Oivato);  <span class="c">// 30 (soma de verdade, pois são números)</span>
+<span class="t">console</span>.<span class="a">log</span>(Otavio / Oivato);  <span class="c">// 0.5</span>
+<span class="t">console</span>.<span class="a">log</span>(Otavio - Oivato);  <span class="c">// -10</span>
+<span class="t">console</span>.<span class="a">log</span>(Oivato - Otavio);  <span class="c">// 10</span></code></pre>
+      
+      <h3>EXEMPLO COMPLETO CORRIGIDO</h3>
+<pre><code><span class="t">const</span> x3 = <span class="v">9</span>;
+<span class="t">const</span> y3 = <span class="v">10</span>;
+<span class="t">const</span> a3 = <span class="v">2</span>;
+
+<span class="t">const</span> soma3 = x3 + y3 + a3;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Resultado da soma: ${soma3}`</span>);
+
+<span class="t">const</span> media3 = (x3 + y3 + a3) / <span class="v">3</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Resultado da média: ${media3}`</span>);
+
+<span class="t">const</span> multiplicacao3 = x3 * y3 * a3;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Resultado da multiplicação: ${multiplicacao3}`</span>);</code></pre>
+    </section>
+
+    <section id="exercicios">
+      <h2>15. Exercícios Práticos Completos</h2>
+      
+      <h3>Exercício 1 - Calculadora Básica</h3>
+      <p>Baseado na estrutura Entrada → Processamento → Saída:</p>
+<pre><code><span class="t">let</span> numero1 = <span class="v">5</span>;
+<span class="t">let</span> numero2 = <span class="v">3</span>;
+<span class="t">let</span> soma = numero1 + numero2;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">"Resultado:"</span>, soma);</code></pre>
+      
+      <h3>Exercício 2 - Verificação de Idade</h3>
+      <p>Usando a estrutura condicional completa da aula:</p>
+<pre><code><span class="t">let</span> idade = <span class="v">20</span>;
+
+<span class="t">if</span>(idade > <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Maior de idade"</span>);
+} <span class="t">else if</span>(idade === <span class="v">18</span>) {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Acabou de completar 18"</span>);
+} <span class="t">else</span> {
+    <span class="t">console</span>.<span class="a">log</span>(<span class="v">"Menor de idade"</span>);
+}</code></pre>
+      
+      <h3>Exercício 3 - Verificação de Aprovação</h3>
+      <p>Usando operadores lógicos e relacionais:</p>
+<pre><code><span class="t">let</span> nota = <span class="v">8</span>;
+<span class="t">let</span> frequencia = <span class="v">90</span>;
+<span class="t">console</span>.<span class="a">log</span>(nota >= <span class="v">7</span> && frequencia >= <span class="v">75</span>); <span class="c">// true</span></code></pre>
+      
+      <h3>Exercício 4 - Entrada de Dados com Conversão</h3>
+      <p>Usando prompt-sync com todas as funções de conversão:</p>
+<pre><code><span class="t">const</span> prompt = <span class="a">require</span>(<span class="v">"prompt-sync"</span>)();
+
+<span class="t">let</span> nome = <span class="a">prompt</span>(<span class="v">"Nome: "</span>);
+<span class="t">let</span> idade = <span class="a">parseInt</span>(<span class="a">prompt</span>(<span class="v">"Idade: "</span>));
+<span class="t">let</span> altura = <span class="a">parseFloat</span>(<span class="a">prompt</span>(<span class="v">"Altura: "</span>));
+
+<span class="t">console</span>.<span class="a">log</span>(nome);
+<span class="t">console</span>.<span class="a">log</span>(idade);
+<span class="t">console</span>.<span class="a">log</span>(altura);</code></pre>
+      
+      <h3>Exercício 5 - Exercício da Aula 2</h3>
+      <p>Reproduzindo o exercício específico da aula:</p>
+<pre><code><span class="t">let</span> nome = <span class="v">"mario"</span>;
+<span class="t">let</span> idade = <span class="v">"12"</span>;
+<span class="t">console</span>.<span class="a">log</span>(<span class="v">`Olá ${nome}, você tem ${idade} anos.`</span>);</code></pre>
+    </section>
+
+    <section id="guia">
+      <h2>16. Guia rápido de consulta</h2>
+      
+      <p>Esta seção complementa os tópicos anteriores; não substitui os exemplos detalhados.</p>
+      
+      <table class="ref">
+        <tr><th>Preciso...</th><th>Recurso</th></tr>
+        <tr><td>Mostrar algo no terminal</td><td><code>console.log()</code></td></tr>
+        <tr><td>Declarar um valor que não será reatribuído</td><td><code>const</code></td></tr>
+        <tr><td>Declarar um valor que poderá ser atualizado</td><td><code>let</code></td></tr>
+        <tr><td>Juntar texto e valores de variáveis</td><td>Template string com crases: <code>Olá ${nome}</code></td></tr>
+        <tr><td>Receber dados pelo terminal no Node.js</td><td><code>prompt-sync</code></td></tr>
+        <tr><td>Converter uma entrada em número</td><td><code>Number()</code>, <code>parseInt()</code> ou <code>parseFloat()</code></td></tr>
+        <tr><td>Fazer cálculos</td><td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>**</code>, <code>%</code></td></tr>
+        <tr><td>Comparar valores</td><td><code>></code>, <code><</code>, <code>>=</code>, <code><=</code>, <code>===</code>, <code>!==</code></td></tr>
+        <tr><td>Combinar condições</td><td><code>&&</code>, <code>||</code>, <code>!</code></td></tr>
+        <tr><td>Escolher entre caminhos</td><td><code>if</code>, <code>else if</code>, <code>else</code></td></tr>
+        <tr><td>Consultar o tipo de um valor</td><td><code>typeof</code></td></tr>
+      </table>
+      
+      <h3>Checklist para resolver um exercício</h3>
+      <ol>
+        <li>Identifique quais dados entram no programa.</li>
+        <li>Determine o que precisa ser calculado ou verificado.</li>
+        <li>Escolha variáveis e tipos adequados.</li>
+        <li>Escreva o processamento passo a passo.</li>
+        <li>Mostre o resultado com <code>console.log()</code>.</li>
+        <li>Teste valores diferentes, incluindo casos-limite.</li>
+        <li>Se ocorrer um erro, leia a mensagem e confira primeiro nomes de variáveis, aspas/crases, parênteses e conversões.</li>
+      </ol>
+      
+      <div class="note"><strong>Observação sobre os exemplos:</strong> Os exemplos são modelos para estudo. Em exercícios que pedem entrada de dados, adapte os valores fixos para leituras com prompt-sync quando esse for o objetivo. Em exemplos de condição, lembre-se de declarar e atribuir a variável utilizada, como idade, antes de executar o if.</div>
+    </section>
+
+    <footer>
+      <p>Conceitos Básicos de Programação JavaScript</p>
+      <p>──────────────────────────────────────────────────</p>
+      <p>Material completo das UC 2 - Aulas 1 a 5 + Resumo Geral</p>
+      <p>Senac Fecomércio / Unisenac Centro Universitário RS</p>
+      <p>Profª Maria Antônia e Prof. Cauê Duarte</p>
+      <p>Técnico em Desenvolvimento de Sistemas</p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
